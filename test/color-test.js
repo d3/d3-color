@@ -1,8 +1,8 @@
 var tape = require("tape"),
     color = require("../");
 
-tape('color("#abc") returns the expected RGB color', function(test) {
-  var c = color.color("#abc");
+tape('color("#abc ") returns the expected RGB color', function(test) {
+  var c = color.color("#abc ");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 0xaa);
   test.equal(c.g, 0xbb);
@@ -10,8 +10,8 @@ tape('color("#abc") returns the expected RGB color', function(test) {
   test.end();
 });
 
-tape('color("#abc123") returns the expected RGB color', function(test) {
-  var c = color.color("#abc123");
+tape('color(" #abc123") returns the expected RGB color', function(test) {
+  var c = color.color(" #abc123");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 0xab);
   test.equal(c.g, 0xc1);
@@ -51,8 +51,8 @@ tape('color("rgb(-70,130,180)") returns the expected RGB color', function(test) 
   test.end();
 });
 
-tape('color(" rgb(70,130,180) ") returns the expected RGB color', function(test) {
-  var c = color.color(" rgb(70,130,180) ");
+tape('color(" rgb(70,130,+180) ") returns the expected RGB color', function(test) {
+  var c = color.color(" rgb(70,130,+180) ");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 70);
   test.equal(c.g, 130);

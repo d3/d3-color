@@ -1,0 +1,21 @@
+{
+  "name": "d3-color",
+  "version": "0.0.1",
+  "description": "Colorspaces.",
+  "main": "build/color",
+  "jsnext:main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d3/d3-color.git"
+  },
+  "scripts": {
+    "pretest": "mkdir -p build && d3-bundler --format=cjs -- index.js > build/color.js",
+    "test": "faucet `find test -name '*-test.js'`",
+    "prepublish": "npm run test"
+  },
+  "devDependencies": {
+    "d3-bundler": "~0.2.5",
+    "faucet": "0.0",
+    "tape": "4"
+  }
+}

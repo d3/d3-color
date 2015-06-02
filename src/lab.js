@@ -1,7 +1,8 @@
 import {Rgb} from "./rgb";
 
-var Kn = 18,
-    Xn = 0.950470, // D65 standard referent
+export var Kn = 18;
+
+var Xn = 0.950470, // D65 standard referent
     Yn = 1,
     Zn = 1.088830,
     t0 = 4 / 29,

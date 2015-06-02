@@ -11,3 +11,5 @@ Colorspaces! This code is currently EXPERIMENTAL and represents the in-developme
 * All colorspaces, including RGB, now support the color.rgb method. This method returns a new color instance representing the nearest-equivalent color in the RGB colorspace.
 
 * Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]. An HSL color’s `h` is a number in the range [0,360), while `s` and `l` are numbers in the range [0,1].
+
+* A new color method parses the specified string according to [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) and returns the corresponding color in its colorspace. For HSL color values, this is the HSL colorspace; for other values, the RGB colorspace is used.

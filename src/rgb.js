@@ -1,11 +1,11 @@
 export var darker = .7;
 export var brighter = 1 / darker;
 
-function Rgb(r, g, b) {
+export function Rgb(r, g, b) {
   this.r = Math.max(0, Math.min(255, Math.round(r)));
   this.g = Math.max(0, Math.min(255, Math.round(g)));
   this.b = Math.max(0, Math.min(255, Math.round(b)));
-}
+};
 
 function rgb(r, g, b) {
   return new Rgb(r, g, b); // TODO

@@ -1,10 +1,10 @@
 import {Rgb, brighter, darker} from "./rgb";
 
-function Hsl(h, s, l) {
+export function Hsl(h, s, l) {
   this.h = (h %= 360) < 0 ? h + 360 : h;
   this.s = Math.max(0, Math.min(1, +s));
   this.l = Math.max(0, Math.min(1, +l));
-}
+};
 
 function hsl(h, s, l) {
   return new Hsl(h, s, l); // TODO
@@ -43,4 +43,4 @@ Hsl.prototype = hsl.prototype = {
   }
 };
 
-export default rgb;
+export default hsl;

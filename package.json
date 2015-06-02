@@ -1,7 +1,7 @@
 {
   "name": "d3-color",
   "version": "0.0.1",
-  "description": "Colorspaces.",
+  "description": "Colorspaces!",
   "main": "build/color",
   "jsnext:main": "index",
   "repository": {

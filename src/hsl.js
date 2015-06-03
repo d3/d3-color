@@ -3,12 +3,12 @@ import {default as rgb, Rgb} from "./rgb";
 
 export default function(h, s, l) {
   if (arguments.length === 1) {
-    if (h instanceof hsl) {
+    if (h instanceof Hsl) {
       l = h.l;
       s = h.s;
       h = h.h;
     } else {
-      if (!(h instanceof rgb)) h = rgb(h);
+      if (!(h instanceof Rgb)) h = rgb(h);
       var r = h.r / 255,
           g = h.g / 255,
           b = h.b / 255,

@@ -1,6 +1,6 @@
 import {default as color, Color} from "./color";
 import {default as rgb, Rgb} from "./rgb";
-import {default as hcl, deg2rad} from "./hcl";
+import {default as hcl, Hcl, deg2rad} from "./hcl";
 
 export var Kn = 18;
 
@@ -14,18 +14,18 @@ var Xn = 0.950470, // D65 standard referent
 
 export default function(l, a, b) {
   if (arguments.length === 1) {
-    if (l instanceof lab) {
+    if (l instanceof Lab) {
       b = l.b;
       a = l.a;
       l = l.l;
-    } else if (l instanceof hcl) {
+    } else if (l instanceof Hcl) {
       var h = isNaN(l.h) ? 0 : l.h * deg2rad,
           c = isNaN(l.c) ? 0 : l.c;
       b = Math.sin(h) * c;
       a = Math.cos(h) * c;
       l = l.l;
     } else {
-      if (!(l instanceof rgb)) l = rgb(l);
+      if (!(l instanceof Rgb)) l = rgb(l);
       var r = rgb2xyz(l.r),
           g = rgb2xyz(l.g),
           b = rgb2xyz(l.b),

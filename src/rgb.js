@@ -5,7 +5,7 @@ export var brighter = 1 / darker;
 
 export default function(r, g, b) {
   if (arguments.length === 1) {
-    if (!(r instanceof rgb)) r = color(r).rgb();
+    if (!(r instanceof Rgb)) r = color(r).rgb();
     b = r.b;
     g = r.g;
     r = r.r;

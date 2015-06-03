@@ -1,17 +1,17 @@
 import {default as color, Color} from "./color";
-import {default as lab, Kn} from "./lab";
+import {default as lab, Lab, Kn} from "./lab";
 
 export var deg2rad = Math.PI / 180;
 export var rad2deg = 180 / Math.PI;
 
 export default function(h, c, l) {
   if (arguments.length === 1) {
-    if (h instanceof hcl) {
+    if (h instanceof Hcl) {
       l = h.l;
       c = h.c;
       h = h.h;
     } else {
-      if (!(h instanceof lab)) h = lab(h);
+      if (!(h instanceof Lab)) h = lab(h);
       l = h.l;
       c = Math.sqrt(h.a * h.a + h.b * h.b);
       h = Math.atan2(h.b, h.a) * rad2deg;

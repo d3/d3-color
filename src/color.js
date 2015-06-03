@@ -22,7 +22,7 @@ export default function(format) {
 };
 
 function rgbn(n) {
-  return rgb((n & 0xff0000) >> 16, (n & 0xff00) >> 8, n & 0xff);
+  return rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
 }
 
 var named = (new Map)

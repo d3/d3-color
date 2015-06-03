@@ -58,8 +58,8 @@ prototype.darker = function(k) {
 
 prototype.rgb = function() {
   var y = (this.l + 16) / 116,
-      x = y + this.a / 500,
-      z = y - this.b / 200;
+      x = isNaN(this.a) ? y : y + this.a / 500,
+      z = isNaN(this.b) ? y : y - this.b / 200;
   y = Yn * lab2xyz(y);
   x = Xn * lab2xyz(x);
   z = Zn * lab2xyz(z);

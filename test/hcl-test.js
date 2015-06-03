@@ -1,43 +1,184 @@
 var tape = require("tape"),
     color = require("../");
 
-tape('hcl(h, c, l) returns the expected Lch color', function(test) {
-  var c = color.hcl(-97.21873224090723, 32.44906314974561, 52.46551718768575);
+require("./hclEqual");
+require("./rgbEqual");
+
+tape("hcl(…) returns an instance of hcl and color", function(test) {
+  var c = color.hcl(120, 40, 50);
   test.ok(c instanceof color.hcl);
-  test.equal(c.h, 262.78126775909277);
-  test.equal(c.c, 32.44906314974561);
-  test.equal(c.l, 52.46551718768575);
+  test.ok(c instanceof color.color);
   test.end();
 });
 
-tape('hcl(h, c, l) clamps l to the range [0,100]', function(test) {
-  var c = color.hcl(1, 2, 200);
-  test.ok(c instanceof color.hcl);
-  test.equal(c.h, 1);
-  test.equal(c.c, 2);
-  test.equal(c.l, 100);
-  var c = color.hcl(1, 2, -100);
-  test.ok(c instanceof color.hcl);
-  test.equal(c.h, 1);
-  test.equal(c.c, 2);
-  test.equal(c.l, 0);
+tape("hcl(…) exposes h, c, and l channel values", function(test) {
+  test.hclEqual(color.hcl("#abc"), 257.7177616818892, 10.774886733325554, 75.10497524893663);
   test.end();
 });
 
-tape('hcl(h, c, l) allows NaN channel values', function(test) {
-  var c = color.hcl(undefined, NaN, "foo");
-  test.ok(c instanceof color.hcl);
-  test.ok(isNaN(c.h) && (c.h !== c.h));
-  test.ok(isNaN(c.c) && (c.c !== c.c));
-  test.ok(isNaN(c.l) && (c.l !== c.l));
+tape("hcl.toString() converts to RGB and formats as hexadecimal", function(test) {
+  test.equal(color.hcl("#abcdef") + "", "#abcdef");
+  test.equal(color.hcl("moccasin") + "", "#ffe4b5");
+  test.equal(color.hcl("hsl(60, 100%, 20%)") + "", "#666600");
+  test.equal(color.hcl("rgb(12, 34, 56)") + "", "#0c2238");
+  test.equal(color.hcl(color.rgb(12, 34, 56)) + "", "#0c2238");
+  test.equal(color.hcl(color.hsl(60, 1, .2)) + "", "#666600");
   test.end();
 });
 
-tape('hcl.rgb returns the expected RGB color', function(test) {
-  var c = color.hcl(262.78126775909277, 32.44906314974561, 52.46551718768575).rgb();
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 70);
-  test.equal(c.g, 130);
-  test.equal(c.b, 180);
+tape("hcl.toString() reflects h, c and l channel values", function(test) {
+  var c = color.hcl("#abc");
+  c.h += 10, c.c += 1, c.l -= 1; // Note: I don’t modifying channel values directly.
+  test.equal(c + "", "#aab7cc");
+  test.end();
+});
+
+tape("hcl.toString() treats undefined channel values as 0", function(test) {
+  test.equal(color.hcl("invalid") + "", "#000000");
+  test.equal(color.hcl("#000") + "", "#000000");
+  test.equal(color.hcl("#ccc") + "", "#cccccc");
+  test.equal(color.hcl("#fff") + "", "#ffffff");
+  test.equal(color.hcl(NaN, 20, 40) + "", "#7d525f"); // equivalent to hcl(0, 20, 40)
+  test.equal(color.hcl(120, NaN, 40) + "", "#5e5e5e"); // equivalent to hcl(*, 0, 40)
+  test.equal(color.hcl(0, NaN, 40) + "", "#5e5e5e");
+  test.equal(color.hcl(120, 50, NaN) + "", "#000000"); // equivalent to hcl(*, *, 0)
+  test.equal(color.hcl(0, 50, NaN) + "", "#000000");
+  test.equal(color.hcl(120, 0, NaN) + "", "#000000");
+  test.end();
+});
+
+tape("hcl(h, c, l) wraps hue to [0,360)", function(test) {
+  test.hclEqual(color.hcl(-10, 40, 50), 350, 40, 50);
+  test.hclEqual(color.hcl(0, 40, 50), 0, 40, 50);
+  test.hclEqual(color.hcl(360, 40, 50), 0, 40, 50);
+  test.hclEqual(color.hcl(370, 40, 50), 10, 40, 50);
+  test.end();
+});
+
+tape("hcl(h, c, l) clamps l channel value to [0,100]", function(test) {
+  test.hclEqual(color.hcl(120, 20, -10), 120, 20, 0);
+  test.hclEqual(color.hcl(120, 20, 110), 120, 20, 100);
+  test.end();
+});
+
+tape("hcl(h, c, l) coerces channel values to numbers", function(test) {
+  test.hclEqual(color.hcl("120", "40", "50"), 120, 40, 50);
+  test.end();
+});
+
+tape("hcl(h, c, l) allows undefined channel values", function(test) {
+  test.hclEqual(color.hcl(undefined, NaN, "foo"), NaN, NaN, NaN);
+  test.hclEqual(color.hcl(undefined, 40, 50), NaN, 40, 50);
+  test.hclEqual(color.hcl(42, undefined, 50), 42, NaN, 50);
+  test.hclEqual(color.hcl(42, 40, undefined), 42, 40, NaN);
+  test.end();
+});
+
+tape("hcl(format) parses the specified format and converts to HCL", function(test) {
+  test.hclEqual(color.hcl("#abcdef"), 259.84214815790716, 20.768234621934273, 81.04386565274363);
+  test.hclEqual(color.hcl("#abc"), 257.7177616818892, 10.774886733325554, 75.10497524893663);
+  test.hclEqual(color.hcl("rgb(12, 34, 56)"), 270.41717207657933, 16.833655998102003, 12.65624852526134);
+  test.hclEqual(color.hcl("rgb(12%, 34%, 56%)"), 273.93462130991594, 36.220700288278884, 36.156665230032566);
+  test.hclEqual(color.hcl("hsl(60,100%,20%)"), 102.85124420310271, 49.44871600399321, 41.73251953866431);
+  test.hclEqual(color.hcl("aliceblue"), 252.44447593419056, 4.4710949781436735, 97.17864982306108);
+  test.end();
+});
+
+tape("hcl(format) returns undefined channel values for unknown formats", function(test) {
+  test.hclEqual(color.hcl("invalid"), NaN, NaN, NaN);
+  test.end();
+});
+
+tape("hcl(hcl) copies an HCL color", function(test) {
+  var c1 = color.hcl(120, 30, 50),
+      c2 = color.hcl(c1);
+  test.hclEqual(c1, 120, 30, 50);
+  c1.h = c1.c = c1.l = 0;
+  test.hclEqual(c1, 0, 0, 0);
+  test.hclEqual(c2, 120, 30, 50);
+  test.end();
+});
+
+tape("hcl(rgb) converts from RGB", function(test) {
+  test.hclEqual(color.hcl(color.rgb(255, 0, 0)), 39.99901061253294, 104.55176567686985, 53.24079414130722);
+  test.end();
+});
+
+tape("hcl(color) converts from another colorspace via color.rgb()", function(test) {
+  function TestColor() {}
+  TestColor.prototype = Object.create(color.color.prototype);
+  TestColor.prototype.rgb = function() { return color.rgb(12, 34, 56); };
+  TestColor.prototype.toString = function() { throw new Error("should use rgb, not toString"); };
+  test.hclEqual(color.hcl(new TestColor), 270.41717207657933, 16.833655998102003, 12.65624852526134);
+  test.end();
+});
+
+tape("hcl.brighter(k) returns a brighter color if k > 0", function(test) {
+  var c = color.hcl("brown");
+  test.hclEqual(c.brighter(.5), 31.577795955065785, 58.32679960239559, 46.52650524281069);
+  test.hclEqual(c.brighter(1), 31.577795955065785, 58.32679960239559, 55.52650524281069);
+  test.hclEqual(c.brighter(2), 31.577795955065785, 58.32679960239559, 73.52650524281069);
+  test.end();
+});
+
+tape("hcl.brighter(k) returns a copy", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.brighter(1);
+  test.hclEqual(c1, 262.78126775909277, 32.44906314974561, 52.46551718768575);
+  test.hclEqual(c2, 262.78126775909277, 32.44906314974561, 70.46551718768575);
+  test.end();
+});
+
+tape("hcl.brighter() is equivalent to hcl.brighter(1)", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.brighter(),
+      c3 = c1.brighter(1);
+  test.hclEqual(c2, c3.h, c3.c, c3.l);
+  test.end();
+});
+
+tape("hcl.brighter(k) is equivalent to hcl.darker(-k)", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.brighter(1.5),
+      c3 = c1.darker(-1.5);
+  test.hclEqual(c2, c3.h, c3.c, c3.l);
+  test.end();
+});
+
+tape("hcl.darker(k) returns a darker color if k > 0", function(test) {
+  var c = color.hcl("brown");
+  test.hclEqual(c.darker(.5), 31.577795955065785, 58.32679960239559, 28.526505242810693);
+  test.hclEqual(c.darker(1), 31.577795955065785, 58.32679960239559, 19.526505242810693);
+  test.hclEqual(c.darker(2), 31.577795955065785, 58.32679960239559, 1.5265052428106927);
+  test.end();
+});
+
+tape("hcl.darker(k) returns a copy", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.darker(1);
+  test.hclEqual(c1, 262.78126775909277, 32.44906314974561, 52.46551718768575);
+  test.hclEqual(c2, 262.78126775909277, 32.44906314974561, 34.46551718768575);
+  test.end();
+});
+
+tape("hcl.darker() is equivalent to hcl.darker(1)", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.darker(),
+      c3 = c1.darker(1);
+  test.hclEqual(c2, c3.h, c3.c, c3.l);
+  test.end();
+});
+
+tape("hcl.darker(k) is equivalent to hcl.brighter(-k)", function(test) {
+  var c1 = color.hcl("steelblue"),
+      c2 = c1.darker(1.5),
+      c3 = c1.brighter(-1.5);
+  test.hclEqual(c2, c3.h, c3.c, c3.l);
+  test.end();
+});
+
+tape("hcl.rgb() converts to RGB", function(test) {
+  var c = color.hcl(120, 30, 50);
+  test.rgbEqual(c.rgb(), 109, 125, 74);
   test.end();
 });

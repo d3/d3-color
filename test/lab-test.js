@@ -88,6 +88,11 @@ tape("lab(lab) copies a Lab color", function(test) {
   test.end();
 });
 
+tape("lab(hcl(lab)) doesn’t lose a and b channels if luminance is zero", function(test) {
+  test.labEqual(color.lab(color.hcl(color.lab(0, 10, 0))), 0, 10, 0);
+  test.end();
+});
+
 tape("lab(rgb) converts from RGB", function(test) {
   test.labEqual(color.lab(color.rgb(255, 0, 0)), 53.24079414130722, 80.09245959641109, 67.20319651585301);
   test.end();

@@ -8,12 +8,9 @@ export default function(h, s, l) {
       s = h.s;
       h = h.h;
     } else {
-      if (!(h instanceof Rgb)) {
-        h = color(h);
-        if (h instanceof Hsl) {
-          return h;
-        }
-      }
+      if (!(h instanceof Color)) h = color(h);
+      if (h instanceof Hsl) return h;
+      h = h.rgb();
       var r = h.r / 255,
           g = h.g / 255,
           b = h.b / 255,
@@ -55,8 +52,8 @@ prototype.darker = function(k) {
 };
 
 prototype.rgb = function() {
-  var h = isNaN(this.h) ? 0 : this.h,
-      s = isNaN(this.s) ? 0 : this.s,
+  var h = this.h,
+      s = isNaN(this.h) || isNaN(this.s) ? 0 : this.s,
       l = this.l,
       m2 = l <= .5 ? l * (1 + s) : l + s - l * s,
       m1 = 2 * l - m2;

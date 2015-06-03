@@ -1,17 +1,7 @@
 var tape = require("tape"),
     color = require("../");
 
-tape.Test.prototype.rgbEqual = function(actual, r, g, b) {
-  this._assert(actual instanceof color.rgb
-      && (isNaN(r) ? isNaN(actual.r) && actual.r !== actual.r : actual.r === r)
-      && (isNaN(g) ? isNaN(actual.g) && actual.g !== actual.g : actual.g === g)
-      && (isNaN(b) ? isNaN(actual.b) && actual.b !== actual.b : actual.b === b), {
-    message: "should be equal",
-    operator: "rgbEqual",
-    actual: [actual.r, actual.g, actual.b],
-    expected: [r, g, b]
-  });
-};
+require("./rgbEqual");
 
 tape("rgb(…) returns an instance of rgb and color", function(test) {
   var c = color.rgb(70, 130, 180);
@@ -21,10 +11,7 @@ tape("rgb(…) returns an instance of rgb and color", function(test) {
 });
 
 tape("rgb(…) exposes r, g and b channel values", function(test) {
-  var c = color.rgb("#abc");
-  test.equal(c.r, 170);
-  test.equal(c.g, 187);
-  test.equal(c.b, 204);
+  test.rgbEqual(color.rgb("#abc"), 170, 187, 204);
   test.end();
 });
 
@@ -69,75 +56,25 @@ tape("rgb(r, g, b) coerces channel values to numbers", function(test) {
 });
 
 tape("rgb(r, g, b) allows undefined channel values", function(test) {
-  var c = color.rgb(undefined, NaN, "foo");
-  test.ok(isNaN(c.r) && (c.r !== c.r));
-  test.ok(isNaN(c.g) && (c.g !== c.g));
-  test.ok(isNaN(c.b) && (c.b !== c.b));
+  test.rgbEqual(color.rgb(undefined, NaN, "foo"), NaN, NaN, NaN);
+  test.rgbEqual(color.rgb(undefined, 42, 56), NaN, 42, 56);
+  test.rgbEqual(color.rgb(42, undefined, 56), 42, NaN, 56);
+  test.rgbEqual(color.rgb(42, 56, undefined), 42, 56, NaN);
   test.end();
 });
 
-tape("rgb(r, g, b) allows some channels to be defined, and others not", function(test) {
-  var c = color.rgb(undefined, 42, "foo");
-  test.ok(isNaN(c.r) && (c.r !== c.r));
-  test.equal(c.g, 42);
-  test.ok(isNaN(c.b) && (c.b !== c.b));
-  test.end();
-});
-
-tape("rgb(format) parses hexadecimal (e.g., \"#abcdef\")", function(test) {
+tape("rgb(format) parses the specified format and converts to RGB", function(test) {
   test.rgbEqual(color.rgb("#abcdef"), 171, 205, 239);
-  test.end();
-});
-
-tape("rgb(format) parses hexadecimal shorthand (e.g., \"#abc\")", function(test) {
   test.rgbEqual(color.rgb("#abc"), 170, 187, 204);
-  test.end();
-});
-
-tape("rgb(format) parses integer values (e.g., \"rgb(12, 34, 56)\")", function(test) {
   test.rgbEqual(color.rgb("rgb(12, 34, 56)"), 12, 34, 56);
-  test.end();
-});
-
-tape("rgb(format) parses percentage values (e.g., \"rgb(12%, 34%, 56%)\")", function(test) {
   test.rgbEqual(color.rgb("rgb(12%, 34%, 56%)"), 31, 87, 143);
-  test.end();
-});
-
-tape("rgb(format) parses and converts HSL format (e.g., \"hsl(60, 100%, 20%)\")", function(test) {
   test.rgbEqual(color.rgb("hsl(60,100%,20%)"), 102, 102, 0);
-  test.end();
-});
-
-tape("rgb(name) parses CSS color names (e.g., \"Moccasin\")", function(test) {
-  test.rgbEqual(color.rgb("moccasin"), 255, 228, 181);
   test.rgbEqual(color.rgb("aliceblue"), 240, 248, 255);
-  test.rgbEqual(color.rgb("yellow"), 255, 255, 0);
-  test.rgbEqual(color.rgb("moccasin"), 255, 228, 181);
-  test.rgbEqual(color.rgb("aliceblue"), 240, 248, 255);
-  test.rgbEqual(color.rgb("yellow"), 255, 255, 0);
   test.end();
 });
 
-tape("rgb(name) ignores leading and trailing whitespace", function(test) {
-  test.rgbEqual(color.rgb(" aliceblue\t\n"), 240, 248, 255);
-  test.end();
-});
-
-tape("rgb(name) is case-insensitive", function(test) {
-  test.rgbEqual(color.rgb("aLiCeBlUE"), 240, 248, 255);
-  test.end();
-});
-
-tape("rgb(name) parses rebeccapurple", function(test) {
-  test.rgbEqual(color.rgb("rebeccapurple"), 102, 51, 153);
-  test.end();
-});
-
-tape("rgb(name) returns undefined channel values for unknown names", function(test) {
+tape("rgb(format) returns undefined channel values for unknown formats", function(test) {
   test.rgbEqual(color.rgb("invalid"), NaN, NaN, NaN);
-  test.rgbEqual(color.rgb("hasOwnProperty"), NaN, NaN, NaN);
-  test.rgbEqual(color.rgb("__proto__"), NaN, NaN, NaN);
   test.end();
 });
 

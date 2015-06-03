@@ -1,128 +1,107 @@
 var tape = require("tape"),
     color = require("../");
 
-tape('color("#abc ") returns rgb(170, 187, 204)', function(test) {
-  var c = color.color("#abc ");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 170);
-  test.equal(c.g, 187);
-  test.equal(c.b, 204);
+require("./rgbEqual");
+require("./hslEqual");
+
+tape("color(format) parses CSS color names (e.g., \"rebeccapurple\")", function(test) {
+  test.rgbEqual(color.color("moccasin"), 255, 228, 181);
+  test.rgbEqual(color.color("aliceblue"), 240, 248, 255);
+  test.rgbEqual(color.color("yellow"), 255, 255, 0);
+  test.rgbEqual(color.color("moccasin"), 255, 228, 181);
+  test.rgbEqual(color.color("aliceblue"), 240, 248, 255);
+  test.rgbEqual(color.color("yellow"), 255, 255, 0);
+  test.rgbEqual(color.color("rebeccapurple"), 102, 51, 153);
   test.end();
 });
 
-tape('color(" #abc123") returns rgb(171, 193, 35)', function(test) {
-  var c = color.color(" #abc123");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 171);
-  test.equal(c.g, 193);
-  test.equal(c.b, 35);
+tape("color(format) parses 6-digit hexadecimal (e.g., \"#abcdef\")", function(test) {
+  test.rgbEqual(color.color("#abcdef"), 171, 205, 239);
   test.end();
 });
 
-tape('color("#ab") returns rgb(NaN, NaN, NaN)', function(test) {
-  var c = color.color("#ab");
-  test.ok(c instanceof color.rgb);
-  test.ok(isNaN(c.r) && c.r !== c.r);
-  test.ok(isNaN(c.g) && c.g !== c.g);
-  test.ok(isNaN(c.b) && c.b !== c.b);
+tape("color(format) parses 3-digit hexadecimal (e.g., \"#abc\")", function(test) {
+  test.rgbEqual(color.color("#abc"), 170, 187, 204);
   test.end();
 });
 
-tape('color("steelblue") returns rgb(70, 130, 180)', function(test) {
-  var c = color.color("steelblue");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 70);
-  test.equal(c.g, 130);
-  test.equal(c.b, 180);
+tape("color(format) parses RGB integer format (e.g., \"rgb(12,34,56)\")", function(test) {
+  test.rgbEqual(color.color("rgb(12,34,56)"), 12, 34, 56);
   test.end();
 });
 
-tape('color("rgb(70, 130, 180)") returns rgb(70, 130, 180)', function(test) {
-  var c = color.color("rgb(70, 130, 180)");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 70);
-  test.equal(c.g, 130);
-  test.equal(c.b, 180);
+tape("color(format) parses RGB percentage format (e.g., \"rgb(12%,34%,56%)\")", function(test) {
+  test.rgbEqual(color.color("rgb(12%,34%,56%)"), 31, 87, 143);
   test.end();
 });
 
-tape('color("rgb(-70,130,180)") returns rgb(0, 130, 180)', function(test) {
-  var c = color.color("rgb(-70,130,180)");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 0);
-  test.equal(c.g, 130);
-  test.equal(c.b, 180);
+tape("color(format) parses HSL format (e.g., \"hsl(60,100%,20%)\")", function(test) {
+  test.hslEqual(color.color("hsl(60,100%,20%)"), 60, 1, .2);
   test.end();
 });
 
-tape('color(" rgb(70,130,+180) ") returns rgb(70, 130, 180)', function(test) {
-  var c = color.color(" rgb(70,130,+180) ");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 70);
-  test.equal(c.g, 130);
-  test.equal(c.b, 180);
+tape("color(format) ignores leading and trailing whitespace", function(test) {
+  test.rgbEqual(color.color(" aliceblue\t\n"), 240, 248, 255);
+  test.rgbEqual(color.color(" #abc\t\n"), 170, 187, 204);
+  test.rgbEqual(color.color(" #aabbcc\t\n"), 170, 187, 204);
+  test.rgbEqual(color.color(" rgb(120,30,50)\t\n"), 120, 30, 50);
+  test.hslEqual(color.color(" hsl(120,30%,50%)\t\n"), 120, .3, .5);
   test.end();
 });
 
-tape('color(" rgb(70.5,130,180) ") returns rgb(NaN, NaN, NaN)', function(test) {
-  var c = color.color(" rgb(70.5,130,180) ");
-  test.ok(c instanceof color.rgb);
-  test.ok(isNaN(c.r) && c.r !== c.r);
-  test.ok(isNaN(c.g) && c.g !== c.g);
-  test.ok(isNaN(c.b) && c.b !== c.b);
+tape("color(format) ignores whitespace between numbers", function(test) {
+  test.rgbEqual(color.color(" rgb( 120 , 30 , 50 ) "), 120, 30, 50);
+  test.hslEqual(color.color(" hsl( 120 , 30% , 50% ) "), 120, .3, .5);
   test.end();
 });
 
-tape('color("rgb(30%,40%,50%)") returns rgb(77, 102, 128)', function(test) {
-  var c = color.color("rgb(30%,40%,50%)");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 77);
-  test.equal(c.g, 102);
-  test.equal(c.b, 128);
+tape("color(format) allows number signs", function(test) {
+  test.rgbEqual(color.color("rgb(+120,+30,+50)"), 120, 30, 50);
+  test.hslEqual(color.color("hsl(+120,+30%,+50%)"), 120, .3, .5);
+  test.rgbEqual(color.color("rgb(-120,-30,-50)"), 0, 0, 0);
+  test.hslEqual(color.color("hsl(-120,-30%,-50%)"), 240, 0, 0);
   test.end();
 });
 
-tape('color("rgb(30%,-40%,50%)") returns rgb(77, 0, 128)', function(test) {
-  var c = color.color("rgb(30%,-40%,50%)");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 77);
-  test.equal(c.g, 0);
-  test.equal(c.b, 128);
+tape("color(format) allows decimals for non-integer values", function(test) {
+  test.rgbEqual(color.color("rgb(20.0%,30.4%,51.2%)"), 51, 78, 131);
+  test.hslEqual(color.color("hsl(20.0,30.4%,51.2%)"), 20, .304, .512);
   test.end();
 });
 
-tape('color("rgb(30.5%,40%,50%)") returns rgb(78, 102, 128)', function(test) {
-  var c = color.color("rgb(30.5%,40%,50%)");
-  test.ok(c instanceof color.rgb);
-  test.equal(c.r, 78);
-  test.equal(c.g, 102);
-  test.equal(c.b, 128);
+tape("color(format) does not allow decimals for integer values", function(test) {
+  test.rgbEqual(color.color("rgb(120.5,30,50)"), NaN, NaN, NaN);
   test.end();
 });
 
-tape('color("rgb(30.5%,40.%,50%)") returns rgb(NaN, NaN, NaN)', function(test) {
-  var c = color.color("rgb(30.5%,40.%,50%)");
-  test.ok(c instanceof color.rgb);
-  test.ok(isNaN(c.r) && c.r !== c.r);
-  test.ok(isNaN(c.g) && c.g !== c.g);
-  test.ok(isNaN(c.b) && c.b !== c.b);
+tape("color(format) does not allow empty decimals", function(test) {
+  test.rgbEqual(color.color("rgb(120.,30,50)"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("rgb(120.%,30%,50%)"), NaN, NaN, NaN);
   test.end();
 });
 
-tape('color("hsl(30,40%,50%)") returns hsl(30, .4, .5)', function(test) {
-  var c = color.color("hsl(30,40%,50%)");
-  test.ok(c instanceof color.hsl);
-  test.equal(c.h, 30);
-  test.equal(c.s, .4);
-  test.equal(c.l, .5);
+tape("color(format) does not allow whitespace before open paren or percent sign", function(test) {
+  test.rgbEqual(color.color("rgb (120,30,50)"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("hsl (120,30%,50%)"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("hsl(120,30 %,50%)"), NaN, NaN, NaN);
   test.end();
 });
 
-tape('color("hsl(1030,-40%,50.5%)") returns hsl(310, 0, .505)', function(test) {
-  var c = color.color("hsl(1030,-40%,50.5%)");
-  test.ok(c instanceof color.hsl);
-  test.equal(c.h, 310);
-  test.equal(c.s, 0);
-  test.equal(c.l, .505);
+tape("color(format) is case-insensitive", function(test) {
+  test.rgbEqual(color.color("aLiCeBlUE"), 240, 248, 255);
+  test.rgbEqual(color.color(" #aBc\t\n"), 170, 187, 204);
+  test.rgbEqual(color.color(" #aaBBCC\t\n"), 170, 187, 204);
+  test.rgbEqual(color.color(" rGB(120,30,50)\t\n"), 120, 30, 50);
+  test.hslEqual(color.color(" HSl(120,30%,50%)\t\n"), 120, .3, .5);
+  test.end();
+});
+
+tape("color(format) returns undefined RGB channel values for unknown formats", function(test) {
+  test.rgbEqual(color.color("invalid"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("hasOwnProperty"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("__proto__"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("#ab"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("#abcd"), NaN, NaN, NaN);
+  test.rgbEqual(color.color("rgba(120,30,50,.5)"), NaN, NaN, NaN);
   test.end();
 });

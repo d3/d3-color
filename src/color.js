@@ -14,9 +14,9 @@ export default function(format) {
   format = (format + "").trim().toLowerCase();
   return (m = /^#([0-9a-f]{3})$/.exec(format)) ? (m = parseInt(m[1], 16), rgb((m & 0xf00) >> 8 | (m & 0xf00) >> 4, (m & 0xf0) >> 4 | (m & 0xf0), (m & 0xf) << 4 | (m & 0xf))) // #f00
       : (m = /^#([0-9a-f]{6})$/.exec(format)) ? (m = parseInt(m[1], 16), rgb((m & 0xff0000) >> 16, (m & 0xff00) >> 8, m & 0xff)) // #ff0000
-      : (m = /^rgb\s*\(\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*\)$/.exec(format)) ? rgb(m[1], m[2], m[3]) // rgb(255,0,0)
-      : (m = /^rgb\s*\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/.exec(format)) ? rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%,0%,0%)
-      : (m = /^hsl\s*\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/.exec(format)) ? hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
+      : (m = /^rgb\(\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*\)$/.exec(format)) ? rgb(m[1], m[2], m[3]) // rgb(255,0,0)
+      : (m = /^rgb\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/.exec(format)) ? rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%,0%,0%)
+      : (m = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/.exec(format)) ? hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
       : named.has(format) ? rgbn(named.get(format))
       : rgb(NaN, NaN, NaN);
 };

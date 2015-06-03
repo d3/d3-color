@@ -8,10 +8,10 @@ Colorspaces! This code is currently EXPERIMENTAL and represents the in-developme
 
 * The rgb.brighter method no longer special-cases behavior for black and very dark channels; it is now a simple channel multiplier, consistent with rgb.darker and implementations in the other colorspaces.
 
-* The rgb.hsl method has been removed; use the hsl constructor to convert any color to the HSL colorspace (e.g., `hsl(foo)`).
+* The rgb.hsl method has been removed; use the appropriate constructor to convert any desired colorspace (e.g., `hsl(foo)`).
 
-* All colorspaces, including RGB, now support the color.rgb method. This method returns a color instance representing the nearest-equivalent color in the RGB colorspace. For RGB colors, it returns `this`.
+* All colorspaces, including RGB, now support the color.rgb method. This method returns a color instance representing the nearest-equivalent color in the RGB colorspace. For RGB colors, it returns `this`. Use the rgb constructor if you want a copy.
 
-* When converting to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information. (Even gray colors in HCL have a defined hue due to the D65 referent.)
+* When converting to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
 
-* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]. An HSL color’s `h` is a number in the range [0,360), while `s` and `l` are numbers in the range [0,1].
+* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]; an HSL color’s `h` is a number in the range [0,360), while `s` and `l` are numbers in the range [0,1].

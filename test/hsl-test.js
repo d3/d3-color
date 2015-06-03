@@ -28,8 +28,8 @@ tape("hsl.toString() converts to RGB and formats as hexadecimal", function(test)
 
 tape("hsl.toString() reflects h, s and l channel values", function(test) {
   var c = color.hsl("#abc");
-  c.h += 10; // Note: I don’t modifying channel values directly.
-  test.equal(c + "", "#aab5cc");
+  c.h += 10, c.s += .01, c.l -= .01; // Note: I don’t modifying channel values directly.
+  test.equal(c + "", "#a6b2cb");
   test.end();
 });
 
@@ -109,7 +109,7 @@ tape("hsl(format) returns undefined channel values for unknown formats", functio
   test.end();
 });
 
-tape("hsl(hsl) copies an RGB color", function(test) {
+tape("hsl(hsl) copies an HSL color", function(test) {
   var c1 = color.hsl("hsl(120,30%,50%)"),
       c2 = color.hsl(c1);
   test.hslEqual(c1, 120, .3, .5);

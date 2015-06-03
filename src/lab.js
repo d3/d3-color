@@ -19,10 +19,9 @@ export default function(l, a, b) {
       a = l.a;
       l = l.l;
     } else if (l instanceof Hcl) {
-      var h = isNaN(l.h) ? 0 : l.h * deg2rad,
-          c = isNaN(l.c) ? 0 : l.c;
-      b = Math.sin(h) * c;
-      a = Math.cos(h) * c;
+      var h = l.h * deg2rad;
+      b = Math.sin(h) * l.c;
+      a = Math.cos(h) * l.c;
       l = l.l;
     } else {
       if (!(l instanceof Rgb)) l = rgb(l);

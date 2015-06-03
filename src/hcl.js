@@ -13,12 +13,8 @@ export default function(h, c, l) {
     } else {
       if (!(h instanceof Lab)) h = lab(h);
       l = h.l;
-      if (l > 0) {
-        c = Math.sqrt(h.a * h.a + h.b * h.b);
-        h = Math.atan2(h.b, h.a) * rad2deg;
-      } else {
-        c = h = NaN;
-      }
+      c = Math.sqrt(h.a * h.a + h.b * h.b);
+      h = Math.atan2(h.b, h.a) * rad2deg;
     }
   }
   return new Hcl(h, c, l);

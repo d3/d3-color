@@ -12,4 +12,6 @@ Colorspaces! This code is currently EXPERIMENTAL and represents the in-developme
 
 * All colorspaces, including RGB, now support the color.rgb method. This method returns a color instance representing the nearest-equivalent color in the RGB colorspace. For RGB colors, it returns `this`.
 
+* When converting to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information. (Even gray colors in HCL have a defined hue due to the D65 referent.)
+
 * Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]. An HSL color’s `h` is a number in the range [0,360), while `s` and `l` are numbers in the range [0,1].

@@ -1,6 +1,6 @@
 {
   "name": "d3-color",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Colorspaces!",
   "main": "build/color",
   "jsnext:main": "index",

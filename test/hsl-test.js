@@ -10,6 +10,15 @@ tape('hsl(70, .5, .4) returns the expected HSL color', function(test) {
   test.end();
 });
 
+tape('hsl("hsl(325,50%,50%)") does not lose precision', function(test) {
+  var c = color.hsl("hsl(325,50%,40%)");
+  test.ok(c instanceof color.hsl);
+  test.equal(c.h, 325);
+  test.equal(c.s, .5);
+  test.equal(c.l, .4);
+  test.end();
+});
+
 tape('hsl(h, s, l) converts hue to the range [0,360)', function(test) {
   var c = color.hsl(360, .5, .4);
   test.ok(c instanceof color.hsl);

@@ -1,4 +1,4 @@
-import {Color} from "./color";
+import {default as color, Color} from "./color";
 import {default as rgb, Rgb} from "./rgb";
 
 export default function(h, s, l) {
@@ -8,7 +8,12 @@ export default function(h, s, l) {
       s = h.s;
       h = h.h;
     } else {
-      if (!(h instanceof Rgb)) h = rgb(h);
+      if (!(h instanceof Rgb)) {
+        h = color(h);
+        if (h instanceof Hsl) {
+          return h;
+        }
+      }
       var r = h.r / 255,
           g = h.g / 255,
           b = h.b / 255,

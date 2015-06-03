@@ -16,6 +16,14 @@ tape("hcl(…) exposes h, c, and l channel values", function(test) {
   test.end();
 });
 
+tape("hcl(…) returns undefined hue and chroma for black if not explicitly specified", function(test) {
+  test.hclEqual(color.hcl("black"), NaN, NaN, 0);
+  test.hclEqual(color.hcl("#000"), NaN, NaN, 0);
+  test.hclEqual(color.hcl(color.lab("#000")), NaN, NaN, 0);
+  test.hclEqual(color.hcl(0, 0, 0), 0, 0, 0);
+  test.end();
+});
+
 tape("hcl.toString() converts to RGB and formats as hexadecimal", function(test) {
   test.equal(color.hcl("#abcdef") + "", "#abcdef");
   test.equal(color.hcl("moccasin") + "", "#ffe4b5");

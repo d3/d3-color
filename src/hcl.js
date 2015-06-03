@@ -1,6 +1,8 @@
-import {Lab, Kn} from "./lab";
+import color from "./color";
+import {default as lab, Kn} from "./lab";
 
-var deg2rad = Math.PI / 180;
+export var deg2rad = Math.PI / 180;
+export var rad2deg = 180 / Math.PI;
 
 export function Hcl(h, c, l) {
   this.h = (h %= 360) < 0 ? h + 360 : h;
@@ -9,24 +11,33 @@ export function Hcl(h, c, l) {
 };
 
 function hcl(h, c, l) {
-  return new Hcl(h, c, l); // TODO
+  if (arguments.length === 1) {
+    if (h instanceof hcl) {
+      l = h.l;
+      c = h.c;
+      h = h.h;
+    } else {
+      if (!(h instanceof lab)) h = lab(h);
+      l = h.l;
+      c = Math.sqrt(h.a * h.a + h.b * h.b);
+      h = Math.atan2(h.b, h.a) * rad2deg;
+    }
+  }
+  return new Hcl(h, c, l);
 }
 
-Hcl.prototype = hcl.prototype = {
-  brighter: function(k) {
-    return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
-  },
-  darker: function(k) {
-    return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k));
-  },
-  rgb: function() {
-    var h = isNaN(this.h) ? 0 : this.h * deg2rad,
-        c = isNaN(this.c) ? 0 : this.c;
-    return new Lab(this.l, Math.cos(h) * c, Math.sin(h) * c).rgb();
-  },
-  toString: function() {
-    return this.rgb() + "";
-  }
+var prototype = Hcl.prototype = hcl.prototype = Object.create(color.prototype);
+
+prototype.brighter = function(k) {
+  return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
+};
+
+prototype.darker = function(k) {
+  return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k));
+};
+
+prototype.rgb = function() {
+  return lab(this).rgb();
 };
 
 export default hcl;

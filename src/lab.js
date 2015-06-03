@@ -1,4 +1,6 @@
-import {Rgb} from "./rgb";
+import color from "./color";
+import {default as rgb, Rgb} from "./rgb";
+import {default as hcl, deg2rad} from "./hcl";
 
 export var Kn = 18;
 
@@ -17,32 +19,55 @@ export function Lab(l, a, b) {
 };
 
 function lab(l, a, b) {
-  return new Lab(l, a, b); // TODO
+  if (arguments.length === 1) {
+    if (l instanceof lab) {
+      b = l.b;
+      a = l.a;
+      l = l.l;
+    } else if (l instanceof hcl) {
+      var h = isNaN(l.h) ? 0 : l.h * deg2rad,
+          c = isNaN(l.c) ? 0 : l.c;
+      b = Math.sin(h) * c;
+      a = Math.cos(h) * c;
+      l = l.l;
+    } else {
+      if (!(l instanceof rgb)) l = rgb(l);
+      var r = rgb2xyz(l.r),
+          g = rgb2xyz(l.g),
+          b = rgb2xyz(l.b),
+          x = xyz2lab((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / Xn),
+          y = xyz2lab((0.2126729 * r + 0.7151522 * g + 0.0721750 * b) / Yn),
+          z = xyz2lab((0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / Zn);
+      b = 200 * (y - z);
+      a = 500 * (x - y);
+      l = 116 * y - 16;
+    }
+  }
+  return new Lab(l, a, b);
 }
 
-Lab.prototype = lab.prototype = {
-  brighter: function(k) {
-    return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
-  },
-  darker: function(k) {
-    return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
-  },
-  rgb: function() {
-    var y = (this.l + 16) / 116,
-        x = y + this.a / 500,
-        z = y - this.b / 200;
-    y = Yn * lab2xyz(y);
-    x = Xn * lab2xyz(x);
-    z = Zn * lab2xyz(z);
-    return new Rgb(
-      xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
-      xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
-      xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z)
-    );
-  },
-  toString: function() {
-    return this.rgb() + "";
-  }
+var prototype = Lab.prototype = lab.prototype = Object.create(color.prototype);
+
+prototype.brighter = function(k) {
+  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
+};
+
+prototype.darker = function(k) {
+  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
+};
+
+prototype.rgb = function() {
+  var y = (this.l + 16) / 116,
+      x = y + this.a / 500,
+      z = y - this.b / 200;
+  y = Yn * lab2xyz(y);
+  x = Xn * lab2xyz(x);
+  z = Zn * lab2xyz(z);
+  return new Rgb(
+    xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
+    xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
+    xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z)
+  );
 };
 
 function xyz2lab(t) {

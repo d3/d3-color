@@ -1,5 +1,4 @@
 import hsl from "./hsl";
-import {format} from "./rgb";
 
 export default function(a, b) {
   a = hsl(a);

@@ -1,30 +1,34 @@
 var tape = require("tape"),
     color = require("../");
 
-tape('color("#abc ") returns the expected RGB color', function(test) {
+tape('color("#abc ") returns rgb(170, 187, 204)', function(test) {
   var c = color.color("#abc ");
   test.ok(c instanceof color.rgb);
-  test.equal(c.r, 0xaa);
-  test.equal(c.g, 0xbb);
-  test.equal(c.b, 0xcc);
+  test.equal(c.r, 170);
+  test.equal(c.g, 187);
+  test.equal(c.b, 204);
   test.end();
 });
 
-tape('color(" #abc123") returns the expected RGB color', function(test) {
+tape('color(" #abc123") returns rgb(171, 193, 35)', function(test) {
   var c = color.color(" #abc123");
   test.ok(c instanceof color.rgb);
-  test.equal(c.r, 0xab);
-  test.equal(c.g, 0xc1);
-  test.equal(c.b, 0x23);
+  test.equal(c.r, 171);
+  test.equal(c.g, 193);
+  test.equal(c.b, 35);
   test.end();
 });
 
-tape('color("#ab") returns null', function(test) {
-  test.equal(color.color("#ab"), null);
+tape('color("#ab") returns rgb(NaN, NaN, NaN)', function(test) {
+  var c = color.color("#ab");
+  test.ok(c instanceof color.rgb);
+  test.ok(isNaN(c.r) && c.r !== c.r);
+  test.ok(isNaN(c.g) && c.g !== c.g);
+  test.ok(isNaN(c.b) && c.b !== c.b);
   test.end();
 });
 
-tape('color("steelblue") returns the expected RGB color', function(test) {
+tape('color("steelblue") returns rgb(70, 130, 180)', function(test) {
   var c = color.color("steelblue");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 70);
@@ -33,7 +37,7 @@ tape('color("steelblue") returns the expected RGB color', function(test) {
   test.end();
 });
 
-tape('color("rgb(70, 130, 180)") returns the expected RGB color', function(test) {
+tape('color("rgb(70, 130, 180)") returns rgb(70, 130, 180)', function(test) {
   var c = color.color("rgb(70, 130, 180)");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 70);
@@ -42,7 +46,7 @@ tape('color("rgb(70, 130, 180)") returns the expected RGB color', function(test)
   test.end();
 });
 
-tape('color("rgb(-70,130,180)") returns the expected RGB color', function(test) {
+tape('color("rgb(-70,130,180)") returns rgb(0, 130, 180)', function(test) {
   var c = color.color("rgb(-70,130,180)");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 0);
@@ -51,7 +55,7 @@ tape('color("rgb(-70,130,180)") returns the expected RGB color', function(test) 
   test.end();
 });
 
-tape('color(" rgb(70,130,+180) ") returns the expected RGB color', function(test) {
+tape('color(" rgb(70,130,+180) ") returns rgb(70, 130, 180)', function(test) {
   var c = color.color(" rgb(70,130,+180) ");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 70);
@@ -60,12 +64,16 @@ tape('color(" rgb(70,130,+180) ") returns the expected RGB color', function(test
   test.end();
 });
 
-tape('color(" rgb(70.5,130,180) ") returns null', function(test) {
-  test.equal(color.color(" rgb(70.5,130,180) "), null);
+tape('color(" rgb(70.5,130,180) ") returns rgb(NaN, NaN, NaN)', function(test) {
+  var c = color.color(" rgb(70.5,130,180) ");
+  test.ok(c instanceof color.rgb);
+  test.ok(isNaN(c.r) && c.r !== c.r);
+  test.ok(isNaN(c.g) && c.g !== c.g);
+  test.ok(isNaN(c.b) && c.b !== c.b);
   test.end();
 });
 
-tape('color("rgb(30%,40%,50%)") returns the expected RGB color', function(test) {
+tape('color("rgb(30%,40%,50%)") returns rgb(77, 102, 128)', function(test) {
   var c = color.color("rgb(30%,40%,50%)");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 77);
@@ -74,7 +82,7 @@ tape('color("rgb(30%,40%,50%)") returns the expected RGB color', function(test) 
   test.end();
 });
 
-tape('color("rgb(30%,-40%,50%)") returns the expected RGB color', function(test) {
+tape('color("rgb(30%,-40%,50%)") returns rgb(77, 0, 128)', function(test) {
   var c = color.color("rgb(30%,-40%,50%)");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 77);
@@ -83,7 +91,7 @@ tape('color("rgb(30%,-40%,50%)") returns the expected RGB color', function(test)
   test.end();
 });
 
-tape('color("rgb(30.5%,40%,50%)") returns the expected RGB color', function(test) {
+tape('color("rgb(30.5%,40%,50%)") returns rgb(78, 102, 128)', function(test) {
   var c = color.color("rgb(30.5%,40%,50%)");
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 78);
@@ -92,12 +100,16 @@ tape('color("rgb(30.5%,40%,50%)") returns the expected RGB color', function(test
   test.end();
 });
 
-tape('color("rgb(30.5%,40.%,50%)") returns null', function(test) {
-  test.equal(color.color("rgb(30.5%,40.%,50%)"), null);
+tape('color("rgb(30.5%,40.%,50%)") returns rgb(NaN, NaN, NaN)', function(test) {
+  var c = color.color("rgb(30.5%,40.%,50%)");
+  test.ok(c instanceof color.rgb);
+  test.ok(isNaN(c.r) && c.r !== c.r);
+  test.ok(isNaN(c.g) && c.g !== c.g);
+  test.ok(isNaN(c.b) && c.b !== c.b);
   test.end();
 });
 
-tape('color("hsl(30,40%,50%)") returns the expected HSL color', function(test) {
+tape('color("hsl(30,40%,50%)") returns hsl(30, .4, .5)', function(test) {
   var c = color.color("hsl(30,40%,50%)");
   test.ok(c instanceof color.hsl);
   test.equal(c.h, 30);
@@ -106,7 +118,7 @@ tape('color("hsl(30,40%,50%)") returns the expected HSL color', function(test) {
   test.end();
 });
 
-tape('color("hsl(1030,-40%,50.5%)") returns the expected HSL color', function(test) {
+tape('color("hsl(1030,-40%,50.5%)") returns hsl(310, 0, .505)', function(test) {
   var c = color.color("hsl(1030,-40%,50.5%)");
   test.ok(c instanceof color.hsl);
   test.equal(c.h, 310);

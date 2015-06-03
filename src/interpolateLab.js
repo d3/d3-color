@@ -1,5 +1,4 @@
 import lab from "./lab";
-import {format} from "./rgb";
 
 export default function(a, b) {
   a = lab(a);

@@ -1,7 +1,7 @@
 var tape = require("tape"),
     color = require("../");
 
-tape('rgb(70, 130, 180) returns the expected RGB color', function(test) {
+tape('rgb(r, g, b) sets the r, g, and b channels', function(test) {
   var c = color.rgb(70, 130, 180);
   test.ok(c instanceof color.rgb);
   test.equal(c.r, 70);
@@ -46,12 +46,8 @@ tape('rgb(r, g, b) allows some channels to be defined, and others not', function
   test.end();
 });
 
-tape('rgb.rgb returns a copy', function(test) {
-  var c1 = color.rgb(70, 130, 180),
-      c2 = c1.rgb();
-  c1.r = c1.g = c1.b = NaN;
-  test.equal(c2.r, 70);
-  test.equal(c2.g, 130);
-  test.equal(c2.b, 180);
+tape('rgb.rgb returns this', function(test) {
+  var c = color.rgb(70, 130, 180);
+  test.equal(c.rgb(), c);
   test.end();
 });

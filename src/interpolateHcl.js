@@ -1,5 +1,4 @@
 import hcl from "./hcl";
-import {format} from "./rgb";
 
 export default function(a, b) {
   a = hcl(a);

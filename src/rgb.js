@@ -1,3 +1,5 @@
+import color from "./color";
+
 export var darker = .7;
 export var brighter = 1 / darker;
 
@@ -8,24 +10,29 @@ export function Rgb(r, g, b) {
 };
 
 function rgb(r, g, b) {
-  return new Rgb(r, g, b); // TODO
+  if (arguments.length === 1) {
+    if (!(r instanceof rgb)) r = color(r).rgb();
+    b = r.b;
+    g = r.g;
+    r = r.r;
+  }
+  return new Rgb(r, g, b);
 }
 
-Rgb.prototype = rgb.prototype = {
-  brighter: function(k) {
-    k = k == null ? brighter : Math.pow(brighter, k);
-    return new Rgb(this.r * k, this.g * k, this.b * k);
-  },
-  darker: function(k) {
-    k = k == null ? darker : Math.pow(darker, k);
-    return new Rgb(this.r * k, this.g * k, this.b * k);
-  },
-  rgb: function() {
-    return new Rgb(this.r, this.g, this.b);
-  },
-  toString: function() {
-    return format(this.r, this.g, this.b);
-  }
+var prototype = Rgb.prototype = rgb.prototype = Object.create(color.prototype);
+
+prototype.brighter = function(k) {
+  k = k == null ? brighter : Math.pow(brighter, k);
+  return new Rgb(this.r * k, this.g * k, this.b * k);
+};
+
+prototype.darker = function(k) {
+  k = k == null ? darker : Math.pow(darker, k);
+  return new Rgb(this.r * k, this.g * k, this.b * k);
+};
+
+prototype.rgb = function() {
+  return this;
 };
 
 export function format(r, g, b) {

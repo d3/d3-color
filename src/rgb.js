@@ -40,6 +40,9 @@ prototype.toString = function() {
 };
 
 export function format(r, g, b) {
+  if (isNaN(r)) r = 0;
+  if (isNaN(g)) g = 0;
+  if (isNaN(b)) b = 0;
   return "#"
       + (r < 16 ? "0" + r.toString(16) : r.toString(16))
       + (g < 16 ? "0" + g.toString(16) : g.toString(16))

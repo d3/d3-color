@@ -16,7 +16,7 @@ tape("hsl(…) exposes h, s, and l channel values", function(test) {
   test.end();
 });
 
-tape("hsl.toString() formats as hexadecimal", function(test) {
+tape("hsl.toString() converts to RGB and formats as hexadecimal", function(test) {
   test.equal(color.hsl("#abcdef") + "", "#abcdef");
   test.equal(color.hsl("moccasin") + "", "#ffe4b5");
   test.equal(color.hsl("hsl(60, 100%, 20%)") + "", "#666600");

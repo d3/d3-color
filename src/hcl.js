@@ -1,16 +1,10 @@
-import color from "./color";
+import {default as color, Color} from "./color";
 import {default as lab, Kn} from "./lab";
 
 export var deg2rad = Math.PI / 180;
 export var rad2deg = 180 / Math.PI;
 
-export function Hcl(h, c, l) {
-  this.h = (h %= 360) < 0 ? h + 360 : h;
-  this.c = +c;
-  this.l = Math.max(0, Math.min(100, +l));
-};
-
-function hcl(h, c, l) {
+export default function(h, c, l) {
   if (arguments.length === 1) {
     if (h instanceof hcl) {
       l = h.l;
@@ -24,9 +18,15 @@ function hcl(h, c, l) {
     }
   }
   return new Hcl(h, c, l);
-}
+};
 
-var prototype = Hcl.prototype = hcl.prototype = Object.create(color.prototype);
+export function Hcl(h, c, l) {
+  this.h = (h %= 360) < 0 ? h + 360 : h;
+  this.c = +c;
+  this.l = Math.max(0, Math.min(100, +l));
+};
+
+var prototype = Hcl.prototype = new Color;
 
 prototype.brighter = function(k) {
   return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
@@ -39,5 +39,3 @@ prototype.darker = function(k) {
 prototype.rgb = function() {
   return lab(this).rgb();
 };
-
-export default hcl;

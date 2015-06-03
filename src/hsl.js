@@ -1,13 +1,7 @@
-import color from "./color";
-import {default as rgb, Rgb, brighter, darker} from "./rgb";
+import {Color} from "./color";
+import {default as rgb, Rgb} from "./rgb";
 
-export function Hsl(h, s, l) {
-  this.h = (h %= 360) < 0 ? h + 360 : h;
-  this.s = Math.max(0, Math.min(1, +s));
-  this.l = Math.max(0, Math.min(1, +l));
-};
-
-function hsl(h, s, l) {
+export default function(h, s, l) {
   if (arguments.length === 1) {
     if (h instanceof hsl) {
       l = h.l;
@@ -20,13 +14,13 @@ function hsl(h, s, l) {
           b = h.b / 255,
           min = Math.min(r, g, b),
           max = Math.max(r, g, b),
-          d = max - min;
+          range = max - min;
       l = (max + min) / 2;
-      if (d) {
-        s = l < .5 ? d / (max + min) : d / (2 - max - min);
-        if (r == max) h = (g - b) / d + (g < b ? 6 : 0);
-        else if (g == max) h = (b - r) / d + 2;
-        else h = (r - g) / d + 4;
+      if (range) {
+        s = l < .5 ? range / (max + min) : range / (2 - max - min);
+        if (r === max) h = (g - b) / range + (g < b) * 6;
+        else if (g === max) h = (b - r) / range + 2;
+        else h = (r - g) / range + 4;
         h *= 60;
       } else {
         h = NaN;
@@ -35,9 +29,15 @@ function hsl(h, s, l) {
     }
   }
   return new Hsl(h, s, l);
-}
+};
 
-var prototype = Hsl.prototype = hsl.prototype = Object.create(color.prototype);
+export function Hsl(h, s, l) {
+  this.h = (h %= 360) < 0 ? h + 360 : h;
+  this.s = Math.max(0, Math.min(1, +s));
+  this.l = Math.max(0, Math.min(1, +l));
+};
+
+var prototype = Hsl.prototype = new Color;
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);
@@ -69,5 +69,3 @@ function hsl2rgb(h, m1, m2) {
       : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60
       : m1) * 255;
 }
-
-export default hsl;

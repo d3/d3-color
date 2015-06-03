@@ -13,7 +13,7 @@ export default function(a, b) {
   if (isNaN(bh)) bh = 0, ah = isNaN(ah) ? b.h : ah;
   else if (bh > 180) bh -= 360; else if (bh < -180) bh += 360; // shortest path
   return function(t) {
-    a.h = ah + bh * t;
+    a.h = ah + bh * t; // XXX this doesn’t wrap around
     a.s = as + bs * t;
     a.l = al + bl * t
     return a + "";

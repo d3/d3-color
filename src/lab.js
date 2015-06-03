@@ -1,4 +1,4 @@
-import color from "./color";
+import {default as color, Color} from "./color";
 import {default as rgb, Rgb} from "./rgb";
 import {default as hcl, deg2rad} from "./hcl";
 
@@ -12,13 +12,7 @@ var Xn = 0.950470, // D65 standard referent
     t2 = 3 * t1 * t1,
     t3 = t1 * t1 * t1;
 
-export function Lab(l, a, b) {
-  this.l = Math.max(0, Math.min(100, +l));
-  this.a = +a;
-  this.b = +b;
-};
-
-function lab(l, a, b) {
+export default function(l, a, b) {
   if (arguments.length === 1) {
     if (l instanceof lab) {
       b = l.b;
@@ -44,9 +38,15 @@ function lab(l, a, b) {
     }
   }
   return new Lab(l, a, b);
-}
+};
 
-var prototype = Lab.prototype = lab.prototype = Object.create(color.prototype);
+export function Lab(l, a, b) {
+  this.l = Math.max(0, Math.min(100, +l));
+  this.a = +a;
+  this.b = +b;
+};
+
+var prototype = Lab.prototype = new Color;
 
 prototype.brighter = function(k) {
   return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
@@ -85,5 +85,3 @@ function xyz2rgb(x) {
 function rgb2xyz(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
-
-export default lab;

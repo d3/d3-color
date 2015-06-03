@@ -1,7 +1,15 @@
 import rgb from "./rgb";
 import hsl from "./hsl";
 
-function color(format) {
+export function Color() {};
+
+Color.prototype = {
+  toString: function() {
+    return this.rgb() + "";
+  }
+};
+
+export default function(format) {
   var m;
   format = (format + "").trim().toLowerCase();
   return (m = /^#([0-9a-f]{3})$/.exec(format)) ? (m = parseInt(m[1], 16), rgb((m & 0xf00) >> 8 | (m & 0xf00) >> 4, (m & 0xf0) >> 4 | (m & 0xf0), (m & 0xf) << 4 | (m & 0xf))) // #f00
@@ -11,15 +19,7 @@ function color(format) {
       : (m = /^hsl\s*\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/.exec(format)) ? hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
       : named.has(format) ? rgbn(named.get(format))
       : rgb(NaN, NaN, NaN);
-}
-
-color.prototype = {
-  toString: function() {
-    return this.rgb() + "";
-  }
 };
-
-export default color;
 
 function rgbn(n) {
   return rgb((n & 0xff0000) >> 16, (n & 0xff00) >> 8, n & 0xff);

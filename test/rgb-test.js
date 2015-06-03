@@ -156,6 +156,15 @@ tape("rgb(hsl) converts from HSL", function(test) {
   test.end();
 });
 
+tape("rgb(color) converts from another colorspace via color.rgb()", function(test) {
+  function TestColor() {}
+  TestColor.prototype = Object.create(color.color.prototype);
+  TestColor.prototype.rgb = function() { return color.rgb(12, 34, 56); };
+  TestColor.prototype.toString = function() { throw new Error("should use rgb, not toString"); };
+  test.rgbEqual(color.rgb(new TestColor), 12, 34, 56);
+  test.end();
+});
+
 tape("rgb.brighter(k) returns a brighter color if k > 0", function(test) {
   var c = color.rgb("brown");
   test.rgbEqual(c.brighter(.5), 197, 50, 50);

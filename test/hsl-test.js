@@ -28,7 +28,7 @@ tape("hsl.toString() converts to RGB and formats as hexadecimal", function(test)
 
 tape("hsl.toString() reflects h, s and l channel values", function(test) {
   var c = color.hsl("#abc");
-  c.h += 10, c.s += .01, c.l -= .01; // Note: I don’t modifying channel values directly.
+  c.h += 10, c.s += .01, c.l -= .01;
   test.equal(c + "", "#a6b2cb");
   test.end();
 });

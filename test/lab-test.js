@@ -28,7 +28,7 @@ tape("lab.toString() converts to RGB and formats as hexadecimal", function(test)
 
 tape("lab.toString() reflects l, a and b channel values", function(test) {
   var c = color.lab("#abc");
-  c.l += 10, c.a -= 10, c.b += 10; // Note: I don’t modifying channel values directly.
+  c.l += 10, c.a -= 10, c.b += 10;
   test.equal(c + "", "#badcd5");
   test.end();
 });

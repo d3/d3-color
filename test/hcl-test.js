@@ -38,7 +38,7 @@ tape("hcl.toString() converts to RGB and formats as hexadecimal", function(test)
 
 tape("hcl.toString() reflects h, c and l channel values", function(test) {
   var c = color.hcl("#abc");
-  c.h += 10, c.c += 1, c.l -= 1; // Note: I don’t modifying channel values directly.
+  c.h += 10, c.c += 1, c.l -= 1;
   test.equal(c + "", "#aab7cc");
   test.end();
 });

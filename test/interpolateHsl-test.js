@@ -13,6 +13,17 @@ tape("interpolateHsl(a, b) interpolates in HSL and returns an RGB hexadecimal st
   test.end();
 });
 
+tape("interpolateHsl(a, b) uses the shortest path when interpolating hue", function(test) {
+  var i = color.interpolateHsl("hsl(10,50%,50%)", "hsl(350,50%,50%)");
+  test.equal(i(0), "#bf5540");
+  test.equal(i(.2), "#bf4d40");
+  test.equal(i(.4), "#bf4440");
+  test.equal(i(.6), "#bf4044");
+  test.equal(i(.8), "#bf404d");
+  test.equal(i(1), "#bf4055");
+  test.end();
+});
+
 tape("interpolateHsl(a, b) uses a’s hue when b’s hue is undefined", function(test) {
   test.equal(color.interpolateHsl("#f60", "#000")(.5), "#803300");
   test.equal(color.interpolateHsl("#6f0", "#fff")(.5), "#b3ff80");

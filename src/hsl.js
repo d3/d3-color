@@ -34,7 +34,7 @@ export default function(h, s, l) {
 };
 
 export function Hsl(h, s, l) {
-  this.h = (h %= 360) < 0 ? h + 360 : h;
+  h %= 360, this.h = h < 0 ? h + 360 : h;
   this.s = Math.max(0, Math.min(1, +s));
   this.l = Math.max(0, Math.min(1, +l));
 };
@@ -52,8 +52,8 @@ prototype.darker = function(k) {
 };
 
 prototype.rgb = function() {
-  var h = this.h,
-      s = isNaN(this.h) || isNaN(this.s) ? 0 : this.s,
+  var h = this.h % 360 + (this.h < 0) * 360,
+      s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
       l = this.l,
       m2 = l <= .5 ? l * (1 + s) : l + s - l * s,
       m1 = 2 * l - m2;

@@ -14,8 +14,6 @@ export default function(a, b) {
   else if (bh > 180) bh -= 360; else if (bh < -180) bh += 360; // shortest path
   return function(t) {
     a.h = ah + bh * t;
-    if (a.h > 360) a.h -= 360;
-    else if (a.h < 0) a.h += 360;
     a.c = ac + bc * t;
     a.l = al + bl * t
     return a + "";

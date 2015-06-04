@@ -27,7 +27,7 @@ tape("rgb.toString() formats as hexadecimal", function(test) {
 
 tape("rgb.toString() reflects r, g and b channel values", function(test) {
   var c = color.rgb("#abc");
-  ++c.r, ++c.g, ++c.b; // Note: I don’t modifying channel values directly.
+  ++c.r, ++c.g, ++c.b;
   test.equal(c + "", "#abbccd");
   test.end();
 });

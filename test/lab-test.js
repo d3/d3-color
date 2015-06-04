@@ -42,11 +42,11 @@ tape("lab.toString() treats undefined channel values as 0", function(test) {
   test.end();
 });
 
-tape("lab(l, a, b) clamps l channel value to [0,100]", function(test) {
-  test.labEqual(color.lab(-10, 1, 2), 0, 1, 2);
+tape("lab(l, a, b) does not clamp l channel value", function(test) {
+  test.labEqual(color.lab(-10, 1, 2), -10, 1, 2);
   test.labEqual(color.lab(0, 1, 2), 0, 1, 2);
   test.labEqual(color.lab(100, 1, 2), 100, 1, 2);
-  test.labEqual(color.lab(110, 1, 2), 100, 1, 2);
+  test.labEqual(color.lab(110, 1, 2), 110, 1, 2);
   test.end();
 });
 

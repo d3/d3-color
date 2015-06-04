@@ -20,9 +20,9 @@ tape("hcl(…) returns defined hue and chroma, even for black and white", functi
   test.hclEqual(color.hcl("black"), 0, 0, 0);
   test.hclEqual(color.hcl("#000"), 0, 0, 0);
   test.hclEqual(color.hcl(color.lab("#000")), 0, 0, 0);
-  test.hclEqual(color.hcl("white"), 158.19859051364818, 0.00001795054880958058, 100);
-  test.hclEqual(color.hcl("#fff"), 158.19859051364818, 0.00001795054880958058, 100);
-  test.hclEqual(color.hcl(color.lab("#fff")), 158.19859051364818, 0.00001795054880958058, 100);
+  test.hclEqual(color.hcl("white"), 158.19859051364818, 0.00001795054880958058, 100.00000386666655);
+  test.hclEqual(color.hcl("#fff"), 158.19859051364818, 0.00001795054880958058, 100.00000386666655);
+  test.hclEqual(color.hcl(color.lab("#fff")), 158.19859051364818, 0.00001795054880958058, 100.00000386666655);
   test.end();
 });
 
@@ -65,9 +65,11 @@ tape("hcl(h, c, l) wraps hue to [0,360)", function(test) {
   test.end();
 });
 
-tape("hcl(h, c, l) clamps l channel value to [0,100]", function(test) {
-  test.hclEqual(color.hcl(120, 20, -10), 120, 20, 0);
-  test.hclEqual(color.hcl(120, 20, 110), 120, 20, 100);
+tape("hcl(h, c, l) does not clamp l channel value", function(test) {
+  test.hclEqual(color.hcl(120, 20, -10), 120, 20, -10);
+  test.hclEqual(color.hcl(120, 20, 0), 120, 20, 0);
+  test.hclEqual(color.hcl(120, 20, 100), 120, 20, 100);
+  test.hclEqual(color.hcl(120, 20, 110), 120, 20, 110);
   test.end();
 });
 

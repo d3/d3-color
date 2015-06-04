@@ -40,7 +40,7 @@ export default function(l, a, b) {
 };
 
 export function Lab(l, a, b) {
-  this.l = Math.max(0, Math.min(100, +l));
+  this.l = +l;
   this.a = +a;
   this.b = +b;
 };

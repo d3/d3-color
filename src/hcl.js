@@ -23,7 +23,7 @@ export default function(h, c, l) {
 export function Hcl(h, c, l) {
   this.h = (h %= 360) < 0 ? h + 360 : h;
   this.c = +c;
-  this.l = Math.max(0, Math.min(100, +l));
+  this.l = +l;
 };
 
 var prototype = Hcl.prototype = new Color;

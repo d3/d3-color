@@ -24,7 +24,7 @@
     "url": "https://github.com/d3/d3-color.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && d3-bundler --format=umd --name=color -- index.js > build/color.js",
+    "pretest": "mkdir -p build && d3-bundler --polyfill-map --format=umd --name=color -- index.js > build/color.js",
     "test": "faucet `find test -name '*-test.js'`",
     "prepublish": "npm run test && uglifyjs build/color.js -c -m -o build/color.min.js"
   },

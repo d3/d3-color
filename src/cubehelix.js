@@ -24,8 +24,8 @@ export default function(h, s, l) {
       l = (BC_DA * b + ED * r - EB * g) / (BC_DA + ED - EB);
       var bl = b - l, k = (E * (g - l) - C * bl) / D, lgamma = Math.pow(l, gamma);
       s = Math.sqrt(k * k + bl * bl) / (E * lgamma * (1 - lgamma)); // NaN if lgamma=0 or lgamma=1
-      h = s ? Math.atan2(k, bl) * rad2deg : NaN;
-      if (h < 0) h += 360;
+      h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
+      if (h < 0) h += 360; else if (h >= 360) h -= 360;
     }
   }
   return new Cubehelix(h, s, l);
@@ -50,9 +50,9 @@ prototype.darker = function(k) {
 };
 
 prototype.rgb = function() {
-  var h = this.h ? this.h * deg2rad : 0,
+  var h = isNaN(this.h) ? 0 : (this.h + 120) * deg2rad,
       l = Math.pow(this.l, gamma),
-      a = this.s ? this.s * l * (1 - l) : 0,
+      a = isNaN(this.s) ? 0 : this.s * l * (1 - l),
       cosh = Math.cos(h),
       sinh = Math.sin(h);
   return new Rgb(

@@ -1,5 +1,5 @@
 import {default as color, Color} from "./color";
-import {default as rgb, Rgb} from "./rgb";
+import {default as rgb, Rgb, darker, lighter} from "./rgb";
 
 export default function(h, s, l) {
   if (arguments.length === 1) {

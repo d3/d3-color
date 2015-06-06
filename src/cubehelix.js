@@ -1,5 +1,5 @@
 import {default as color, Color} from "./color";
-import {default as rgb, Rgb} from "./rgb";
+import {default as rgb, Rgb, darker, brighter} from "./rgb";
 import {deg2rad, rad2deg} from "./hcl";
 
 var gamma = 1, // Default gamma. TODO Customize.

@@ -25,7 +25,7 @@ export default function(h, s, l) {
       var bl = b - l, k = (E * (g - l) - C * bl) / D, lgamma = Math.pow(l, gamma);
       s = Math.sqrt(k * k + bl * bl) / (E * lgamma * (1 - lgamma)); // NaN if lgamma=0 or lgamma=1
       h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
-      if (h < 0) h += 360; else if (h >= 360) h -= 360;
+      if (h < 0) h += 360;
     }
   }
   return new Cubehelix(h, s, l);

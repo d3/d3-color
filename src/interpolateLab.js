@@ -12,7 +12,7 @@ export default function(a, b) {
   return function(t) {
     a.l = al + bl * t;
     a.a = aa + ba * t;
-    a.b = ab + bb * t
+    a.b = ab + bb * t;
     return a + "";
   };
 };

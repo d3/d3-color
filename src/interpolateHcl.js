@@ -15,7 +15,7 @@ export default function(a, b) {
   return function(t) {
     a.h = ah + bh * t;
     a.c = ac + bc * t;
-    a.l = al + bl * t
+    a.l = al + bl * t;
     return a + "";
   };
 };

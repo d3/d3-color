@@ -16,7 +16,7 @@ Changes from D3 3.x:
 
 * All color spaces, including RGB, now support the [color.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. For RGB colors, it returns `this`. Use the [rgb constructor](#rgb) if you want a copy.
 
-* When converting to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
+* When converting from Lab to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
 
 * Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]; an HSL color’s `s` and `l` are numbers in the range [0,1].
 

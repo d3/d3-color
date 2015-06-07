@@ -1,5 +1,4 @@
 import cubehelix from "./cubehelix";
-import deltaHue from "./deltaHue";
 
 export default function(a, b) {
   a = cubehelix(a);
@@ -7,7 +6,7 @@ export default function(a, b) {
   var ah = isNaN(a.h) ? b.h : a.h,
       as = isNaN(a.s) ? b.s : a.s,
       al = a.l,
-      bh = isNaN(b.h) ? 0 : deltaHue(b.h, ah),
+      bh = isNaN(b.h) ? 0 : b.h - ah,
       bs = isNaN(b.s) ? 0 : b.s - as,
       bl = b.l - al;
   return function(t) {

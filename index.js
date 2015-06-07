@@ -11,7 +11,7 @@ import interpolateLab from "./src/interpolateLab";
 import interpolateHcl from "./src/interpolateHcl";
 import interpolateHclLong from "./src/interpolateHclLong";
 import interpolateCubehelix from "./src/interpolateCubehelix";
-import interpolateCubehelixShort from "./src/interpolateCubehelixShort";
+import interpolateCubehelixLong from "./src/interpolateCubehelixLong";
 
 // Done lazily to avoid circular dependency between Color, Rgb and Hsl.
 color.prototype = Color.prototype;
@@ -35,5 +35,5 @@ export {
   interpolateHcl,
   interpolateHclLong,
   interpolateCubehelix,
-  interpolateCubehelixShort
+  interpolateCubehelixLong
 };

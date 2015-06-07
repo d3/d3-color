@@ -1,10 +1,12 @@
 # d3-color
 
-Color spaces! RGB, HSL, Lab and HCL (Lch).
+Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).
 
-Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. This module provides representations for various color spaces, including [RGB](https://en.wikipedia.org/wiki/RGB_color_model), [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV), [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB), allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
+Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. This module provides representations for various color spaces, including [RGB](https://en.wikipedia.org/wiki/RGB_color_model), [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV), [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/), [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB), allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
 
 Changes from D3 3.x:
+
+* A new [cubehelix](#cubehelix) color space!
 
 * A new color method parses the specified string according to [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
 
@@ -96,6 +98,18 @@ If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and 
 
 If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
+<a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>)<br>
+<a href="#cubehelix">#</a> <b>cubehelix</b>(<i>specifier</i>)<br>
+<a href="#cubehelix">#</a> <b>cubehelix</b>(<i>color</i>)<br>
+
+Constructs a new Cubehelix color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance.
+
+If *h*, *s* and *l* are specified, these represent the channel values of the returned color.
+
+If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Cubehelix color space. See [color](#color) for examples.
+
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
+
 <a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
 
 Returns an RGB color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in RGB; they will be converted to RGB using [rgb](#rgb). The return value of the interpolator is a hexadecimal RGB string.
@@ -119,3 +133,11 @@ Returns an HCL color space interpolator between the two colors *a* and *b*. The 
 <a name="interpolateHclLong" href="#interpolateHclLong">#</a> <b>interpolateHclLong</b>(<i>a</i>, <i>b</i>)
 
 Like [interpolateHcl](#interpolateHcl), but does not use the shortest path between hues.
+
+<a name="interpolateCubehelix" href="#interpolateCubehelix">#</a> <b>interpolateCubehelix</b>(<i>a</i>, <i>b</i>)
+
+Returns a Cubehelix color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
+
+<a name="interpolateCubehelixLong" href="#interpolateCubehelixLong">#</a> <b>interpolateCubehelixLong</b>(<i>a</i>, <i>b</i>)
+
+Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortest path between hues.

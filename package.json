@@ -1,7 +1,7 @@
 {
   "name": "d3-color",
-  "version": "0.0.4",
-  "description": "Color spaces! RGB, HSL, Lab and HCL (Lch).",
+  "version": "0.1.0",
+  "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",
     "color",
@@ -9,7 +9,8 @@
     "hsl",
     "lab",
     "hcl",
-    "lch"
+    "lch",
+    "cubehelix"
   ],
   "homepage": "https://github.com/d3/d3-color",
   "license" : "BSD-3-Clause",

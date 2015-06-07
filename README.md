@@ -84,6 +84,18 @@ If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and 
 
 If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
 
+<a name="hcl" href="#hcl">#</a> <b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>)<br>
+<a href="#hcl">#</a> <b>hcl</b>(<i>specifier</i>)<br>
+<a href="#hcl">#</a> <b>hcl</b>(<i>color</i>)<br>
+
+Constructs a new HCL color. The channel values are exposed as `h`, `c` and `l` properties on the returned instance.
+
+If *h*, *c* and *l* are specified, these represent the channel values of the returned color.
+
+If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples.
+
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
+
 <a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
 
 Returns an RGB color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in RGB; they will be converted to RGB using [rgb](#rgb). The return value of the interpolator is a hexadecimal RGB string.

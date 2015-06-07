@@ -14,13 +14,13 @@ tape("interpolateHcl(a, b) interpolates in HCL and returns an RGB hexadecimal st
 });
 
 tape("interpolateHcl(a, b) uses the shortest path when interpolating hue", function(test) {
-  var i = color.interpolateHcl("hsl(10,50%,50%)", "hsl(350,50%,50%)");
-  test.equal(i(0), "#bf5540");
-  test.equal(i(.2), "#c05144");
-  test.equal(i(.4), "#c04c48");
-  test.equal(i(.6), "#c0484c");
-  test.equal(i(.8), "#c04450");
-  test.equal(i(1), "#bf4055");
+  var i = color.interpolateHcl(color.hcl(10, 50, 50), color.hcl(350, 50, 50));
+  test.equal(i(0.0), "#c44f6a");
+  test.equal(i(0.2), "#c44f70");
+  test.equal(i(0.4), "#c34f76");
+  test.equal(i(0.6), "#c14f7c");
+  test.equal(i(0.8), "#bf5081");
+  test.equal(i(1.0), "#bd5187");
   test.end();
 });
 

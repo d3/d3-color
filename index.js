@@ -5,8 +5,10 @@ import {default as lab, Lab} from "./src/lab";
 import {default as hcl, Hcl} from "./src/hcl";
 import interpolateRgb from "./src/interpolateRgb";
 import interpolateHsl from "./src/interpolateHsl";
+import interpolateHslLong from "./src/interpolateHslLong";
 import interpolateLab from "./src/interpolateLab";
 import interpolateHcl from "./src/interpolateHcl";
+import interpolateHclLong from "./src/interpolateHclLong";
 
 // Done lazily to avoid circular dependency between Color, Rgb and Hsl.
 color.prototype = Color.prototype;
@@ -23,6 +25,8 @@ export {
   hcl,
   interpolateRgb,
   interpolateHsl,
+  interpolateHslLong,
   interpolateLab,
-  interpolateHcl
+  interpolateHcl,
+  interpolateHclLong
 };

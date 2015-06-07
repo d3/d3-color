@@ -14,7 +14,7 @@ Changes from D3 3.x:
 
 * The rgb.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
 
-* All color spaces, including RGB, now support the [color.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. For RGB colors, it returns `this`. Use the [rgb constructor](#rgb) if you want a copy.
+* All color spaces, including RGB, now support the [*color*.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. For RGB colors, it returns `this`. Use the [rgb constructor](#rgb) if you want a copy.
 
 * When converting from Lab to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
 
@@ -60,7 +60,7 @@ If *r*, *g* and *b* are specified, these represent the channel values of the ret
 
 If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples.
 
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb). Note that unlike [color.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
 <a name="hsl" href="#hsl">#</a> <b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>)<br>
 <a href="#hsl">#</a> <b>hsl</b>(<i>specifier</i>)<br>
@@ -72,7 +72,7 @@ If *h*, *s* and *l* are specified, these represent the channel values of the ret
 
 If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples.
 
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 
 <a name="lab" href="#lab">#</a> <b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>)<br>
 <a href="#lab">#</a> <b>lab</b>(<i>specifier</i>)<br>
@@ -84,7 +84,7 @@ If *l*, *a* and *b* are specified, these represent the channel values of the ret
 
 If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples.
 
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
 
 <a name="hcl" href="#hcl">#</a> <b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>)<br>
 <a href="#hcl">#</a> <b>hcl</b>(<i>specifier</i>)<br>
@@ -96,7 +96,7 @@ If *h*, *c* and *l* are specified, these represent the channel values of the ret
 
 If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples.
 
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>)<br>
 <a href="#cubehelix">#</a> <b>cubehelix</b>(<i>specifier</i>)<br>
@@ -108,7 +108,7 @@ If *h*, *s* and *l* are specified, these represent the channel values of the ret
 
 If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Cubehelix color space. See [color](#color) for examples.
 
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [color.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
+If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
 
 <a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
 

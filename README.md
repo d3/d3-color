@@ -1,8 +1,8 @@
 # d3-color
 
-Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).
+Color spaces! [RGB](https://en.wikipedia.org/wiki/RGB_color_model), [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV), [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/), [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB).
 
-Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. This module provides representations for various color spaces, including [RGB](https://en.wikipedia.org/wiki/RGB_color_model), [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV), [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/), [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB), allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
+Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. This module provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
 
 Changes from D3 3.x:
 

@@ -12,7 +12,7 @@ Changes from D3 3.x:
 
 * The [*color*.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [*color*.darker](#color_darker) and other color spaces.
 
-* The rgb.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
+* The *rgb*.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
 
 * All color spaces, including RGB, now support the [*color*.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. For RGB colors, it returns `this`. Use the [rgb constructor](#rgb) if you want a copy.
 

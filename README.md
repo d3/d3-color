@@ -108,7 +108,7 @@ Returns an HSL color space interpolator between the two colors *a* and *b*. The 
 
 Like [interpolateHsl](#interpolateHsl), but does not use the shortest path between hues.
 
-<a name="d3_interpolateLab" href="#d3_interpolateLab">#</a> d3.<b>interpolateLab</b>(<i>a</i>, <i>b</i>)
+<a name="interpolateLab" href="#interpolateLab">#</a> <b>interpolateLab</b>(<i>a</i>, <i>b</i>)
 
 Returns a Lab color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Lab; they will be converted to Lab using [lab](#lab). The return value of the interpolator is a hexadecimal RGB string.
 

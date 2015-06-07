@@ -36,7 +36,7 @@ Note: this function may also be used with `instanceof` to test if an object is a
 
 <a name="color_rgb" href="#color_rgb">#</a> *color*.<b>rgb</b>()
 
-Returns the [RGB equivalent](#rgb) of this color.
+Returns the [RGB equivalent](#rgb) of this color. For RGB colors, that’s `this`.
 
 <a name="color_brighter" href="#color_brighter">#</a> *color*.<b>brighter</b>([<i>k</i>])
 

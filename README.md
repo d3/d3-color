@@ -8,7 +8,7 @@ Changes from D3 3.x:
 
 * A new [cubehelix](#cubehelix) color space!
 
-* A new color method parses the specified string according to [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
+* A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
 
 * The [color.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [color.darker](#color_darker) and other color spaces.
 
@@ -22,7 +22,7 @@ Changes from D3 3.x:
 
 <a name="color" href="#color">#</a> <b>color</b>(<i>specifier</i>)
 
-Parses the specified CSS Color Module Level 3 *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, an RGB color with NaN channel values is returned. Some examples:
+Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, an RGB color with NaN channel values is returned. Some examples:
 
 * `"rgb(255,255,255)"`
 * `"hsl(120,50%,20%)"`

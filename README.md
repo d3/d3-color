@@ -10,7 +10,7 @@ Changes from D3 3.x:
 
 * A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
 
-* The [color.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [color.darker](#color_darker) and other color spaces.
+* The [*color*.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [*color*.darker](#color_darker) and other color spaces.
 
 * The rgb.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
 
@@ -42,7 +42,7 @@ Returns the [RGB equivalent](#rgb) of this color. For RGB colors, that’s `this
 
 Returns a brighter copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.
 
-<a name="color_darker" href="#color_darker">#</a> color.<b>darker</b>([<i>k</i>])
+<a name="color_darker" href="#color_darker">#</a> *color*.<b>darker</b>([<i>k</i>])
 
 Returns a darker copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.
 

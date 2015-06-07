@@ -57,11 +57,11 @@ tape("hcl.toString() treats undefined channel values as 0", function(test) {
   test.end();
 });
 
-tape("hcl(h, c, l) wraps hue to [0,360)", function(test) {
-  test.hclEqual(color.hcl(-10, 40, 50), 350, 40, 50);
+tape("hcl(h, c, l) does not wrap hue to [0,360)", function(test) {
+  test.hclEqual(color.hcl(-10, 40, 50), -10, 40, 50);
   test.hclEqual(color.hcl(0, 40, 50), 0, 40, 50);
-  test.hclEqual(color.hcl(360, 40, 50), 0, 40, 50);
-  test.hclEqual(color.hcl(370, 40, 50), 10, 40, 50);
+  test.hclEqual(color.hcl(360, 40, 50), 360, 40, 50);
+  test.hclEqual(color.hcl(370, 40, 50), 370, 40, 50);
   test.end();
 });
 

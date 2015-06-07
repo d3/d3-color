@@ -14,4 +14,4 @@ Colorspaces! This code is currently EXPERIMENTAL and represents the in-developme
 
 * When converting to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
 
-* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]; an HSL color’s `h` is a number in the range [0,360), while `s` and `l` are numbers in the range [0,1].
+* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,100]; an HSL color’s `s` and `l` are numbers in the range [0,1].

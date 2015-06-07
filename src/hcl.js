@@ -15,13 +15,14 @@ export default function(h, c, l) {
       l = h.l;
       c = Math.sqrt(h.a * h.a + h.b * h.b);
       h = Math.atan2(h.b, h.a) * rad2deg;
+      if (h < 0) h += 360;
     }
   }
   return new Hcl(h, c, l);
 };
 
 export function Hcl(h, c, l) {
-  this.h = (h %= 360) < 0 ? h + 360 : h;
+  this.h = +h;
   this.c = +c;
   this.l = +l;
 };

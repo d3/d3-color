@@ -34,7 +34,7 @@ export default function(h, s, l) {
 };
 
 export function Hsl(h, s, l) {
-  h %= 360, this.h = h < 0 ? h + 360 : h;
+  this.h = +h;
   this.s = Math.max(0, Math.min(1, +s));
   this.l = Math.max(0, Math.min(1, +l));
 };

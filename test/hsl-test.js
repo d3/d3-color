@@ -45,11 +45,11 @@ tape("hsl.toString() treats undefined channel values as 0", function(test) {
   test.end();
 });
 
-tape("hsl(h, s, l) wraps hue to [0,360)", function(test) {
-  test.hslEqual(color.hsl(-10, .4, .5), 350, .4, .5);
+tape("hsl(h, s, l) does not wrap hue to [0,360)", function(test) {
+  test.hslEqual(color.hsl(-10, .4, .5), -10, .4, .5);
   test.hslEqual(color.hsl(0, .4, .5), 0, .4, .5);
-  test.hslEqual(color.hsl(360, .4, .5), 0, .4, .5);
-  test.hslEqual(color.hsl(370, .4, .5), 10, .4, .5);
+  test.hslEqual(color.hsl(360, .4, .5), 360, .4, .5);
+  test.hslEqual(color.hsl(370, .4, .5), 370, .4, .5);
   test.end();
 });
 

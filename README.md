@@ -124,6 +124,8 @@ Returns an HSL color space interpolator between the two colors *a* and *b*. The 
 
 <a name="interpolateHslLong" href="#interpolateHslLong">#</a> <b>interpolateHslLong</b>(<i>a</i>, <i>b</i>)
 
+![interpolatehsllong](https://cloud.githubusercontent.com/assets/230541/8028057/bae888b8-0d59-11e5-983a-a460a59ae4ab.png)
+
 Like [interpolateHsl](#interpolateHsl), but does not use the shortest path between hues.
 
 <a name="interpolateLab" href="#interpolateLab">#</a> <b>interpolateLab</b>(<i>a</i>, <i>b</i>)
@@ -140,6 +142,8 @@ Returns an HCL color space interpolator between the two colors *a* and *b*. The 
 
 <a name="interpolateHclLong" href="#interpolateHclLong">#</a> <b>interpolateHclLong</b>(<i>a</i>, <i>b</i>)
 
+![interpolatehcllong](https://cloud.githubusercontent.com/assets/230541/8028056/bad85786-0d59-11e5-9c22-6c23215779fa.png)
+
 Like [interpolateHcl](#interpolateHcl), but does not use the shortest path between hues.
 
 <a name="interpolateCubehelix" href="#interpolateCubehelix">#</a> <b>interpolateCubehelix</b>(<i>a</i>, <i>b</i>)
@@ -149,5 +153,7 @@ Like [interpolateHcl](#interpolateHcl), but does not use the shortest path betwe
 Returns a Cubehelix color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
 
 <a name="interpolateCubehelixLong" href="#interpolateCubehelixLong">#</a> <b>interpolateCubehelixLong</b>(<i>a</i>, <i>b</i>)
+
+![interpolatecubehelixlong](https://cloud.githubusercontent.com/assets/230541/8028055/bad68424-0d59-11e5-8f0f-1ecdbd8e46c8.png)
 
 Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortest path between hues.

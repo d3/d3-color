@@ -112,9 +112,13 @@ If a [*color*](#color) instance is specified, it is converted to the RGB color s
 
 <a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
 
+![interpolateRgb](https://cloud.githubusercontent.com/assets/230541/8027976/07e91580-0d58-11e5-8d3f-4c50f152a2e3.png)
+
 Returns an RGB color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in RGB; they will be converted to RGB using [rgb](#rgb). The return value of the interpolator is a hexadecimal RGB string.
 
 <a name="interpolateHsl" href="#interpolateHsl">#</a> <b>interpolateHsl</b>(<i>a</i>, <i>b</i>)
+
+![interpolatehsl](https://cloud.githubusercontent.com/assets/230541/8027979/07fec100-0d58-11e5-90df-dc458ae7af10.png)
 
 Returns an HSL color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in HSL; they will be converted to HSL using [hsl](#hsl). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
 
@@ -124,9 +128,13 @@ Like [interpolateHsl](#interpolateHsl), but does not use the shortest path betwe
 
 <a name="interpolateLab" href="#interpolateLab">#</a> <b>interpolateLab</b>(<i>a</i>, <i>b</i>)
 
+![interpolatelab](https://cloud.githubusercontent.com/assets/230541/8027977/07eaea04-0d58-11e5-8f4f-b739eb842549.png)
+
 Returns a Lab color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Lab; they will be converted to Lab using [lab](#lab). The return value of the interpolator is a hexadecimal RGB string.
 
 <a name="interpolateHcl" href="#interpolateHcl">#</a> <b>interpolateHcl</b>(<i>a</i>, <i>b</i>)
+
+![interpolatehcl](https://cloud.githubusercontent.com/assets/230541/8027978/07f91002-0d58-11e5-92f0-f06899907c6a.png)
 
 Returns an HCL color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in HCL; they will be converted to HCL using [hcl](#hcl). If either color’s hue or chroma is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
 
@@ -135,6 +143,8 @@ Returns an HCL color space interpolator between the two colors *a* and *b*. The 
 Like [interpolateHcl](#interpolateHcl), but does not use the shortest path between hues.
 
 <a name="interpolateCubehelix" href="#interpolateCubehelix">#</a> <b>interpolateCubehelix</b>(<i>a</i>, <i>b</i>)
+
+![interpolatecubehelix](https://cloud.githubusercontent.com/assets/230541/8027999/737cde08-0d58-11e5-8130-36e2437996ee.png)
 
 Returns a Cubehelix color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
 

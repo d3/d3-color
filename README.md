@@ -8,6 +8,8 @@ Changes from D3 3.x:
 
 * A new [cubehelix](#cubehelix) color space!
 
+* New “long” methods for hue interpolation in [HSL](#interpolateHslLong), [HCL](#interpolateHclLong) and [Cubehelix](#interpolateCubehelixLong).
+
 * A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
 
 * The [*color*.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [*color*.darker](#color_darker) and other color spaces.

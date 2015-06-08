@@ -54,25 +54,17 @@ Returns the RGB hexadecimal string representing this color, such as `"#f7eaba"`.
 <a href="#rgb">#</a> <b>rgb</b>(<i>specifier</i>)<br>
 <a href="#rgb">#</a> <b>rgb</b>(<i>color</i>)<br>
 
-Constructs a new RGB color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
+Constructs a new RGB color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Channel values will be rounded to the nearest integer value and clamped to the range [0,255]. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
 
-If *r*, *g* and *b* are specified, these represent the channel values of the returned color. Channel values will be rounded to the nearest integer value and clamped to the range [0,255].
-
-If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples.
-
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
+If *r*, *g* and *b* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
 <a name="hsl" href="#hsl">#</a> <b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>)<br>
 <a href="#hsl">#</a> <b>hsl</b>(<i>specifier</i>)<br>
 <a href="#hsl">#</a> <b>hsl</b>(<i>color</i>)<br>
 
-Constructs a new HSL color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
+Constructs a new HSL color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. The saturation and lightness channels will be clamped to the range [0,1]. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
 
-If *h*, *s* and *l* are specified, these represent the channel values of the returned color. The saturation and lightness channels will be clamped to the range [0,1].
-
-If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples.
-
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
+If *h*, *s* and *l* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 
 <a name="lab" href="#lab">#</a> <b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>)<br>
 <a href="#lab">#</a> <b>lab</b>(<i>specifier</i>)<br>
@@ -80,11 +72,7 @@ If a [*color*](#color) instance is specified, it is converted to the RGB color s
 
 Constructs a new Lab color. The channel values are exposed as `l`, `a` and `b` properties on the returned instance. Use the [Lab color picker](http://bl.ocks.org/mbostock/9f37cc207c0cb166921b) to explore this color space.
 
-If *l*, *a* and *b* are specified, these represent the channel values of the returned color.
-
-If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples.
-
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
+If *l*, *a* and *b* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
 
 <a name="hcl" href="#hcl">#</a> <b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>)<br>
 <a href="#hcl">#</a> <b>hcl</b>(<i>specifier</i>)<br>
@@ -92,11 +80,7 @@ If a [*color*](#color) instance is specified, it is converted to the RGB color s
 
 Constructs a new HCL color. The channel values are exposed as `h`, `c` and `l` properties on the returned instance. Use the [HCL color picker](http://bl.ocks.org/mbostock/3e115519a1b495e0bd95) to explore this color space.
 
-If *h*, *c* and *l* are specified, these represent the channel values of the returned color.
-
-If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples.
-
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
+If *h*, *c* and *l* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
 <a name="cubehelix" href="#cubehelix">#</a> <b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>)<br>
 <a href="#cubehelix">#</a> <b>cubehelix</b>(<i>specifier</i>)<br>
@@ -104,11 +88,7 @@ If a [*color*](#color) instance is specified, it is converted to the RGB color s
 
 Constructs a new Cubehelix color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [Cubehelix color picker](http://bl.ocks.org/mbostock/ba8d75e45794c27168b5) to explore this color space.
 
-If *h*, *s* and *l* are specified, these represent the channel values of the returned color.
-
-If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Cubehelix color space. See [color](#color) for examples.
-
-If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
+If *h*, *s* and *l* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Cubehelix color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
 
 <a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
 

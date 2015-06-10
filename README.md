@@ -24,7 +24,7 @@ Changes from D3 3.x:
 
 <a name="color" href="#color">#</a> <b>color</b>(<i>specifier</i>)
 
-Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, an RGB color with NaN channel values is returned. Some examples:
+Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, null is returned. Some examples:
 
 * `"rgb(255,255,255)"`
 * `"hsl(120,50%,20%)"`

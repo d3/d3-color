@@ -9,24 +9,28 @@ export default function(h, s, l) {
       h = h.h;
     } else {
       if (!(h instanceof Color)) h = color(h);
-      if (h instanceof Hsl) return h;
-      h = h.rgb();
-      var r = h.r / 255,
-          g = h.g / 255,
-          b = h.b / 255,
-          min = Math.min(r, g, b),
-          max = Math.max(r, g, b),
-          range = max - min;
-      l = (max + min) / 2;
-      if (range) {
-        s = l < .5 ? range / (max + min) : range / (2 - max - min);
-        if (r === max) h = (g - b) / range + (g < b) * 6;
-        else if (g === max) h = (b - r) / range + 2;
-        else h = (r - g) / range + 4;
-        h *= 60;
+      if (h) {
+        if (h instanceof Hsl) return h;
+        h = h.rgb();
+        var r = h.r / 255,
+            g = h.g / 255,
+            b = h.b / 255,
+            min = Math.min(r, g, b),
+            max = Math.max(r, g, b),
+            range = max - min;
+        l = (max + min) / 2;
+        if (range) {
+          s = l < .5 ? range / (max + min) : range / (2 - max - min);
+          if (r === max) h = (g - b) / range + (g < b) * 6;
+          else if (g === max) h = (b - r) / range + 2;
+          else h = (r - g) / range + 4;
+          h *= 60;
+        } else {
+          h = NaN;
+          s = l > 0 && l < 1 ? 0 : h;
+        }
       } else {
-        h = NaN;
-        s = l > 0 && l < 1 ? 0 : h;
+        h = s = l = NaN;
       }
     }
   }

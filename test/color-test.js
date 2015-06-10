@@ -70,20 +70,25 @@ tape("color(format) allows decimals for non-integer values", function(test) {
 });
 
 tape("color(format) does not allow decimals for integer values", function(test) {
-  test.rgbEqual(color.color("rgb(120.5,30,50)"), NaN, NaN, NaN);
+  test.equal(color.color("rgb(120.5,30,50)"), null);
   test.end();
 });
 
 tape("color(format) does not allow empty decimals", function(test) {
-  test.rgbEqual(color.color("rgb(120.,30,50)"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("rgb(120.%,30%,50%)"), NaN, NaN, NaN);
+  test.equal(color.color("rgb(120.,30,50)"), null);
+  test.equal(color.color("rgb(120.%,30%,50%)"), null);
+  test.end();
+});
+
+tape("color(format) does not allow made-up names", function(test) {
+  test.equal(color.color("bostock"), null);
   test.end();
 });
 
 tape("color(format) does not allow whitespace before open paren or percent sign", function(test) {
-  test.rgbEqual(color.color("rgb (120,30,50)"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("hsl (120,30%,50%)"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("hsl(120,30 %,50%)"), NaN, NaN, NaN);
+  test.equal(color.color("rgb (120,30,50)"), null);
+  test.equal(color.color("hsl (120,30%,50%)"), null);
+  test.equal(color.color("hsl(120,30 %,50%)"), null);
   test.end();
 });
 
@@ -97,11 +102,11 @@ tape("color(format) is case-insensitive", function(test) {
 });
 
 tape("color(format) returns undefined RGB channel values for unknown formats", function(test) {
-  test.rgbEqual(color.color("invalid"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("hasOwnProperty"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("__proto__"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("#ab"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("#abcd"), NaN, NaN, NaN);
-  test.rgbEqual(color.color("rgba(120,30,50,.5)"), NaN, NaN, NaN);
+  test.equal(color.color("invalid"), null);
+  test.equal(color.color("hasOwnProperty"), null);
+  test.equal(color.color("__proto__"), null);
+  test.equal(color.color("#ab"), null);
+  test.equal(color.color("#abcd"), null);
+  test.equal(color.color("rgba(120,30,50,.5)"), null);
   test.end();
 });

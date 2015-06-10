@@ -6,10 +6,14 @@ export var brighter = 1 / darker;
 export default function(r, g, b) {
   if (arguments.length === 1) {
     if (!(r instanceof Color)) r = color(r);
-    r = r.rgb();
-    b = r.b;
-    g = r.g;
-    r = r.r;
+    if (r) {
+      r = r.rgb();
+      b = r.b;
+      g = r.g;
+      r = r.r;
+    } else {
+      r = g = b = NaN;
+    }
   }
   return new Rgb(r, g, b);
 };

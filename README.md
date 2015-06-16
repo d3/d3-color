@@ -1,26 +1,19 @@
 # d3-color
 
-Color spaces! [RGB](https://en.wikipedia.org/wiki/RGB_color_model), [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV), [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/), [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB).
+Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. The d3-color module therefore provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
 
-Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. This module provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
+In addition to the ubiquitous and machine-friendly [RGB](https://en.wikipedia.org/wiki/RGB_color_model) and [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color space, d3-color supports two color spaces that are designed for humans:
 
-Changes from D3 3.x:
+* Dave Green’s [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/)
+* [Lab (CIELAB) and HCL (CIELCH)](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB).
 
-* A new [cubehelix](#cubehelix) color space!
+Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
 
-* New “long” methods for hue interpolation in [HSL](#interpolateHslLong), [HCL](#interpolateHclLong) and [Cubehelix](#interpolateCubehelixLong).
+## Installing
 
-* A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
+If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest).
 
-* The [*color*.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [*color*.darker](#color_darker) and other color spaces.
-
-* The *rgb*.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
-
-* All color spaces, including RGB, now support the [*color*.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. Use the [rgb constructor](#rgb) if you want a copy.
-
-* When converting from Lab to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
-
-* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,255]; an HSL color’s `s` and `l` are numbers in the range [0,1].
+## API Reference
 
 <a name="color" href="#color">#</a> <b>color</b>(<i>specifier</i>)
 
@@ -139,3 +132,21 @@ Returns a Cubehelix color space interpolator between the two colors *a* and *b*.
 ![interpolatecubehelixlong](https://cloud.githubusercontent.com/assets/230541/8028055/bad68424-0d59-11e5-8f0f-1ecdbd8e46c8.png)
 
 Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortest path between hues.
+
+## Changes from D3 3.x:
+
+* A new [cubehelix](#cubehelix) color space!
+
+* New “long” methods for hue interpolation in [HSL](#interpolateHslLong), [HCL](#interpolateHclLong) and [Cubehelix](#interpolateCubehelixLong).
+
+* A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
+
+* The [*color*.brighter](#color_brighter) method no longer special-cases behavior for black and very dark channels in RGB; it is now a simple channel multiplier, consistent with [*color*.darker](#color_darker) and other color spaces.
+
+* The *rgb*.hsl method has been removed; use the [hsl constructor](#hsl) to convert to HSL instead.
+
+* All color spaces, including RGB, now support the [*color*.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. Use the [rgb constructor](#rgb) if you want a copy.
+
+* When converting from Lab to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
+
+* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,255]; an HSL color’s `s` and `l` are numbers in the range [0,1].

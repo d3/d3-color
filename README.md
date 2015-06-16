@@ -5,7 +5,7 @@ Even though your browser understands a lot about colors, it doesn’t offer much
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:
 
 * Dave Green’s [Cubehelix](#cubehelix)
-* [Lab (CIELAB)](#lab) and [HCL] (CIELCH)](#hcl)
+* [Lab (CIELAB)](#lab) and [HCL (CIELCH)](#hcl)
 
 Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
 

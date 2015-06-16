@@ -1,6 +1,6 @@
 {
   "name": "d3-color",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",
@@ -27,7 +27,7 @@
   "scripts": {
     "pretest": "mkdir -p build && d3-bundler --polyfill-map --format=umd --name=color -- index.js > build/color.js",
     "test": "faucet `find test -name '*-test.js'`",
-    "prepublish": "npm run test && uglifyjs build/color.js -c -m -o build/color.min.js"
+    "prepublish": "npm run test && uglifyjs build/color.js -c -m -o build/color.min.js && rm -f build/color.zip && zip -j build/color.zip -- LICENSE README.md build/color.js build/color.min.js"
   },
   "devDependencies": {
     "d3-bundler": "~0.2.5",

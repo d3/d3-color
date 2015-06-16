@@ -1,13 +1,39 @@
 # d3-color
 
-Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. The d3-color module therefore provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation (such as making colors brighter or darker).
+Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. The d3-color module therefore provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation.
+
+For example, take the color named “steelblue”:
+
+```js
+color("steelblue"); // {r: 70, g: 130, b: 180}
+```
+
+Let’s try converting it to HSL:
+
+```js
+hsl("steelblue"); // {h: 207.27272727272728, s: 0.44, l: 0.4901960784313726}
+```
+
+Now rotate the hue by 90°, bump up the saturation, and format as hex:
+
+```js
+c.h += 90;
+c.s += .2;
+c + ""; // #c62dcd
+```
+
+Or to find the perceptual halfway point between steelblue and brown:
+
+```js
+interpolateLab("steelblue", "brown")(.5); // #8e5c6d
+```
 
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:
 
 * Dave Green’s [Cubehelix](#cubehelix)
 * [Lab (CIELAB)](#lab) and [HCL (CIELCH)](#hcl)
 
-Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
+Cubehelix features monotonic lightness, while Lab and HCL are perceptually uniform. Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
 
 ## Installing
 

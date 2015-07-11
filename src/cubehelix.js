@@ -2,8 +2,7 @@ import {default as color, Color} from "./color";
 import {default as rgb, Rgb, darker, brighter} from "./rgb";
 import {deg2rad, rad2deg} from "./hcl";
 
-var gamma = 1, // Default gamma. TODO Customize.
-    A = -0.14861,
+var A = -0.14861,
     B = +1.78277,
     C = -0.29227,
     D = -0.90649,
@@ -22,8 +21,8 @@ export default function(h, s, l) {
       if (!(h instanceof Rgb)) h = rgb(h);
       var r = h.r / 255, g = h.g / 255, b = h.b / 255;
       l = (BC_DA * b + ED * r - EB * g) / (BC_DA + ED - EB);
-      var bl = b - l, k = (E * (g - l) - C * bl) / D, lgamma = Math.pow(l, gamma);
-      s = Math.sqrt(k * k + bl * bl) / (E * lgamma * (1 - lgamma)); // NaN if lgamma=0 or lgamma=1
+      var bl = b - l, k = (E * (g - l) - C * bl) / D;
+      s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)); // NaN if lgamma=0 or lgamma=1
       h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
       if (h < 0) h += 360;
     }
@@ -51,7 +50,7 @@ prototype.darker = function(k) {
 
 prototype.rgb = function() {
   var h = isNaN(this.h) ? 0 : (this.h + 120) * deg2rad,
-      l = Math.pow(this.l, gamma),
+      l = +this.l,
       a = isNaN(this.s) ? 0 : this.s * l * (1 - l),
       cosh = Math.cos(h),
       sinh = Math.sin(h);

@@ -151,13 +151,25 @@ Like [interpolateHcl](#interpolateHcl), but does not use the shortest path betwe
 
 ![interpolatecubehelix](https://cloud.githubusercontent.com/assets/230541/8027999/737cde08-0d58-11e5-8130-36e2437996ee.png)
 
-Returns a Cubehelix color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
+Returns a Cubehelix color space interpolator between the two colors *a* and *b* using the default *gamma* of 1.0. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
 
 <a name="interpolateCubehelixLong" href="#interpolateCubehelixLong">#</a> <b>interpolateCubehelixLong</b>(<i>a</i>, <i>b</i>)
 
 ![interpolatecubehelixlong](https://cloud.githubusercontent.com/assets/230541/8028055/bad68424-0d59-11e5-8f0f-1ecdbd8e46c8.png)
 
 Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortest path between hues.
+
+<a name="interpolateCubehelixGamma" href="#interpolateCubehelixGamma">#</a> <b>interpolateCubehelixGamma</b>(<i>gamma</i>)
+
+Returns a Cubehelix color space interpolator factory using the specified *gamma*. For example:
+
+```js
+var i = interpolateCubehelixGamma(1.5)("red", "blue");
+```
+
+<a name="interpolateCubehelixGammaLong" href="#interpolateCubehelixGammaLong">#</a> <b>interpolateCubehelixGammaLong</b>(<i>gamma</i>)
+
+Like [interpolateCubehelixGamma](#interpolateCubehelixGamma), but does not use the shortest path between hues.
 
 ## Changes from D3 3.x:
 

@@ -161,7 +161,7 @@ Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortes
 
 <a name="interpolateCubehelixGamma" href="#interpolateCubehelixGamma">#</a> <b>interpolateCubehelixGamma</b>(<i>gamma</i>)
 
-Returns a Cubehelix color space interpolator factory using the specified *gamma*. For example:
+Returns a Cubehelix color space interpolator factory using the specified *gamma*. A gamma value less than one emphasizes low intensity values, while a gamma value greater than one emphasizes high intensity values. For example:
 
 ```js
 var i = interpolateCubehelixGamma(1.5)("red", "blue");

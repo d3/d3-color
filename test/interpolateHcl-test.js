@@ -13,7 +13,7 @@ tape("interpolateHcl(a, b) interpolates in HCL and returns an RGB hexadecimal st
   test.end();
 });
 
-tape("interpolateHcl(a, b) uses the shortest path when interpolating hue", function(test) {
+tape("interpolateHcl(a, b) uses the shortest path when interpolating hue difference greater than 180°", function(test) {
   var i = color.interpolateHcl(color.hcl(10, 50, 50), color.hcl(350, 50, 50));
   test.equal(i(0.0), "#c44f6a");
   test.equal(i(0.2), "#c44f70");
@@ -21,6 +21,39 @@ tape("interpolateHcl(a, b) uses the shortest path when interpolating hue", funct
   test.equal(i(0.6), "#c14f7c");
   test.equal(i(0.8), "#bf5081");
   test.equal(i(1.0), "#bd5187");
+  test.end();
+});
+
+tape("interpolateHcl(a, b) uses the shortest path when interpolating hue difference greater than 360°", function(test) {
+  var i = color.interpolateHcl(color.hcl(10, 50, 50), color.hcl(380, 50, 50));
+  test.equal(i(0.0), "#c44f6a");
+  test.equal(i(0.2), "#c44f68");
+  test.equal(i(0.4), "#c55065");
+  test.equal(i(0.6), "#c45062");
+  test.equal(i(0.8), "#c4505f");
+  test.equal(i(1.0), "#c4515c");
+  test.end();
+});
+
+tape("interpolateHcl(a, b) uses the shortest path when interpolating hue difference greater than 540°", function(test) {
+  var i = color.interpolateHcl(color.hcl(10, 50, 50), color.hcl(710, 50, 50));
+  test.equal(i(0.0), "#c44f6a");
+  test.equal(i(0.2), "#c44f70");
+  test.equal(i(0.4), "#c34f76");
+  test.equal(i(0.6), "#c14f7c");
+  test.equal(i(0.8), "#bf5081");
+  test.equal(i(1.0), "#bd5187");
+  test.end();
+});
+
+tape("interpolateHcl(a, b) uses the shortest path when interpolating hue difference greater than 720°", function(test) {
+  var i = color.interpolateHcl(color.hcl(10, 50, 50), color.hcl(740, 50, 50));
+  test.equal(i(0.0), "#c44f6a");
+  test.equal(i(0.2), "#c44f68");
+  test.equal(i(0.4), "#c55065");
+  test.equal(i(0.6), "#c45062");
+  test.equal(i(0.8), "#c4505f");
+  test.equal(i(1.0), "#c4515c");
   test.end();
 });
 

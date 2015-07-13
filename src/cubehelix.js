@@ -22,7 +22,7 @@ export default function(h, s, l) {
       var r = h.r / 255, g = h.g / 255, b = h.b / 255;
       l = (BC_DA * b + ED * r - EB * g) / (BC_DA + ED - EB);
       var bl = b - l, k = (E * (g - l) - C * bl) / D;
-      s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)); // NaN if lgamma=0 or lgamma=1
+      s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)); // NaN if l=0 or l=1
       h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
       if (h < 0) h += 360;
     }

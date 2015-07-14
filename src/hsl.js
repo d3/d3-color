@@ -59,7 +59,7 @@ prototype.rgb = function() {
   var h = this.h % 360 + (this.h < 0) * 360,
       s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
       l = this.l,
-      m2 = l <= .5 ? l * (1 + s) : l + s - l * s,
+      m2 = l + (l < .5 ? l : 1 - l) * s,
       m1 = 2 * l - m2;
   return new Rgb(
     hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),

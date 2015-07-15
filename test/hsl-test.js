@@ -149,12 +149,12 @@ tape("hsl(color) converts from another colorspace via color.rgb()", function(tes
   test.end();
 });
 
-tape("hsl.inGamut() returns true if the color is in-gamut", function(test) {
-  test.equal(color.hsl("red").inGamut(), true);
-  test.equal(color.hsl(NaN, NaN, 1).inGamut(), true);
-  test.equal(color.hsl(NaN, NaN, 1.5).inGamut(), false);
-  test.equal(color.hsl(120, -0.5, 0).inGamut(), false);
-  test.equal(color.hsl(120, 1.5, 0).inGamut(), false);
+tape("hsl.displayable() returns true if the color is within the RGB gamut", function(test) {
+  test.equal(color.hsl("red").displayable(), true);
+  test.equal(color.hsl(NaN, NaN, 1).displayable(), true);
+  test.equal(color.hsl(NaN, NaN, 1.5).displayable(), false);
+  test.equal(color.hsl(120, -0.5, 0).displayable(), false);
+  test.equal(color.hsl(120, 1.5, 0).displayable(), false);
   test.end();
 });
 

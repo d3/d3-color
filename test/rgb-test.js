@@ -102,14 +102,14 @@ tape("rgb(color) converts from another colorspace via color.rgb()", function(tes
   test.end();
 });
 
-tape("rgb.inGamut() returns true if the color is in-gamut", function(test) {
-  test.equal(color.rgb("red").inGamut(), true);
-  test.equal(color.rgb(-1, 0, 0).inGamut(), false);
-  test.equal(color.rgb(0, -1, 0).inGamut(), false);
-  test.equal(color.rgb(0, 0, -1).inGamut(), false);
-  test.equal(color.rgb(256, 0, 0).inGamut(), false);
-  test.equal(color.rgb(0, 256, 0).inGamut(), false);
-  test.equal(color.rgb(0, 0, 256).inGamut(), false);
+tape("rgb.displayable() returns true if the color is within the RGB gamut", function(test) {
+  test.equal(color.rgb("red").displayable(), true);
+  test.equal(color.rgb(-1, 0, 0).displayable(), false);
+  test.equal(color.rgb(0, -1, 0).displayable(), false);
+  test.equal(color.rgb(0, 0, -1).displayable(), false);
+  test.equal(color.rgb(256, 0, 0).displayable(), false);
+  test.equal(color.rgb(0, 256, 0).displayable(), false);
+  test.equal(color.rgb(0, 0, 256).displayable(), false);
   test.end();
 });
 

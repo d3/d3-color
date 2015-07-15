@@ -40,7 +40,7 @@ prototype.rgb = function() {
   return this;
 };
 
-prototype.inGamut = function() {
+prototype.displayable = function() {
   return (0 <= this.r && this.r <= 255)
       && (0 <= this.g && this.g <= 255)
       && (0 <= this.b && this.b <= 255);

@@ -10,8 +10,8 @@ var reHex3 = /^#([0-9a-f]{3})$/,
     reHslPercent = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
 
 Color.prototype = {
-  inGamut: function() {
-    return this.rgb().inGamut();
+  displayable: function() {
+    return this.rgb().displayable();
   },
   toString: function() {
     return this.rgb() + "";

@@ -68,7 +68,7 @@ prototype.rgb = function() {
   );
 };
 
-prototype.inGamut = function() {
+prototype.displayable = function() {
   return (0 <= this.s && this.s <= 1 || isNaN(this.s))
       && (0 <= this.l && this.l <= 1);
 };

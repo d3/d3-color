@@ -73,13 +73,13 @@ Returns true if and only if the color is displayable on standard hardware. For e
 
 <a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>()
 
-Returns the RGB hexadecimal string representing this color, such as `"#f7eaba"`.
+Returns the RGB hexadecimal string representing this color, such as `"#f7eaba"`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
 <a name="rgb" href="#rgb">#</a> <b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>)<br>
 <a href="#rgb">#</a> <b>rgb</b>(<i>specifier</i>)<br>
 <a href="#rgb">#</a> <b>rgb</b>(<i>color</i>)<br>
 
-Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Channel values will be rounded to the nearest integer value. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
+Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
 
 If *r*, *g* and *b* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 

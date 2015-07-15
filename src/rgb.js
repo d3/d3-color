@@ -19,9 +19,9 @@ export default function(r, g, b) {
 };
 
 export function Rgb(r, g, b) {
-  this.r = Math.round(r);
-  this.g = Math.round(g);
-  this.b = Math.round(b);
+  this.r = +r;
+  this.g = +g;
+  this.b = +b;
 };
 
 var prototype = Rgb.prototype = new Color;
@@ -51,11 +51,8 @@ prototype.toString = function() {
 };
 
 export function format(r, g, b) {
-  if (isNaN(r)) r = 0;
-  if (isNaN(g)) g = 0;
-  if (isNaN(b)) b = 0;
   return "#"
-      + (r < 16 ? "0" + Math.max(0, r).toString(16) : Math.min(255, r).toString(16))
-      + (g < 16 ? "0" + Math.max(0, g).toString(16) : Math.min(255, g).toString(16))
-      + (b < 16 ? "0" + Math.max(0, b).toString(16) : Math.min(255, b).toString(16));
+      + (isNaN(r) ? "00" : (r = Math.round(r)) < 16 ? "0" + Math.max(0, r).toString(16) : Math.min(255, r).toString(16))
+      + (isNaN(g) ? "00" : (g = Math.round(g)) < 16 ? "0" + Math.max(0, g).toString(16) : Math.min(255, g).toString(16))
+      + (isNaN(b) ? "00" : (b = Math.round(b)) < 16 ? "0" + Math.max(0, b).toString(16) : Math.min(255, b).toString(16));
 };

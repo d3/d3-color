@@ -67,7 +67,7 @@ tape("lab(format) parses the specified format and converts to Lab", function(tes
   test.labEqual(color.lab("#abcdef"), 81.04386565274363, -3.6627002800885267, -20.442705201854984);
   test.labEqual(color.lab("#abc"), 75.10497524893663, -2.292114632248876, -10.528266458853786);
   test.labEqual(color.lab("rgb(12, 34, 56)"), 12.65624852526134, 0.12256520883417721, -16.833209795877284);
-  test.labEqual(color.lab("rgb(12%, 34%, 56%)"), 36.156665230032566, 2.4853968939478888, -36.135328027470294);
+  test.labEqual(color.lab("rgb(12%, 34%, 56%)"), 36.040298589825746, 2.5504315155944477, -36.19963333647264);
   test.labEqual(color.lab("hsl(60,100%,20%)"), 41.73251953866431, -10.998411255098816, 48.21006600604577);
   test.labEqual(color.lab("aliceblue"), 97.17864982306108, -1.3486158598345344, -4.262854157273543);
   test.end();

@@ -93,7 +93,7 @@ tape("hsl(format) parses the specified format and converts to HSL", function(tes
   test.hslEqual(color.hsl("#abcdef"), 210, 0.68, 0.8039215);
   test.hslEqual(color.hsl("#abc"), 210, 0.25, 0.733333333);
   test.hslEqual(color.hsl("rgb(12, 34, 56)"), 210, 0.647058, 0.1333333);
-  test.hslEqual(color.hsl("rgb(12%, 34%, 56%)"), 210, 0.643678, 0.3411765);
+  test.hslEqual(color.hsl("rgb(12%, 34%, 56%)"), 210, 0.647058, 0.34);
   test.hslEqual(color.hsl("hsl(60,100%,20%)"), 60, 1, 0.2);
   test.hslEqual(color.hsl("aliceblue"), 208, 1, 0.9705882);
   test.end();

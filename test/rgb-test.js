@@ -38,8 +38,8 @@ tape("rgb.toString() treats undefined channel values as 0", function(test) {
   test.end();
 });
 
-tape("rgb(r, g, b) rounds channel values", function(test) {
-  test.rgbEqual(color.rgb(1.2, 2.6, 42.9), 1, 3, 43);
+tape("rgb(r, g, b) does not round channel values", function(test) {
+  test.rgbStrictEqual(color.rgb(1.2, 2.6, 42.9), 1.2, 2.6, 42.9);
   test.end();
 });
 

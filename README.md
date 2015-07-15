@@ -190,5 +190,3 @@ Like [interpolateCubehelixGamma](#interpolateCubehelixGamma), but does not use t
 * All color spaces, including RGB, now support the [*color*.rgb](#color_rgb) method. This method returns a color instance representing the nearest-equivalent color in the RGB color space. Use the [rgb constructor](#rgb) if you want a copy.
 
 * When converting from Lab to HCL, hue and chroma are no longer undefined if the luminance is zero. Thus, the roundtrip from Lab to HCL and back again no longer loses information.
-
-* Colors are now validated upon construction. For example, an RGB color’s `r`, `g` and `b` values are integers in the range [0,255]; an HSL color’s `s` and `l` are numbers in the range [0,1].

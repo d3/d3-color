@@ -43,9 +43,9 @@ tape("rgb(r, g, b) rounds channel values", function(test) {
   test.end();
 });
 
-tape("rgb(r, g, b) clamps channel values to [0,255]", function(test) {
-  test.rgbEqual(color.rgb(-10, -20, -30), 0, 0, 0);
-  test.rgbEqual(color.rgb(300, 400, 500), 255, 255, 255);
+tape("rgb(r, g, b) does not clamp channel values", function(test) {
+  test.rgbEqual(color.rgb(-10, -20, -30), -10, -20, -30);
+  test.rgbEqual(color.rgb(300, 400, 500), 300, 400, 500);
   test.end();
 });
 
@@ -102,11 +102,22 @@ tape("rgb(color) converts from another colorspace via color.rgb()", function(tes
   test.end();
 });
 
+tape("rgb.inGamut() returns true if the color is in-gamut", function(test) {
+  test.equal(color.rgb("red").inGamut(), true);
+  test.equal(color.rgb(-1, 0, 0).inGamut(), false);
+  test.equal(color.rgb(0, -1, 0).inGamut(), false);
+  test.equal(color.rgb(0, 0, -1).inGamut(), false);
+  test.equal(color.rgb(256, 0, 0).inGamut(), false);
+  test.equal(color.rgb(0, 256, 0).inGamut(), false);
+  test.equal(color.rgb(0, 0, 256).inGamut(), false);
+  test.end();
+});
+
 tape("rgb.brighter(k) returns a brighter color if k > 0", function(test) {
   var c = color.rgb("brown");
   test.rgbEqual(c.brighter(.5), 197, 50, 50);
   test.rgbEqual(c.brighter(1), 236, 60, 60);
-  test.rgbEqual(c.brighter(2), 255, 86, 86);
+  test.rgbEqual(c.brighter(2), 337, 86, 86);
   test.end();
 });
 
@@ -114,7 +125,7 @@ tape("rgb.brighter(k) returns a copy", function(test) {
   var c1 = color.rgb("steelblue"),
       c2 = c1.brighter(1);
   test.rgbEqual(c1, 70, 130, 180);
-  test.rgbEqual(c2, 100, 186, 255);
+  test.rgbEqual(c2, 100, 186, 257);
   test.end();
 });
 

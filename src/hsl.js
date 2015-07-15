@@ -39,8 +39,8 @@ export default function(h, s, l) {
 
 export function Hsl(h, s, l) {
   this.h = +h;
-  this.s = Math.max(0, Math.min(1, +s));
-  this.l = Math.max(0, Math.min(1, +l));
+  this.s = +s;
+  this.l = +l;
 };
 
 var prototype = Hsl.prototype = new Color;
@@ -66,6 +66,11 @@ prototype.rgb = function() {
     hsl2rgb(h, m1, m2),
     hsl2rgb(h < 120 ? h + 240 : h - 120, m1, m2)
   );
+};
+
+prototype.inGamut = function() {
+  return (0 <= this.s && this.s <= 1 || isNaN(this.s))
+      && (0 <= this.l && this.l <= 1);
 };
 
 /* From FvD 13.37, CSS Color Module Level 3 */

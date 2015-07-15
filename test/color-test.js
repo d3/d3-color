@@ -58,8 +58,8 @@ tape("color(format) ignores whitespace between numbers", function(test) {
 tape("color(format) allows number signs", function(test) {
   test.rgbEqual(color.color("rgb(+120,+30,+50)"), 120, 30, 50);
   test.hslEqual(color.color("hsl(+120,+30%,+50%)"), 120, .3, .5);
-  test.rgbEqual(color.color("rgb(-120,-30,-50)"), 0, 0, 0);
-  test.hslEqual(color.color("hsl(-120,-30%,-50%)"), -120, 0, 0);
+  test.rgbEqual(color.color("rgb(-120,-30,-50)"), -120, -30, -50);
+  test.hslEqual(color.color("hsl(-120,-30%,-50%)"), -120, -.3, -.5);
   test.end();
 });
 

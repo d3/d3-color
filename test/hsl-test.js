@@ -53,11 +53,11 @@ tape("hsl(h, s, l) does not wrap hue to [0,360)", function(test) {
   test.end();
 });
 
-tape("hsl(h, s, l) clamps s and l channel values to [0,1]", function(test) {
-  test.hslEqual(color.hsl(120, -.1, .5), 120, 0, .5);
-  test.hslEqual(color.hsl(120, 1.1, .5), 120, 1, .5);
-  test.hslEqual(color.hsl(120, .2, -.1), 120, .2, 0);
-  test.hslEqual(color.hsl(120, .2, 1.1), 120, .2, 1);
+tape("hsl(h, s, l) does not clamp s and l channel values to [0,1]", function(test) {
+  test.hslEqual(color.hsl(120, -.1, .5), 120, -.1, .5);
+  test.hslEqual(color.hsl(120, 1.1, .5), 120, 1.1, .5);
+  test.hslEqual(color.hsl(120, .2, -.1), 120, .2, -.1);
+  test.hslEqual(color.hsl(120, .2, 1.1), 120, .2, 1.1);
   test.end();
 });
 
@@ -146,6 +146,15 @@ tape("hsl(color) converts from another colorspace via color.rgb()", function(tes
   TestColor.prototype.rgb = function() { return color.rgb(12, 34, 56); };
   TestColor.prototype.toString = function() { throw new Error("should use rgb, not toString"); };
   test.hslEqual(color.hsl(new TestColor), 210, 0.6470588, 0.1333334);
+  test.end();
+});
+
+tape("hsl.inGamut() returns true if the color is in-gamut", function(test) {
+  test.equal(color.hsl("red").inGamut(), true);
+  test.equal(color.hsl(NaN, NaN, 1).inGamut(), true);
+  test.equal(color.hsl(NaN, NaN, 1.5).inGamut(), false);
+  test.equal(color.hsl(120, -0.5, 0).inGamut(), false);
+  test.equal(color.hsl(120, 1.5, 0).inGamut(), false);
   test.end();
 });
 

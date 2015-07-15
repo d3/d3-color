@@ -150,7 +150,10 @@ tape("hsl(color) converts from another colorspace via color.rgb()", function(tes
 });
 
 tape("hsl.displayable() returns true if the color is within the RGB gamut", function(test) {
+  test.equal(color.hsl("white").displayable(), true);
   test.equal(color.hsl("red").displayable(), true);
+  test.equal(color.hsl("black").displayable(), true);
+  test.equal(color.hsl("invalid").displayable(), false);
   test.equal(color.hsl(NaN, NaN, 1).displayable(), true);
   test.equal(color.hsl(NaN, NaN, 1.5).displayable(), false);
   test.equal(color.hsl(120, -0.5, 0).displayable(), false);

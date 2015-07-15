@@ -103,7 +103,10 @@ tape("rgb(color) converts from another colorspace via color.rgb()", function(tes
 });
 
 tape("rgb.displayable() returns true if the color is within the RGB gamut", function(test) {
+  test.equal(color.rgb("white").displayable(), true);
   test.equal(color.rgb("red").displayable(), true);
+  test.equal(color.rgb("black").displayable(), true);
+  test.equal(color.rgb("invalid").displayable(), false);
   test.equal(color.rgb(-1, 0, 0).displayable(), false);
   test.equal(color.rgb(0, -1, 0).displayable(), false);
   test.equal(color.rgb(0, 0, -1).displayable(), false);

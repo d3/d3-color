@@ -67,6 +67,10 @@ Returns a brighter copy of this color. If *k* is specified, it controls how much
 
 Returns a darker copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.
 
+<a name="color_displayable" href="#color_displayable">#</a> *color*.<b>displayable</b>()
+
+Returns true if and only if the color is displayable on standard hardware. For example, this returns false for an RGB color if any channel value is less than zero or greater than 255.
+
 <a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>()
 
 Returns the RGB hexadecimal string representing this color, such as `"#f7eaba"`.
@@ -75,7 +79,7 @@ Returns the RGB hexadecimal string representing this color, such as `"#f7eaba"`.
 <a href="#rgb">#</a> <b>rgb</b>(<i>specifier</i>)<br>
 <a href="#rgb">#</a> <b>rgb</b>(<i>color</i>)<br>
 
-Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Channel values will be rounded to the nearest integer value and clamped to the range [0,255]. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
+Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Channel values will be rounded to the nearest integer value. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
 
 If *r*, *g* and *b* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
@@ -83,7 +87,7 @@ If *r*, *g* and *b* are specified, these represent the channel values of the ret
 <a href="#hsl">#</a> <b>hsl</b>(<i>specifier</i>)<br>
 <a href="#hsl">#</a> <b>hsl</b>(<i>color</i>)<br>
 
-Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. The saturation and lightness channels will be clamped to the range [0,1]. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
+Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 

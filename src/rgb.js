@@ -3,7 +3,7 @@ import {default as color, Color} from "./color";
 export var darker = .7;
 export var brighter = 1 / darker;
 
-export default function(r, g, b) {
+export default function rgb(r, g, b) {
   if (arguments.length === 1) {
     if (!(r instanceof Color)) r = color(r);
     if (r) {
@@ -24,7 +24,7 @@ export function Rgb(r, g, b) {
   this.b = +b;
 };
 
-var prototype = Rgb.prototype = new Color;
+var prototype = rgb.prototype = Rgb.prototype = new Color;
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

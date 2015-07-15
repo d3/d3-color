@@ -12,7 +12,7 @@ var Xn = 0.950470, // D65 standard referent
     t2 = 3 * t1 * t1,
     t3 = t1 * t1 * t1;
 
-export default function(l, a, b) {
+export default function lab(l, a, b) {
   if (arguments.length === 1) {
     if (l instanceof Lab) {
       b = l.b;
@@ -45,7 +45,7 @@ export function Lab(l, a, b) {
   this.b = +b;
 };
 
-var prototype = Lab.prototype = new Color;
+var prototype = lab.prototype = Lab.prototype = new Color;
 
 prototype.brighter = function(k) {
   return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);

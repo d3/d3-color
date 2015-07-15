@@ -11,7 +11,7 @@ var A = -0.14861,
     EB = E * B,
     BC_DA = B * C - D * A;
 
-export default function(h, s, l) {
+export default function cubehelix(h, s, l) {
   if (arguments.length === 1) {
     if (h instanceof Cubehelix) {
       l = h.l;
@@ -36,7 +36,7 @@ export function Cubehelix(h, s, l) {
   this.l = +l;
 };
 
-var prototype = Cubehelix.prototype = new Color;
+var prototype = cubehelix.prototype = Cubehelix.prototype = new Color;
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

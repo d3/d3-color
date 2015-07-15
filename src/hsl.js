@@ -1,7 +1,7 @@
 import {default as color, Color} from "./color";
 import {default as rgb, Rgb, darker, brighter} from "./rgb";
 
-export default function(h, s, l) {
+export default function hsl(h, s, l) {
   if (arguments.length === 1) {
     if (h instanceof Hsl) {
       l = h.l;
@@ -43,7 +43,7 @@ export function Hsl(h, s, l) {
   this.l = +l;
 };
 
-var prototype = Hsl.prototype = new Color;
+var prototype = hsl.prototype = Hsl.prototype = new Color;
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

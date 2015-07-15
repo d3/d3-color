@@ -9,7 +9,7 @@ var reHex3 = /^#([0-9a-f]{3})$/,
     reRgbPercent = /^rgb\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/,
     reHslPercent = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
 
-Color.prototype = {
+color.prototype = Color.prototype = {
   displayable: function() {
     return this.rgb().displayable();
   },
@@ -18,7 +18,7 @@ Color.prototype = {
   }
 };
 
-export default function(format) {
+export default function color(format) {
   var m;
   format = (format + "").trim().toLowerCase();
   return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf))) // #f00

@@ -4,7 +4,7 @@ import {default as lab, Lab, Kn} from "./lab";
 export var deg2rad = Math.PI / 180;
 export var rad2deg = 180 / Math.PI;
 
-export default function(h, c, l) {
+export default function hcl(h, c, l) {
   if (arguments.length === 1) {
     if (h instanceof Hcl) {
       l = h.l;
@@ -27,7 +27,7 @@ export function Hcl(h, c, l) {
   this.l = +l;
 };
 
-var prototype = Hcl.prototype = new Color;
+var prototype = hcl.prototype = Hcl.prototype = new Color;
 
 prototype.brighter = function(k) {
   return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));

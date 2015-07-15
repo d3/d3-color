@@ -16,14 +16,6 @@ import interpolateCubehelixGammaLong from "./src/interpolateCubehelixGammaLong";
 export var interpolateCubehelix = interpolateCubehelixGamma(1);
 export var interpolateCubehelixLong = interpolateCubehelixGammaLong(1);
 
-// Done lazily to avoid circular dependency between Color, Rgb and Hsl.
-color.prototype = Color.prototype;
-rgb.prototype = Rgb.prototype;
-hsl.prototype = Hsl.prototype;
-lab.prototype = Lab.prototype;
-hcl.prototype = Hcl.prototype;
-cubehelix.prototype = Cubehelix.prototype;
-
 export {
   color,
   rgb,

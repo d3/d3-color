@@ -1,9 +1,9 @@
-import {default as color, Color} from "./src/color";
-import {default as rgb, Rgb} from "./src/rgb";
-import {default as hsl, Hsl} from "./src/hsl";
-import {default as lab, Lab} from "./src/lab";
-import {default as hcl, Hcl} from "./src/hcl";
-import {default as cubehelix, Cubehelix} from "./src/cubehelix";
+import color from "./src/color";
+import rgb from "./src/rgb";
+import hsl from "./src/hsl";
+import lab from "./src/lab";
+import hcl from "./src/hcl";
+import cubehelix from "./src/cubehelix";
 import interpolateRgb from "./src/interpolateRgb";
 import interpolateHsl from "./src/interpolateHsl";
 import interpolateHslLong from "./src/interpolateHslLong";

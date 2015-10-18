@@ -32,6 +32,7 @@ tape("color(format) parses RGB integer format (e.g., \"rgb(12,34,56)\")", functi
 
 tape("color(format) parses RGB percentage format (e.g., \"rgb(12%,34%,56%)\")", function(test) {
   test.rgbEqual(color.color("rgb(12%,34%,56%)"), 31, 87, 143);
+  test.rgbStrictEqual(color.color("rgb(100%,100%,100%)"), 255, 255, 255);
   test.end();
 });
 

@@ -10,8 +10,9 @@ export {default as interpolateHslLong} from "./src/interpolateHslLong";
 export {default as interpolateLab} from "./src/interpolateLab";
 export {default as interpolateHcl} from "./src/interpolateHcl";
 export {default as interpolateHclLong} from "./src/interpolateHclLong";
-export {default as interpolateCubehelixGamma} from "./src/interpolateCubehelixGamma";
-export {default as interpolateCubehelixGammaLong} from "./src/interpolateCubehelixGammaLong";
 
+import interpolateCubehelixGamma from "./src/interpolateCubehelixGamma";
+import interpolateCubehelixGammaLong from "./src/interpolateCubehelixGammaLong";
 export var interpolateCubehelix = interpolateCubehelixGamma(1);
 export var interpolateCubehelixLong = interpolateCubehelixGammaLong(1);
+export {interpolateCubehelixGamma, interpolateCubehelixGammaLong};

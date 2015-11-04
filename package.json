@@ -1,6 +1,6 @@
 {
   "name": "d3-color",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",
@@ -18,19 +18,19 @@
     "name": "Mike Bostock",
     "url": "http://bost.ocks.org/mike"
   },
-  "main": "build/color",
+  "main": "build/color.cjs",
   "jsnext:main": "index",
   "repository": {
     "type": "git",
     "url": "https://github.com/d3/d3-color.git"
   },
   "scripts": {
-    "pretest": "mkdir -p build && d3-bundler --format=umd --name=color -- index.js > build/color.js",
+    "pretest": "mkdir -p build && d3-bundler -x -f cjs -o build/color.cjs.js",
     "test": "faucet `find test -name '*-test.js'`",
-    "prepublish": "npm run test && uglifyjs build/color.js -c -m -o build/color.min.js && rm -f build/color.zip && zip -j build/color.zip -- LICENSE README.md build/color.js build/color.min.js"
+    "prepublish": "npm run test && d3-bundler -n color -o build/color.js && uglifyjs build/color.js -c -m -o build/color.min.js && rm -f build/color.zip && zip -j build/color.zip -- LICENSE README.md build/color.js build/color.min.js"
   },
   "devDependencies": {
-    "d3-bundler": "~0.2.8",
+    "d3-bundler": "~0.4.0",
     "faucet": "0.0",
     "tape": "4",
     "uglify-js": "2"

@@ -13,7 +13,7 @@
     "cubehelix"
   ],
   "homepage": "https://github.com/d3/d3-color",
-  "license" : "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "author": {
     "name": "Mike Bostock",
     "url": "http://bost.ocks.org/mike"

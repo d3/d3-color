@@ -18,14 +18,14 @@ Now rotate the hue by 90°, bump up the saturation, and format as hex:
 
 ```js
 c.h += 90;
-c.s += .2;
+c.s += 0.2;
 c + ""; // #c62dcd
 ```
 
 Or to find the perceptual halfway point between steelblue and brown:
 
 ```js
-interpolateLab("steelblue", "brown")(.5); // #8e5c6d
+interpolateLab("steelblue", "brown")(0.5); // #8e5c6d
 ```
 
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:

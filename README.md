@@ -22,12 +22,6 @@ c.s += 0.2;
 c + ""; // #c62dcd
 ```
 
-Or to find the perceptual halfway point between steelblue and brown:
-
-```js
-interpolateLab("steelblue", "brown")(0.5); // #8e5c6d
-```
-
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:
 
 * Dave Green’s [Cubehelix](#cubehelix)
@@ -115,71 +109,9 @@ Constructs a new [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color. 
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Cubehelix color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Cubehelix. (Colors already in the Cubehelix color space skip the conversion to RGB.)
 
-<a name="interpolateRgb" href="#interpolateRgb">#</a> <b>interpolateRgb</b>(<i>a</i>, <i>b</i>)
-
-![interpolateRgb](https://cloud.githubusercontent.com/assets/230541/8027976/07e91580-0d58-11e5-8d3f-4c50f152a2e3.png)
-
-Returns an RGB color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in RGB; they will be converted to RGB using [rgb](#rgb). The return value of the interpolator is a hexadecimal RGB string.
-
-<a name="interpolateHsl" href="#interpolateHsl">#</a> <b>interpolateHsl</b>(<i>a</i>, <i>b</i>)
-
-![interpolatehsl](https://cloud.githubusercontent.com/assets/230541/8027979/07fec100-0d58-11e5-90df-dc458ae7af10.png)
-
-Returns an HSL color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in HSL; they will be converted to HSL using [hsl](#hsl). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
-
-<a name="interpolateHslLong" href="#interpolateHslLong">#</a> <b>interpolateHslLong</b>(<i>a</i>, <i>b</i>)
-
-![interpolatehsllong](https://cloud.githubusercontent.com/assets/230541/8028057/bae888b8-0d59-11e5-983a-a460a59ae4ab.png)
-
-Like [interpolateHsl](#interpolateHsl), but does not use the shortest path between hues.
-
-<a name="interpolateLab" href="#interpolateLab">#</a> <b>interpolateLab</b>(<i>a</i>, <i>b</i>)
-
-![interpolatelab](https://cloud.githubusercontent.com/assets/230541/8027977/07eaea04-0d58-11e5-8f4f-b739eb842549.png)
-
-Returns a Lab color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in Lab; they will be converted to Lab using [lab](#lab). The return value of the interpolator is a hexadecimal RGB string.
-
-<a name="interpolateHcl" href="#interpolateHcl">#</a> <b>interpolateHcl</b>(<i>a</i>, <i>b</i>)
-
-![interpolatehcl](https://cloud.githubusercontent.com/assets/230541/8027978/07f91002-0d58-11e5-92f0-f06899907c6a.png)
-
-Returns an HCL color space interpolator between the two colors *a* and *b*. The colors *a* and *b* need not be in HCL; they will be converted to HCL using [hcl](#hcl). If either color’s hue or chroma is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
-
-<a name="interpolateHclLong" href="#interpolateHclLong">#</a> <b>interpolateHclLong</b>(<i>a</i>, <i>b</i>)
-
-![interpolatehcllong](https://cloud.githubusercontent.com/assets/230541/8028056/bad85786-0d59-11e5-9c22-6c23215779fa.png)
-
-Like [interpolateHcl](#interpolateHcl), but does not use the shortest path between hues.
-
-<a name="interpolateCubehelix" href="#interpolateCubehelix">#</a> <b>interpolateCubehelix</b>(<i>a</i>, <i>b</i>)
-
-![interpolatecubehelix](https://cloud.githubusercontent.com/assets/230541/8027999/737cde08-0d58-11e5-8130-36e2437996ee.png)
-
-Returns a Cubehelix color space interpolator between the two colors *a* and *b* using the default *gamma* of 1.0. The colors *a* and *b* need not be in Cubehelix; they will be converted to Cubehelix using [cubehelix](#cubehelix). If either color’s hue or saturation is NaN, the opposing color’s channel value is used. The shortest path between hues is used. The return value of the interpolator is a hexadecimal RGB string.
-
-<a name="interpolateCubehelixLong" href="#interpolateCubehelixLong">#</a> <b>interpolateCubehelixLong</b>(<i>a</i>, <i>b</i>)
-
-![interpolatecubehelixlong](https://cloud.githubusercontent.com/assets/230541/8028055/bad68424-0d59-11e5-8f0f-1ecdbd8e46c8.png)
-
-Like [interpolateCubehelix](#interpolateCubehelix), but does not use the shortest path between hues.
-
-<a name="interpolateCubehelixGamma" href="#interpolateCubehelixGamma">#</a> <b>interpolateCubehelixGamma</b>(<i>gamma</i>)
-
-Returns a Cubehelix color space interpolator factory using the specified *gamma*. A gamma value less than one emphasizes low intensity values, while a gamma value greater than one emphasizes high intensity values. For example:
-
-```js
-var i = interpolateCubehelixGamma(1.5)("red", "blue");
-```
-
-<a name="interpolateCubehelixGammaLong" href="#interpolateCubehelixGammaLong">#</a> <b>interpolateCubehelixGammaLong</b>(<i>gamma</i>)
-
-Like [interpolateCubehelixGamma](#interpolateCubehelixGamma), but does not use the shortest path between hues.
-
 ## Changes from D3 3.x:
 
 * A new [cubehelix](#cubehelix) color space!
-
-* New “long” methods for hue interpolation in [HSL](#interpolateHslLong), [HCL](#interpolateHclLong) and [Cubehelix](#interpolateCubehelixLong).
 
 * A new [color](#color) method parses the specified string according to the CSS specification and returns the corresponding color in its color space. For HSL color values, this is the HSL color space; for other values, the RGB color space is used. This method correctly parses RGB colors with percentages (e.g., `rgb(30%,40%,50%)`). Decimal values where integers are required are no longer allowed (e.g., `rgb(100.5,0,0)` is not a valid color).
 

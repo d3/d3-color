@@ -1,6 +1,6 @@
 # d3-color
 
-Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. The d3-color module therefore provides representations for various color spaces, allowing specification, interpolation, conversion and manipulation.
+Even though your browser understands a lot about colors, it doesn’t offer much help in manipulating colors through JavaScript. The d3-color module therefore provides representations for various color spaces, allowing specification, [interpolation](https://github.com/d3/d3-interpolate), conversion and manipulation.
 
 For example, take the color named “steelblue”:
 

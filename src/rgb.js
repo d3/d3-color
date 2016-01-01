@@ -25,7 +25,7 @@ export function Rgb(r, g, b) {
   this.b = +b;
 };
 
-var prototype = rgb.prototype = Rgb.prototype = new Color;
+var prototype = rgb.prototype = Rgb.prototype = new Color();
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

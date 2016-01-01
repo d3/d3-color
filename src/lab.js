@@ -45,7 +45,7 @@ export function Lab(l, a, b) {
   this.b = +b;
 };
 
-var prototype = lab.prototype = Lab.prototype = new Color;
+var prototype = lab.prototype = Lab.prototype = new Color();
 
 prototype.brighter = function(k) {
   return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);

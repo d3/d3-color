@@ -20,7 +20,7 @@ export default function color(format) {
       : (m = reHslPercent.exec(format)) ? hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
       : named.hasOwnProperty(format) ? rgbn(named[format])
       : null;
-};
+}
 
 function rgbn(n) {
   return rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);

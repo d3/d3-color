@@ -1,4 +1,4 @@
-export function Color() {};
+export function Color() {}
 
 Color.prototype = {
   displayable: function() {

@@ -44,7 +44,7 @@ export function Hsl(h, s, l) {
   this.l = +l;
 };
 
-var prototype = hsl.prototype = Hsl.prototype = new Color;
+var prototype = hsl.prototype = Hsl.prototype = new Color();
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

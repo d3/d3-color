@@ -1,4 +1,5 @@
-import {default as color, Color} from "./color";
+import {Color} from './colorFn';
+import {default as color} from "./color";
 
 export var darker = .7;
 export var brighter = 1 / darker;

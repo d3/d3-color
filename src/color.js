@@ -1,7 +1,6 @@
 import rgb from "./rgb";
 import hsl from "./hsl";
-
-export function Color() {};
+import {Color} from './colorFn';
 
 var reHex3 = /^#([0-9a-f]{3})$/,
     reHex6 = /^#([0-9a-f]{6})$/,
@@ -9,14 +8,7 @@ var reHex3 = /^#([0-9a-f]{3})$/,
     reRgbPercent = /^rgb\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/,
     reHslPercent = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
 
-color.prototype = Color.prototype = {
-  displayable: function() {
-    return this.rgb().displayable();
-  },
-  toString: function() {
-    return this.rgb() + "";
-  }
-};
+color.prototype = Color.prototype;
 
 export default function color(format) {
   var m;

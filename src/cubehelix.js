@@ -1,4 +1,5 @@
-import {default as color, Color} from "./color";
+import {default as color} from "./color";
+import {Color} from './colorFn';
 import {default as rgb, Rgb, darker, brighter} from "./rgb";
 import {deg2rad, rad2deg} from "./hcl";
 

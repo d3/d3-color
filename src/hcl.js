@@ -1,4 +1,5 @@
-import {default as color, Color} from "./color";
+import {Color} from './colorFn';
+import {default as color} from "./color";
 import {default as lab, Lab, Kn} from "./lab";
 
 export var deg2rad = Math.PI / 180;
@@ -27,7 +28,7 @@ export function Hcl(h, c, l) {
   this.l = +l;
 };
 
-var prototype = hcl.prototype = Hcl.prototype = new Color;
+var prototype = hcl.prototype = Hcl.prototype = new Color();
 
 prototype.brighter = function(k) {
   return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));

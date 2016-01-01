@@ -1,7 +1,6 @@
 import {Color} from './colorFn';
-import {default as color} from "./color";
 import {default as rgb, Rgb} from "./rgb";
-import {default as hcl, Hcl, deg2rad} from "./hcl";
+import {Hcl, deg2rad} from "./hcl";
 
 export var Kn = 18;
 

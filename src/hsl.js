@@ -1,6 +1,6 @@
 import {Color} from './colorFn';
 import {default as color} from "./color";
-import {default as rgb, Rgb, darker, brighter} from "./rgb";
+import {Rgb, darker, brighter} from "./rgb";
 
 export default function hsl(h, s, l) {
   if (arguments.length === 1) {

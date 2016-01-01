@@ -1,5 +1,4 @@
 import {Color} from './colorFn';
-import {default as color} from "./color";
 import {default as lab, Lab, Kn} from "./lab";
 
 export var deg2rad = Math.PI / 180;

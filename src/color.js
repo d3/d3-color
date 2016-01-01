@@ -1,6 +1,6 @@
+import {Color} from './colorFn';
 import rgb from "./rgb";
 import hsl from "./hsl";
-import {Color} from './colorFn';
 
 var reHex3 = /^#([0-9a-f]{3})$/,
     reHex6 = /^#([0-9a-f]{6})$/,

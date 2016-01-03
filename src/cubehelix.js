@@ -1,4 +1,4 @@
-import {default as color, Color} from "./color";
+import {Color} from './colorFn';
 import {default as rgb, Rgb, darker, brighter} from "./rgb";
 import {deg2rad, rad2deg} from "./hcl";
 
@@ -18,25 +18,25 @@ export default function cubehelix(h, s, l) {
       s = h.s;
       h = h.h;
     } else {
-      if (!(h instanceof Rgb)) h = rgb(h);
+      if (!(h instanceof Rgb)) { h = rgb(h); }
       var r = h.r / 255, g = h.g / 255, b = h.b / 255;
       l = (BC_DA * b + ED * r - EB * g) / (BC_DA + ED - EB);
       var bl = b - l, k = (E * (g - l) - C * bl) / D;
       s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)); // NaN if l=0 or l=1
       h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
-      if (h < 0) h += 360;
+      if (h < 0) { h += 360; }
     }
   }
   return new Cubehelix(h, s, l);
-};
+}
 
 export function Cubehelix(h, s, l) {
   this.h = +h;
   this.s = +s;
   this.l = +l;
-};
+}
 
-var prototype = cubehelix.prototype = Cubehelix.prototype = new Color;
+var prototype = cubehelix.prototype = Cubehelix.prototype = new Color();
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);

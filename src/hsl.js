@@ -1,5 +1,6 @@
-import {default as color, Color} from "./color";
-import {default as rgb, Rgb, darker, brighter} from "./rgb";
+import {Color} from './colorFn';
+import {default as color} from "./color";
+import {Rgb, darker, brighter} from "./rgb";
 
 export default function hsl(h, s, l) {
   if (arguments.length === 1) {
@@ -35,15 +36,15 @@ export default function hsl(h, s, l) {
     }
   }
   return new Hsl(h, s, l);
-};
+}
 
 export function Hsl(h, s, l) {
   this.h = +h;
   this.s = +s;
   this.l = +l;
-};
+}
 
-var prototype = hsl.prototype = Hsl.prototype = new Color;
+var prototype = hsl.prototype = Hsl.prototype = new Color();
 
 prototype.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);
@@ -59,7 +60,7 @@ prototype.rgb = function() {
   var h = this.h % 360 + (this.h < 0) * 360,
       s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
       l = this.l,
-      m2 = l + (l < .5 ? l : 1 - l) * s,
+      m2 = l + (l < 0.5 ? l : 1 - l) * s,
       m1 = 2 * l - m2;
   return new Rgb(
     hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),
@@ -69,8 +70,8 @@ prototype.rgb = function() {
 };
 
 prototype.displayable = function() {
-  return (0 <= this.s && this.s <= 1 || isNaN(this.s))
-      && (0 <= this.l && this.l <= 1);
+  return (0 <= this.s && this.s <= 1 || isNaN(this.s)) &&
+         (0 <= this.l && this.l <= 1);
 };
 
 /* From FvD 13.37, CSS Color Module Level 3 */

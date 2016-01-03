@@ -1,6 +1,6 @@
-import {default as color, Color} from "./color";
+import {Color} from './colorFn';
 import {default as rgb, Rgb} from "./rgb";
-import {default as hcl, Hcl, deg2rad} from "./hcl";
+import {Hcl, deg2rad} from "./hcl";
 
 export var Kn = 18;
 
@@ -26,9 +26,9 @@ export default function lab(l, a, b) {
     } else {
       if (!(l instanceof Rgb)) l = rgb(l);
       var r = rgb2xyz(l.r),
-          g = rgb2xyz(l.g),
-          b = rgb2xyz(l.b),
-          x = xyz2lab((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / Xn),
+          g = rgb2xyz(l.g);
+          b = rgb2xyz(l.b);
+      var x = xyz2lab((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / Xn),
           y = xyz2lab((0.2126729 * r + 0.7151522 * g + 0.0721750 * b) / Yn),
           z = xyz2lab((0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / Zn);
       b = 200 * (y - z);
@@ -37,15 +37,15 @@ export default function lab(l, a, b) {
     }
   }
   return new Lab(l, a, b);
-};
+}
 
 export function Lab(l, a, b) {
   this.l = +l;
   this.a = +a;
   this.b = +b;
-};
+}
 
-var prototype = lab.prototype = Lab.prototype = new Color;
+var prototype = lab.prototype = Lab.prototype = new Color();
 
 prototype.brighter = function(k) {
   return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);

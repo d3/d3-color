@@ -1,6 +1,5 @@
-import {default as color, Color} from "./color";
-import {default as rgb, Rgb, darker, brighter} from "./rgb";
-import {deg2rad, rad2deg} from "./hcl";
+import {Color, rgb, Rgb, darker, brighter} from "./color";
+import {deg2rad, rad2deg} from "./math";
 
 var A = -0.14861,
     B = +1.78277,
@@ -36,19 +35,19 @@ export function Cubehelix(h, s, l) {
   this.l = +l;
 };
 
-var prototype = cubehelix.prototype = Cubehelix.prototype = new Color;
+var _cubehelix = cubehelix.prototype = Cubehelix.prototype = new Color;
 
-prototype.brighter = function(k) {
+_cubehelix.brighter = function(k) {
   k = k == null ? brighter : Math.pow(brighter, k);
   return new Cubehelix(this.h, this.s, this.l * k);
 };
 
-prototype.darker = function(k) {
+_cubehelix.darker = function(k) {
   k = k == null ? darker : Math.pow(darker, k);
   return new Cubehelix(this.h, this.s, this.l * k);
 };
 
-prototype.rgb = function() {
+_cubehelix.rgb = function() {
   var h = isNaN(this.h) ? 0 : (this.h + 120) * deg2rad,
       l = +this.l,
       a = isNaN(this.s) ? 0 : this.s * l * (1 - l),

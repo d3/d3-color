@@ -1,38 +1,13 @@
-import rgb from "./rgb";
-import hsl from "./hsl";
-
 export function Color() {};
+
+export var darker = 0.7;
+export var brighter = 1 / darker;
 
 var reHex3 = /^#([0-9a-f]{3})$/,
     reHex6 = /^#([0-9a-f]{6})$/,
     reRgbInteger = /^rgb\(\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*\)$/,
     reRgbPercent = /^rgb\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/,
     reHslPercent = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
-
-color.prototype = Color.prototype = {
-  displayable: function() {
-    return this.rgb().displayable();
-  },
-  toString: function() {
-    return this.rgb() + "";
-  }
-};
-
-export default function color(format) {
-  var m;
-  format = (format + "").trim().toLowerCase();
-  return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf))) // #f00
-      : (m = reHex6.exec(format)) ? rgbn(parseInt(m[1], 16)) // #ff0000
-      : (m = reRgbInteger.exec(format)) ? rgb(m[1], m[2], m[3]) // rgb(255,0,0)
-      : (m = reRgbPercent.exec(format)) ? rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%,0%,0%)
-      : (m = reHslPercent.exec(format)) ? hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
-      : named.hasOwnProperty(format) ? rgbn(named[format])
-      : null;
-};
-
-function rgbn(n) {
-  return rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
-}
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -184,3 +159,161 @@ var named = {
   yellow: 0xffff00,
   yellowgreen: 0x9acd32
 };
+
+color.prototype = Color.prototype = {
+  displayable: function() {
+    return this.rgb().displayable();
+  },
+  toString: function() {
+    return this.rgb() + "";
+  }
+};
+
+export default function color(format) {
+  var m;
+  format = (format + "").trim().toLowerCase();
+  return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), new Rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf))) // #f00
+      : (m = reHex6.exec(format)) ? rgbn(parseInt(m[1], 16)) // #ff0000
+      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3]) // rgb(255,0,0)
+      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%,0%,0%)
+      : (m = reHslPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
+      : named.hasOwnProperty(format) ? rgbn(named[format])
+      : null;
+};
+
+function rgbn(n) {
+  return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
+}
+
+export function rgb(r, g, b) {
+  if (arguments.length === 1) {
+    if (!(r instanceof Color)) r = color(r);
+    if (r) {
+      r = r.rgb();
+      b = r.b;
+      g = r.g;
+      r = r.r;
+    } else {
+      r = g = b = NaN;
+    }
+  }
+  return new Rgb(r, g, b);
+};
+
+export function Rgb(r, g, b) {
+  this.r = +r;
+  this.g = +g;
+  this.b = +b;
+};
+
+var _rgb = rgb.prototype = Rgb.prototype = new Color;
+
+_rgb.brighter = function(k) {
+  k = k == null ? brighter : Math.pow(brighter, k);
+  return new Rgb(this.r * k, this.g * k, this.b * k);
+};
+
+_rgb.darker = function(k) {
+  k = k == null ? darker : Math.pow(darker, k);
+  return new Rgb(this.r * k, this.g * k, this.b * k);
+};
+
+_rgb.rgb = function() {
+  return this;
+};
+
+_rgb.displayable = function() {
+  return (0 <= this.r && this.r <= 255)
+      && (0 <= this.g && this.g <= 255)
+      && (0 <= this.b && this.b <= 255);
+};
+
+_rgb.toString = function() {
+  var r = Math.round(this.r),
+      g = Math.round(this.g),
+      b = Math.round(this.b);
+  return "#"
+      + (isNaN(r) || r <= 0 ? "00" : r < 16 ? "0" + r.toString(16) : r >= 255 ? "ff" : r.toString(16))
+      + (isNaN(g) || g <= 0 ? "00" : g < 16 ? "0" + g.toString(16) : g >= 255 ? "ff" : g.toString(16))
+      + (isNaN(b) || b <= 0 ? "00" : b < 16 ? "0" + b.toString(16) : b >= 255 ? "ff" : b.toString(16));
+};
+
+export function hsl(h, s, l) {
+  if (arguments.length === 1) {
+    if (h instanceof Hsl) {
+      l = h.l;
+      s = h.s;
+      h = h.h;
+    } else {
+      if (!(h instanceof Color)) h = color(h);
+      if (h) {
+        if (h instanceof Hsl) return h;
+        h = h.rgb();
+        var r = h.r / 255,
+            g = h.g / 255,
+            b = h.b / 255,
+            min = Math.min(r, g, b),
+            max = Math.max(r, g, b),
+            range = max - min;
+        l = (max + min) / 2;
+        if (range) {
+          s = l < 0.5 ? range / (max + min) : range / (2 - max - min);
+          if (r === max) h = (g - b) / range + (g < b) * 6;
+          else if (g === max) h = (b - r) / range + 2;
+          else h = (r - g) / range + 4;
+          h *= 60;
+        } else {
+          h = NaN;
+          s = l > 0 && l < 1 ? 0 : h;
+        }
+      } else {
+        h = s = l = NaN;
+      }
+    }
+  }
+  return new Hsl(h, s, l);
+};
+
+export function Hsl(h, s, l) {
+  this.h = +h;
+  this.s = +s;
+  this.l = +l;
+};
+
+var _hsl = hsl.prototype = Hsl.prototype = new Color;
+
+_hsl.brighter = function(k) {
+  k = k == null ? brighter : Math.pow(brighter, k);
+  return new Hsl(this.h, this.s, this.l * k);
+};
+
+_hsl.darker = function(k) {
+  k = k == null ? darker : Math.pow(darker, k);
+  return new Hsl(this.h, this.s, this.l * k);
+};
+
+_hsl.rgb = function() {
+  var h = this.h % 360 + (this.h < 0) * 360,
+      s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
+      l = this.l,
+      m2 = l + (l < 0.5 ? l : 1 - l) * s,
+      m1 = 2 * l - m2;
+  return new Rgb(
+    hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),
+    hsl2rgb(h, m1, m2),
+    hsl2rgb(h < 120 ? h + 240 : h - 120, m1, m2)
+  );
+};
+
+_hsl.displayable = function() {
+  return (0 <= this.s && this.s <= 1 || isNaN(this.s))
+      && (0 <= this.l && this.l <= 1);
+};
+
+/* From FvD 13.37, CSS Color Module Level 3 */
+function hsl2rgb(h, m1, m2) {
+  return (h < 60 ? m1 + (m2 - m1) * h / 60
+      : h < 180 ? m2
+      : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60
+      : m1) * 255;
+}

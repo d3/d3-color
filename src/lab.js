@@ -1,10 +1,8 @@
-import {default as color, Color} from "./color";
-import {default as rgb, Rgb} from "./rgb";
-import {default as hcl, Hcl, deg2rad} from "./hcl";
+import {Color, rgb, Rgb} from "./color";
+import {deg2rad, rad2deg} from "./math";
 
-export var Kn = 18;
-
-var Xn = 0.950470, // D65 standard referent
+var Kn = 18,
+    Xn = 0.950470, // D65 standard referent
     Yn = 1,
     Zn = 1.088830,
     t0 = 4 / 29,
@@ -45,17 +43,17 @@ export function Lab(l, a, b) {
   this.b = +b;
 };
 
-var prototype = lab.prototype = Lab.prototype = new Color;
+var _lab = lab.prototype = Lab.prototype = new Color;
 
-prototype.brighter = function(k) {
+_lab.brighter = function(k) {
   return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
 };
 
-prototype.darker = function(k) {
+_lab.darker = function(k) {
   return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
 };
 
-prototype.rgb = function() {
+_lab.rgb = function() {
   var y = (this.l + 16) / 116,
       x = isNaN(this.a) ? y : y + this.a / 500,
       z = isNaN(this.b) ? y : y - this.b / 200;
@@ -84,3 +82,40 @@ function xyz2rgb(x) {
 function rgb2xyz(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
+
+export function hcl(h, c, l) {
+  if (arguments.length === 1) {
+    if (h instanceof Hcl) {
+      l = h.l;
+      c = h.c;
+      h = h.h;
+    } else {
+      if (!(h instanceof Lab)) h = lab(h);
+      l = h.l;
+      c = Math.sqrt(h.a * h.a + h.b * h.b);
+      h = Math.atan2(h.b, h.a) * rad2deg;
+      if (h < 0) h += 360;
+    }
+  }
+  return new Hcl(h, c, l);
+};
+
+export function Hcl(h, c, l) {
+  this.h = +h;
+  this.c = +c;
+  this.l = +l;
+};
+
+var _hcl = hcl.prototype = Hcl.prototype = new Color;
+
+_hcl.brighter = function(k) {
+  return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
+};
+
+_hcl.darker = function(k) {
+  return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k));
+};
+
+_hcl.rgb = function() {
+  return lab(this).rgb();
+};

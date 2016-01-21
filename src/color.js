@@ -1,4 +1,4 @@
-export function Color() {};
+export function Color() {}
 
 export var darker = 0.7;
 export var brighter = 1 / darker;
@@ -179,7 +179,7 @@ export default function color(format) {
       : (m = reHslPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
       : named.hasOwnProperty(format) ? rgbn(named[format])
       : null;
-};
+}
 
 function rgbn(n) {
   return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
@@ -198,13 +198,13 @@ export function rgb(r, g, b) {
     }
   }
   return new Rgb(r, g, b);
-};
+}
 
 export function Rgb(r, g, b) {
   this.r = +r;
   this.g = +g;
   this.b = +b;
-};
+}
 
 var _rgb = rgb.prototype = Rgb.prototype = new Color;
 
@@ -272,13 +272,13 @@ export function hsl(h, s, l) {
     }
   }
   return new Hsl(h, s, l);
-};
+}
 
 export function Hsl(h, s, l) {
   this.h = +h;
   this.s = +s;
   this.l = +l;
-};
+}
 
 var _hsl = hsl.prototype = Hsl.prototype = new Color;
 

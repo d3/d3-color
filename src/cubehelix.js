@@ -27,13 +27,13 @@ export default function cubehelix(h, s, l) {
     }
   }
   return new Cubehelix(h, s, l);
-};
+}
 
 export function Cubehelix(h, s, l) {
   this.h = +h;
   this.s = +s;
   this.l = +l;
-};
+}
 
 var _cubehelix = cubehelix.prototype = Cubehelix.prototype = new Color;
 

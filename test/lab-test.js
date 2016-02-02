@@ -17,28 +17,28 @@ tape("lab(…) exposes l, a and b channel values", function(test) {
 });
 
 tape("lab.toString() converts to RGB and formats as hexadecimal", function(test) {
-  test.equal(color.lab("#abcdef") + "", "#abcdef");
-  test.equal(color.lab("moccasin") + "", "#ffe4b5");
-  test.equal(color.lab("hsl(60, 100%, 20%)") + "", "#666600");
-  test.equal(color.lab("rgb(12, 34, 56)") + "", "#0c2238");
-  test.equal(color.lab(color.rgb(12, 34, 56)) + "", "#0c2238");
-  test.equal(color.lab(color.hsl(60, 1, .2)) + "", "#666600");
+  test.equal(color.lab("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(color.lab("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(color.lab("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(color.lab("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(color.lab(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(color.lab(color.hsl(60, 1, .2)) + "", "rgb(102, 102, 0)");
   test.end();
 });
 
 tape("lab.toString() reflects l, a and b channel values", function(test) {
   var c = color.lab("#abc");
   c.l += 10, c.a -= 10, c.b += 10;
-  test.equal(c + "", "#badcd5");
+  test.equal(c + "", "rgb(186, 220, 213)");
   test.end();
 });
 
 tape("lab.toString() treats undefined channel values as 0", function(test) {
-  test.equal(color.lab("invalid") + "", "#000000");
-  test.equal(color.lab(NaN, 0, 0) + "", "#000000");
-  test.equal(color.lab(50, NaN, 0) + "", "#777777");
-  test.equal(color.lab(50, 0, NaN) + "", "#777777");
-  test.equal(color.lab(50, NaN, NaN) + "", "#777777");
+  test.equal(color.lab("invalid") + "", "rgb(0, 0, 0)");
+  test.equal(color.lab(NaN, 0, 0) + "", "rgb(0, 0, 0)");
+  test.equal(color.lab(50, NaN, 0) + "", "rgb(119, 119, 119)");
+  test.equal(color.lab(50, 0, NaN) + "", "rgb(119, 119, 119)");
+  test.equal(color.lab(50, NaN, NaN) + "", "rgb(119, 119, 119)");
   test.end();
 });
 

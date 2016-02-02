@@ -27,33 +27,33 @@ tape("hcl(…) returns defined hue and chroma, even for black and white", functi
 });
 
 tape("hcl.toString() converts to RGB and formats as hexadecimal", function(test) {
-  test.equal(color.hcl("#abcdef") + "", "#abcdef");
-  test.equal(color.hcl("moccasin") + "", "#ffe4b5");
-  test.equal(color.hcl("hsl(60, 100%, 20%)") + "", "#666600");
-  test.equal(color.hcl("rgb(12, 34, 56)") + "", "#0c2238");
-  test.equal(color.hcl(color.rgb(12, 34, 56)) + "", "#0c2238");
-  test.equal(color.hcl(color.hsl(60, 1, .2)) + "", "#666600");
+  test.equal(color.hcl("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(color.hcl("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(color.hcl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(color.hcl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(color.hcl(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(color.hcl(color.hsl(60, 1, .2)) + "", "rgb(102, 102, 0)");
   test.end();
 });
 
 tape("hcl.toString() reflects h, c and l channel values", function(test) {
   var c = color.hcl("#abc");
   c.h += 10, c.c += 1, c.l -= 1;
-  test.equal(c + "", "#aab7cc");
+  test.equal(c + "", "rgb(170, 183, 204)");
   test.end();
 });
 
 tape("hcl.toString() treats undefined channel values as 0", function(test) {
-  test.equal(color.hcl("invalid") + "", "#000000");
-  test.equal(color.hcl("#000") + "", "#000000");
-  test.equal(color.hcl("#ccc") + "", "#cccccc");
-  test.equal(color.hcl("#fff") + "", "#ffffff");
-  test.equal(color.hcl(NaN, 20, 40) + "", "#5e5e5e"); // equivalent to hcl(*, *, 40)
-  test.equal(color.hcl(120, NaN, 40) + "", "#5e5e5e");
-  test.equal(color.hcl(0, NaN, 40) + "", "#5e5e5e");
-  test.equal(color.hcl(120, 50, NaN) + "", "#000000"); // equivalent to hcl(*, *, 0)
-  test.equal(color.hcl(0, 50, NaN) + "", "#000000");
-  test.equal(color.hcl(120, 0, NaN) + "", "#000000");
+  test.equal(color.hcl("invalid") + "", "rgb(0, 0, 0)");
+  test.equal(color.hcl("#000") + "", "rgb(0, 0, 0)");
+  test.equal(color.hcl("#ccc") + "", "rgb(204, 204, 204)");
+  test.equal(color.hcl("#fff") + "", "rgb(255, 255, 255)");
+  test.equal(color.hcl(NaN, 20, 40) + "", "rgb(94, 94, 94)"); // equivalent to hcl(*, *, 40)
+  test.equal(color.hcl(120, NaN, 40) + "", "rgb(94, 94, 94)");
+  test.equal(color.hcl(0, NaN, 40) + "", "rgb(94, 94, 94)");
+  test.equal(color.hcl(120, 50, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hcl(*, *, 0)
+  test.equal(color.hcl(0, 50, NaN) + "", "rgb(0, 0, 0)");
+  test.equal(color.hcl(120, 0, NaN) + "", "rgb(0, 0, 0)");
   test.end();
 });
 

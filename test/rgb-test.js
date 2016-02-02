@@ -16,39 +16,39 @@ tape("rgb(…) exposes r, g and b channel values", function(test) {
 });
 
 tape("rgb.toString() formats as hexadecimal", function(test) {
-  test.equal(color.rgb("#abcdef") + "", "#abcdef");
-  test.equal(color.rgb("moccasin") + "", "#ffe4b5");
-  test.equal(color.rgb("hsl(60, 100%, 20%)") + "", "#666600");
-  test.equal(color.rgb("rgb(12, 34, 56)") + "", "#0c2238");
-  test.equal(color.rgb(color.rgb(12, 34, 56)) + "", "#0c2238");
-  test.equal(color.rgb(color.hsl(60, 1, .2)) + "", "#666600");
+  test.equal(color.rgb("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(color.rgb("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(color.rgb("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(color.rgb("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(color.rgb(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(color.rgb(color.hsl(60, 1, .2)) + "", "rgb(102, 102, 0)");
   test.end();
 });
 
 tape("rgb.toString() reflects r, g and b channel values", function(test) {
   var c = color.rgb("#abc");
   ++c.r, ++c.g, ++c.b;
-  test.equal(c + "", "#abbccd");
+  test.equal(c + "", "rgb(171, 188, 205)");
   test.end();
 });
 
 tape("rgb.toString() treats undefined channel values as 0", function(test) {
-  test.equal(color.rgb("invalid") + "", "#000000");
-  test.equal(color.rgb(NaN, 12, 34) + "", "#000c22");
+  test.equal(color.rgb("invalid") + "", "rgb(0, 0, 0)");
+  test.equal(color.rgb(NaN, 12, 34) + "", "rgb(0, 12, 34)");
   test.end();
 });
 
 tape("rgb.toString() clamps r, g and b channel values", function(test) {
-  test.equal(color.rgb(-1,  2,  3) + "", "#000203");
-  test.equal(color.rgb( 2, -1,  3) + "", "#020003");
-  test.equal(color.rgb( 2,  3, -1) + "", "#020300");
+  test.equal(color.rgb(-1,  2,  3) + "", "rgb(0, 2, 3)");
+  test.equal(color.rgb( 2, -1,  3) + "", "rgb(2, 0, 3)");
+  test.equal(color.rgb( 2,  3, -1) + "", "rgb(2, 3, 0)");
   test.end();
 });
 
 tape("rgb.toString() rounds r, g and b channel values", function(test) {
-  test.equal(color.rgb(0.5, 2.0, 3.0) + "", "#010203");
-  test.equal(color.rgb(2.0, 0.5, 3.0) + "", "#020103");
-  test.equal(color.rgb(2.0, 3.0, 0.5) + "", "#020301");
+  test.equal(color.rgb(0.5, 2.0, 3.0) + "", "rgb(1, 2, 3)");
+  test.equal(color.rgb(2.0, 0.5, 3.0) + "", "rgb(2, 1, 3)");
+  test.equal(color.rgb(2.0, 3.0, 0.5) + "", "rgb(2, 3, 1)");
   test.end();
 });
 

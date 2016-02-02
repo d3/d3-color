@@ -17,31 +17,31 @@ tape("hsl(…) exposes h, s, and l channel values", function(test) {
 });
 
 tape("hsl.toString() converts to RGB and formats as hexadecimal", function(test) {
-  test.equal(color.hsl("#abcdef") + "", "#abcdef");
-  test.equal(color.hsl("moccasin") + "", "#ffe4b5");
-  test.equal(color.hsl("hsl(60, 100%, 20%)") + "", "#666600");
-  test.equal(color.hsl("rgb(12, 34, 56)") + "", "#0c2238");
-  test.equal(color.hsl(color.rgb(12, 34, 56)) + "", "#0c2238");
-  test.equal(color.hsl(color.hsl(60, 1, .2)) + "", "#666600");
+  test.equal(color.hsl("#abcdef") + "", "rgb(171, 205, 239)");
+  test.equal(color.hsl("moccasin") + "", "rgb(255, 228, 181)");
+  test.equal(color.hsl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  test.equal(color.hsl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(color.hsl(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  test.equal(color.hsl(color.hsl(60, 1, .2)) + "", "rgb(102, 102, 0)");
   test.end();
 });
 
 tape("hsl.toString() reflects h, s and l channel values", function(test) {
   var c = color.hsl("#abc");
   c.h += 10, c.s += .01, c.l -= .01;
-  test.equal(c + "", "#a6b2cb");
+  test.equal(c + "", "rgb(166, 178, 203)");
   test.end();
 });
 
 tape("hsl.toString() treats undefined channel values as 0", function(test) {
-  test.equal(color.hsl("invalid") + "", "#000000");
-  test.equal(color.hsl("#000") + "", "#000000");
-  test.equal(color.hsl("#ccc") + "", "#cccccc");
-  test.equal(color.hsl("#fff") + "", "#ffffff");
-  test.equal(color.hsl(NaN, .5, .4) + "", "#666666"); // equivalent to hsl(*, 0, .4)
-  test.equal(color.hsl(120, NaN, .4) + "", "#666666");
-  test.equal(color.hsl(NaN, NaN, .4) + "", "#666666");
-  test.equal(color.hsl(120, .5, NaN) + "", "#000000"); // equivalent to hsl(120, .5, 0)
+  test.equal(color.hsl("invalid") + "", "rgb(0, 0, 0)");
+  test.equal(color.hsl("#000") + "", "rgb(0, 0, 0)");
+  test.equal(color.hsl("#ccc") + "", "rgb(204, 204, 204)");
+  test.equal(color.hsl("#fff") + "", "rgb(255, 255, 255)");
+  test.equal(color.hsl(NaN, .5, .4) + "", "rgb(102, 102, 102)"); // equivalent to hsl(*, 0, .4)
+  test.equal(color.hsl(120, NaN, .4) + "", "rgb(102, 102, 102)");
+  test.equal(color.hsl(NaN, NaN, .4) + "", "rgb(102, 102, 102)");
+  test.equal(color.hsl(120, .5, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hsl(120, .5, 0)
   test.end();
 });
 

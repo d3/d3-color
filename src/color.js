@@ -175,44 +175,44 @@ color.prototype = Color.prototype = {
 export default function color(format) {
   var m;
   format = (format + "").trim().toLowerCase();
-  return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), new Rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf))) // #f00
+  return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), new Rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf), 1)) // #f00
       : (m = reHex6.exec(format)) ? rgbn(parseInt(m[1], 16)) // #ff0000
-      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3]) // rgb(255, 0, 0)
-      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%, 0%, 0%)
-      : (m = reRgbaInteger.exec(format)) ? new Rgb(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
-      : (m = reRgbaPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
-      : (m = reHslPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120, 50%, 50%)
-      : (m = reHslaPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
+      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3], 1) // rgb(255, 0, 0)
+      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
+      : (m = reRgbaInteger.exec(format)) ? rgba(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
+      : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
+      : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
+      : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
       : named.hasOwnProperty(format) ? rgbn(named[format])
-      : format === "transparent" ? new Rgb(0, 0, 0, 0)
+      : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;
 }
 
 function rgbn(n) {
-  return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
+  return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff, 1);
+}
+
+function rgba(r, g, b, a) {
+  if (a <= 0) r = g = b = NaN;
+  return new Rgb(r, g, b, a);
+}
+
+export function rgbConvert(o) {
+  if (!(o instanceof Color)) o = color(o);
+  if (!o) return new Rgb;
+  o = o.rgb();
+  return new Rgb(o.r, o.g, o.b, o.opacity);
 }
 
 export function rgb(r, g, b, opacity) {
-  if (arguments.length === 1) {
-    if (!(r instanceof Color)) r = color(r);
-    if (r) {
-      r = r.rgb();
-      opacity = r.opacity;
-      b = r.b;
-      g = r.g;
-      r = r.r;
-    } else {
-      r = NaN;
-    }
-  }
-  return new Rgb(r, g, b, opacity);
+  return arguments.length === 1 ? rgbConvert(r) : new Rgb(r, g, b, opacity == null ? 1 : opacity);
 }
 
 export function Rgb(r, g, b, opacity) {
   this.r = +r;
   this.g = +g;
   this.b = +b;
-  this.opacity = opacity == null ? 1 : +opacity;
+  this.opacity = +opacity;
 }
 
 var _rgb = rgb.prototype = Rgb.prototype = new Color;
@@ -247,49 +247,48 @@ _rgb.toString = function() {
       + (a === 1 ? ")" : ", " + a + ")");
 };
 
-export function hsl(h, s, l, opacity) {
-  if (arguments.length === 1) {
-    if (h instanceof Hsl) {
-      opacity = h.opacity;
-      l = h.l;
-      s = h.s;
-      h = h.h;
-    } else {
-      if (!(h instanceof Color)) h = color(h);
-      if (h) {
-        if (h instanceof Hsl) return h;
-        h = h.rgb();
-        opacity = h.opacity;
-        var r = h.r / 255,
-            g = h.g / 255,
-            b = h.b / 255,
-            min = Math.min(r, g, b),
-            max = Math.max(r, g, b),
-            range = max - min;
-        l = (max + min) / 2;
-        if (range) {
-          s = l < 0.5 ? range / (max + min) : range / (2 - max - min);
-          if (r === max) h = (g - b) / range + (g < b) * 6;
-          else if (g === max) h = (b - r) / range + 2;
-          else h = (r - g) / range + 4;
-          h *= 60;
-        } else {
-          h = NaN;
-          s = l > 0 && l < 1 ? 0 : h;
-        }
-      } else {
-        h = NaN;
-      }
-    }
+function hsla(h, s, l, a) {
+  if (a <= 0) h = s = l = NaN;
+  else if (l <= 0 || l >= 1) h = s = NaN;
+  else if (s <= 0) h = NaN;
+  return new Hsl(h, s, l, a);
+}
+
+export function hslConvert(o) {
+  if (o instanceof Hsl) return new Hsl(o.h, o.s, o.l, o.opacity);
+  if (!(o instanceof Color)) o = color(o);
+  if (!o) return new Hsl;
+  if (o instanceof Hsl) return o;
+  o = o.rgb();
+  var r = o.r / 255,
+      g = o.g / 255,
+      b = o.b / 255,
+      min = Math.min(r, g, b),
+      max = Math.max(r, g, b),
+      h = NaN,
+      s = max - min,
+      l = (max + min) / 2;
+  if (s) {
+    if (r === max) h = (g - b) / s + (g < b) * 6;
+    else if (g === max) h = (b - r) / s + 2;
+    else h = (r - g) / s + 4;
+    s /= l < 0.5 ? max + min : 2 - max - min;
+    h *= 60;
+  } else {
+    s = l > 0 && l < 1 ? 0 : h;
   }
-  return new Hsl(h, s, l, opacity);
+  return new Hsl(h, s, l, o.opacity);
+}
+
+export function hsl(h, s, l, opacity) {
+  return arguments.length === 1 ? hslConvert(h) : new Hsl(h, s, l, opacity == null ? 1 : opacity);
 }
 
 function Hsl(h, s, l, opacity) {
   this.h = +h;
   this.s = +s;
   this.l = +l;
-  this.opacity = opacity == null ? 1 : +opacity;
+  this.opacity = +opacity;
 }
 
 var _hsl = hsl.prototype = Hsl.prototype = new Color;

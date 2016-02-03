@@ -11,7 +11,7 @@ var c = d3.color("steelblue"); // {r: 70, g: 130, b: 180, opacity: 1}
 Let’s try converting it to HSL:
 
 ```js
-var c = d3.hsl("steelblue"); // {h: 207.27272727272728, s: 0.44, l: 0.4901960784313726, opacity: 1}
+var c = d3.hsl("steelblue"); // {h: 207.27…, s: 0.44, l: 0.4902…, opacity: 1}
 ```
 
 Now rotate the hue by 90°, bump up the saturation, and format as a string for CSS:

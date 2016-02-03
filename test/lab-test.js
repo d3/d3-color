@@ -102,7 +102,7 @@ tape("lab(format) parses the specified format and converts to Lab", function(tes
 });
 
 tape("lab(format) returns undefined channel values for unknown formats", function(test) {
-  test.labEqual(color.lab("invalid"), NaN, NaN, NaN, 1);
+  test.labEqual(color.lab("invalid"), NaN, NaN, NaN, NaN);
   test.end();
 });
 

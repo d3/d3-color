@@ -125,7 +125,27 @@ tape("hsl(format) parses the specified format and converts to HSL", function(tes
   test.hslEqual(color.hsl("hsl(60,100%,20%)"), 60, 1, 0.2, 1);
   test.hslEqual(color.hsl("hsla(60,100%,20%,0.4)"), 60, 1, 0.2, 0.4);
   test.hslEqual(color.hsl("aliceblue"), 208, 1, 0.9705882, 1);
-  test.hslEqual(color.hsl("transparent"), NaN, NaN, 0, 0);
+  test.hslEqual(color.hsl("transparent"), NaN, NaN, NaN, 0);
+  test.end();
+});
+
+tape("hsl(format) ignores the hue if the saturation is <= 0", function(test) {
+  test.hslEqual(color.hsl("hsl(120,0%,20%)"), NaN, 0, 0.2, 1);
+  test.hslEqual(color.hsl("hsl(120,-10%,20%)"), NaN, -0.1, 0.2, 1);
+  test.end();
+});
+
+tape("hsl(format) ignores the hue and saturation if the lightness is <= 0 or >= 1", function(test) {
+  test.hslEqual(color.hsl("hsl(120,20%,-10%)"), NaN, NaN, -0.1, 1);
+  test.hslEqual(color.hsl("hsl(120,20%,0%)"), NaN, NaN, 0.0, 1);
+  test.hslEqual(color.hsl("hsl(120,20%,100%)"), NaN, NaN, 1.0, 1);
+  test.hslEqual(color.hsl("hsl(120,20%,120%)"), NaN, NaN, 1.2, 1);
+  test.end();
+});
+
+tape("hsl(format) ignores all channels if the alpha is <= 0", function(test) {
+  test.hslEqual(color.hsl("hsla(120,20%,10%,0)"), NaN, NaN, NaN, 0);
+  test.hslEqual(color.hsl("hsla(120,20%,10%,-0.1)"), NaN, NaN, NaN, -0.1);
   test.end();
 });
 
@@ -135,7 +155,7 @@ tape("hsl(format) does not lose precision when parsing HSL formats", function(te
 });
 
 tape("hsl(format) returns undefined channel values for unknown formats", function(test) {
-  test.hslEqual(color.hsl("invalid"), NaN, NaN, NaN, 1);
+  test.hslEqual(color.hsl("invalid"), NaN, NaN, NaN, NaN);
   test.end();
 });
 

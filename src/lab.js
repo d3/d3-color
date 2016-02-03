@@ -1,4 +1,4 @@
-import {Color, rgb, Rgb} from "./color";
+import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
 
 var Kn = 18,
@@ -10,41 +10,31 @@ var Kn = 18,
     t2 = 3 * t1 * t1,
     t3 = t1 * t1 * t1;
 
-export default function lab(l, a, b, opacity) {
-  if (arguments.length === 1) {
-    if (l instanceof Lab) {
-      opacity = l.opacity;
-      b = l.b;
-      a = l.a;
-      l = l.l;
-    } else if (l instanceof Hcl) {
-      var h = l.h * deg2rad;
-      opacity = l.opacity;
-      b = Math.sin(h) * l.c;
-      a = Math.cos(h) * l.c;
-      l = l.l;
-    } else {
-      if (!(l instanceof Rgb)) l = rgb(l);
-      opacity = l.opacity;
-      b = rgb2xyz(l.r);
-      a = rgb2xyz(l.g);
-      l = rgb2xyz(l.b);
-      var x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
-          y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
-          z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
-      b = 200 * (y - z);
-      a = 500 * (x - y);
-      l = 116 * y - 16;
-    }
+function labConvert(o) {
+  if (o instanceof Lab) return new Lab(o.l, o.a, o.b, o.opacity);
+  if (o instanceof Hcl) {
+    var h = o.h * deg2rad;
+    return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
   }
-  return new Lab(l, a, b, opacity);
+  if (!(o instanceof Rgb)) o = rgbConvert(o);
+  var b = rgb2xyz(o.r),
+      a = rgb2xyz(o.g),
+      l = rgb2xyz(o.b),
+      x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
+      y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
+      z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
+  return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
+}
+
+export default function lab(l, a, b, opacity) {
+  return arguments.length === 1 ? labConvert(l) : new Lab(l, a, b, opacity == null ? 1 : opacity);
 }
 
 export function Lab(l, a, b, opacity) {
   this.l = +l;
   this.a = +a;
   this.b = +b;
-  this.opacity = opacity == null ? 1 : +opacity;
+  this.opacity = +opacity;
 }
 
 var _lab = lab.prototype = Lab.prototype = new Color;
@@ -88,30 +78,22 @@ function rgb2xyz(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
 
+function hclConvert(o) {
+  if (o instanceof Hcl) return new Hcl(o.h, o.c, o.l, o.opacity);
+  if (!(o instanceof Lab)) o = labConvert(o);
+  var h = Math.atan2(o.b, o.a) * rad2deg;
+  return new Hcl(h < 0 ? h + 360 : h, Math.sqrt(o.a * o.a + o.b * o.b), o.l, o.opacity);
+}
+
 export function hcl(h, c, l, opacity) {
-  if (arguments.length === 1) {
-    if (h instanceof Hcl) {
-      opacity = h.opacity;
-      l = h.l;
-      c = h.c;
-      h = h.h;
-    } else {
-      if (!(h instanceof Lab)) h = lab(h);
-      opacity = h.opacity;
-      l = h.l;
-      c = Math.sqrt(h.a * h.a + h.b * h.b);
-      h = Math.atan2(h.b, h.a) * rad2deg;
-      if (h < 0) h += 360;
-    }
-  }
-  return new Hcl(h, c, l, opacity);
+  return arguments.length === 1 ? hclConvert(h) : new Hcl(h, c, l, opacity == null ? 1 : opacity);
 }
 
 export function Hcl(h, c, l, opacity) {
   this.h = +h;
   this.c = +c;
   this.l = +l;
-  this.opacity = opacity == null ? 1 : +opacity;
+  this.opacity = +opacity;
 }
 
 var _hcl = hcl.prototype = Hcl.prototype = new Color;
@@ -125,5 +107,5 @@ _hcl.darker = function(k) {
 };
 
 _hcl.rgb = function() {
-  return lab(this).rgb();
+  return labConvert(this).rgb();
 };

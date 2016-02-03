@@ -119,8 +119,14 @@ tape("rgb(format) parses the specified format and converts to RGB", function(tes
   test.end();
 });
 
+tape("rgb(format) ignores all channels if the alpha is <= 0", function(test) {
+  test.rgbEqual(color.rgb("rgba(12,34,45,0)"), NaN, NaN, NaN, 0);
+  test.rgbEqual(color.rgb("rgba(12,34,45,-0.1)"), NaN, NaN, NaN, -0.1);
+  test.end();
+});
+
 tape("rgb(format) returns undefined channel values for unknown formats", function(test) {
-  test.rgbEqual(color.rgb("invalid"), NaN, NaN, NaN, 1);
+  test.rgbEqual(color.rgb("invalid"), NaN, NaN, NaN, NaN);
   test.end();
 });
 

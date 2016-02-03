@@ -12,7 +12,7 @@ tape("color(format) parses CSS color names (e.g., \"rebeccapurple\")", function(
   test.rgbEqual(color.color("aliceblue"), 240, 248, 255, 1);
   test.rgbEqual(color.color("yellow"), 255, 255, 0, 1);
   test.rgbEqual(color.color("rebeccapurple"), 102, 51, 153, 1);
-  test.rgbEqual(color.color("transparent"), 0, 0, 0, 0);
+  test.rgbEqual(color.color("transparent"), NaN, NaN, NaN, 0);
   test.end();
 });
 
@@ -80,13 +80,13 @@ tape("color(format) allows number signs", function(test) {
   test.rgbEqual(color.color("rgb(+120,+30,+50)"), 120, 30, 50, 1);
   test.hslEqual(color.color("hsl(+120,+30%,+50%)"), 120, 0.3, 0.5, 1);
   test.rgbEqual(color.color("rgb(-120,-30,-50)"), -120, -30, -50, 1);
-  test.hslEqual(color.color("hsl(-120,-30%,-50%)"), -120, -0.3, -0.5, 1);
+  test.hslEqual(color.color("hsl(-120,-30%,-50%)"), NaN, NaN, -0.5, 1);
   test.rgbEqual(color.color("rgba(12,34,56,+0.4)"), 12, 34, 56, 0.4);
-  test.rgbEqual(color.color("rgba(12,34,56,-0.4)"), 12, 34, 56, -0.4);
+  test.rgbEqual(color.color("rgba(12,34,56,-0.4)"), NaN, NaN, NaN, -0.4);
   test.rgbEqual(color.color("rgba(12%,34%,56%,+0.4)"), 31, 87, 143, 0.4);
-  test.rgbEqual(color.color("rgba(12%,34%,56%,-0.4)"), 31, 87, 143, -0.4);
+  test.rgbEqual(color.color("rgba(12%,34%,56%,-0.4)"), NaN, NaN, NaN, -0.4);
   test.hslEqual(color.color("hsla(60,100%,20%,+0.4)"), 60, 1, 0.2, 0.4);
-  test.hslEqual(color.color("hsla(60,100%,20%,-0.4)"), 60, 1, 0.2, -0.4);
+  test.hslEqual(color.color("hsla(60,100%,20%,-0.4)"), NaN, NaN, NaN, -0.4);
   test.end();
 });
 
@@ -128,7 +128,7 @@ tape("color(format) does not allow whitespace before open paren or percent sign"
 
 tape("color(format) is case-insensitive", function(test) {
   test.rgbEqual(color.color("aLiCeBlUE"), 240, 248, 255, 1);
-  test.rgbEqual(color.color("transPARENT"), 0, 0, 0, 0);
+  test.rgbEqual(color.color("transPARENT"), NaN, NaN, NaN, 0);
   test.rgbEqual(color.color(" #aBc\t\n"), 170, 187, 204, 1);
   test.rgbEqual(color.color(" #aaBBCC\t\n"), 170, 187, 204, 1);
   test.rgbEqual(color.color(" rGB(120,30,50)\t\n"), 120, 30, 50, 1);

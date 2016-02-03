@@ -14,12 +14,19 @@ Let’s try converting it to HSL:
 var c = d3.hsl("steelblue"); // {h: 207.27272727272728, s: 0.44, l: 0.4901960784313726, opacity: 1}
 ```
 
-Now rotate the hue by 90°, bump up the saturation, and format as hex:
+Now rotate the hue by 90°, bump up the saturation, and format as a string for CSS:
 
 ```js
 c.h += 90;
 c.s += 0.2;
 c + ""; // rgb(198, 45, 205)
+```
+
+To fade the color slightly:
+
+```js
+c.opacity = 0.8;
+c + ""; // rgba(198, 45, 205, 0.8)
 ```
 
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:

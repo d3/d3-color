@@ -52,15 +52,15 @@ In a vanilla environment, a `d3_color` global is exported. [Try d3-color in your
 
 Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, null is returned. Some examples:
 
-* `"rgb(255, 255, 255)"`
-* `"rgb(10%, 20%, 30%)"`
-* `"rgba(255, 255, 255, 0.4)"`
-* `"rgba(10%, 20%, 30%, 0.4)"`
-* `"hsl(120, 50%, 20%)"`
-* `"hsla(120, 50%, 20%, 0.4)"`
-* `"#ffeeaa"`
-* `"#fea"`
-* `"steelblue"`
+* `rgb(255, 255, 255)`
+* `rgb(10%, 20%, 30%)`
+* `rgba(255, 255, 255, 0.4)`
+* `rgba(10%, 20%, 30%, 0.4)`
+* `hsl(120, 50%, 20%)`
+* `hsla(120, 50%, 20%, 0.4)`
+* `#ffeeaa`
+* `#fea`
+* `steelblue`
 
 The list of supported [named colors](http://www.w3.org/TR/SVG/types.html#ColorKeywords) is specified by CSS.
 
@@ -88,7 +88,7 @@ Returns true if and only if the color is displayable on standard hardware. For e
 
 <a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>()
 
-Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `"rgb(247, 234, 186)"`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
+Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
 <a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>])<br>
 <a href="#rgb">#</a> d3.<b>rgb</b>(<i>specifier</i>)<br>

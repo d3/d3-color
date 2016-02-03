@@ -10,19 +10,22 @@ var Kn = 18,
     t2 = 3 * t1 * t1,
     t3 = t1 * t1 * t1;
 
-export default function lab(l, a, b) {
+export default function lab(l, a, b, opacity) {
   if (arguments.length === 1) {
     if (l instanceof Lab) {
+      opacity = l.opacity;
       b = l.b;
       a = l.a;
       l = l.l;
     } else if (l instanceof Hcl) {
       var h = l.h * deg2rad;
+      opacity = l.opacity;
       b = Math.sin(h) * l.c;
       a = Math.cos(h) * l.c;
       l = l.l;
     } else {
       if (!(l instanceof Rgb)) l = rgb(l);
+      opacity = l.opacity;
       b = rgb2xyz(l.r);
       a = rgb2xyz(l.g);
       l = rgb2xyz(l.b);
@@ -34,23 +37,24 @@ export default function lab(l, a, b) {
       l = 116 * y - 16;
     }
   }
-  return new Lab(l, a, b);
+  return new Lab(l, a, b, opacity);
 }
 
-export function Lab(l, a, b) {
+export function Lab(l, a, b, opacity) {
   this.l = +l;
   this.a = +a;
   this.b = +b;
+  this.opacity = opacity == null ? 1 : +opacity;
 }
 
 var _lab = lab.prototype = Lab.prototype = new Color;
 
 _lab.brighter = function(k) {
-  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
+  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
 };
 
 _lab.darker = function(k) {
-  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
+  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
 };
 
 _lab.rgb = function() {
@@ -63,7 +67,8 @@ _lab.rgb = function() {
   return new Rgb(
     xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
     xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
-    xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z)
+    xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z),
+    this.opacity
   );
 };
 
@@ -83,37 +88,40 @@ function rgb2xyz(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
 
-export function hcl(h, c, l) {
+export function hcl(h, c, l, opacity) {
   if (arguments.length === 1) {
     if (h instanceof Hcl) {
+      opacity = h.opacity;
       l = h.l;
       c = h.c;
       h = h.h;
     } else {
       if (!(h instanceof Lab)) h = lab(h);
+      opacity = h.opacity;
       l = h.l;
       c = Math.sqrt(h.a * h.a + h.b * h.b);
       h = Math.atan2(h.b, h.a) * rad2deg;
       if (h < 0) h += 360;
     }
   }
-  return new Hcl(h, c, l);
+  return new Hcl(h, c, l, opacity);
 }
 
-export function Hcl(h, c, l) {
+export function Hcl(h, c, l, opacity) {
   this.h = +h;
   this.c = +c;
   this.l = +l;
+  this.opacity = opacity == null ? 1 : +opacity;
 }
 
 var _hcl = hcl.prototype = Hcl.prototype = new Color;
 
 _hcl.brighter = function(k) {
-  return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
+  return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k), this.opacity);
 };
 
 _hcl.darker = function(k) {
-  return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k));
+  return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k), this.opacity);
 };
 
 _hcl.rgb = function() {

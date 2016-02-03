@@ -258,8 +258,8 @@ export function hsl(h, s, l, opacity) {
       if (!(h instanceof Color)) h = color(h);
       if (h) {
         if (h instanceof Hsl) return h;
-        opacity = h.opacity;
         h = h.rgb();
+        opacity = h.opacity;
         var r = h.r / 255,
             g = h.g / 255,
             b = h.b / 255,

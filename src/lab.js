@@ -50,11 +50,11 @@ export function Lab(l, a, b, opacity) {
 var _lab = lab.prototype = Lab.prototype = new Color;
 
 _lab.brighter = function(k) {
-  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
+  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
 };
 
 _lab.darker = function(k) {
-  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
+  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
 };
 
 _lab.rgb = function() {

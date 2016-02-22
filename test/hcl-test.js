@@ -8,6 +8,7 @@ tape("hcl(…) returns an instance of hcl and color", function(test) {
   var c = color.hcl(120, 40, 50);
   test.ok(c instanceof color.hcl);
   test.ok(c instanceof color.color);
+  test.equal(c.constructor.name, "Hcl");
   test.end();
 });
 

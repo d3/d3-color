@@ -8,6 +8,7 @@ tape("lab(…) returns an instance of lab and color", function(test) {
   var c = color.lab(120, 40, 50);
   test.ok(c instanceof color.lab);
   test.ok(c instanceof color.color);
+  test.equal(c.constructor.name, "Lab");
   test.end();
 });
 

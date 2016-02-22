@@ -1,3 +1,4 @@
+import define, {extend} from "./define";
 import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
 
@@ -37,30 +38,28 @@ export function Lab(l, a, b, opacity) {
   this.opacity = +opacity;
 }
 
-var _lab = lab.prototype = Lab.prototype = new Color;
-
-_lab.brighter = function(k) {
-  return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
-};
-
-_lab.darker = function(k) {
-  return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
-};
-
-_lab.rgb = function() {
-  var y = (this.l + 16) / 116,
-      x = isNaN(this.a) ? y : y + this.a / 500,
-      z = isNaN(this.b) ? y : y - this.b / 200;
-  y = Yn * lab2xyz(y);
-  x = Xn * lab2xyz(x);
-  z = Zn * lab2xyz(z);
-  return new Rgb(
-    xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
-    xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
-    xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z),
-    this.opacity
-  );
-};
+define(Lab, lab, extend(Color, {
+  brighter: function(k) {
+    return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
+  },
+  darker: function(k) {
+    return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
+  },
+  rgb: function() {
+    var y = (this.l + 16) / 116,
+        x = isNaN(this.a) ? y : y + this.a / 500,
+        z = isNaN(this.b) ? y : y - this.b / 200;
+    y = Yn * lab2xyz(y);
+    x = Xn * lab2xyz(x);
+    z = Zn * lab2xyz(z);
+    return new Rgb(
+      xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
+      xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
+      xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z),
+      this.opacity
+    );
+  }
+}));
 
 function xyz2lab(t) {
   return t > t3 ? Math.pow(t, 1 / 3) : t / t2 + t0;
@@ -96,16 +95,14 @@ export function Hcl(h, c, l, opacity) {
   this.opacity = +opacity;
 }
 
-var _hcl = hcl.prototype = Hcl.prototype = new Color;
-
-_hcl.brighter = function(k) {
-  return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k), this.opacity);
-};
-
-_hcl.darker = function(k) {
-  return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k), this.opacity);
-};
-
-_hcl.rgb = function() {
-  return labConvert(this).rgb();
-};
+define(Hcl, hcl, extend(Color, {
+  brighter: function(k) {
+    return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k), this.opacity);
+  },
+  darker: function(k) {
+    return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k), this.opacity);
+  },
+  rgb: function() {
+    return labConvert(this).rgb();
+  }
+}));

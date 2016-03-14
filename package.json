@@ -26,12 +26,11 @@
   },
   "scripts": {
     "pretest": "rm -rf build && mkdir build && json2module package.json > build/package.js && rollup -f umd -n d3_color -o build/d3-color.js -- index.js",
-    "test": "faucet && eslint index.js src test",
+    "test": "tape test/**/*-test.js && eslint index.js src test",
     "prepublish": "npm run test && uglifyjs build/d3-color.js -c -m -o build/d3-color.min.js",
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-color.js ../d3.github.com/d3-color.v0.4.js && cp build/d3-color.min.js ../d3.github.com/d3-color.v0.4.min.js && cd ../d3.github.com && git add d3-color.v0.4.js d3-color.v0.4.min.js && git commit -m \"d3-color ${VERSION}\" && git push && cd - && zip -j build/d3-color.zip -- LICENSE README.md build/d3-color.js build/d3-color.min.js"
   },
   "devDependencies": {
-    "faucet": "0.0",
     "json2module": "0.0",
     "rollup": "0.25",
     "tape": "4",

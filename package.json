@@ -31,8 +31,9 @@
     "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-color.js ../d3.github.com/d3-color.v0.4.js && cp build/d3-color.min.js ../d3.github.com/d3-color.v0.4.min.js && cd ../d3.github.com && git add d3-color.v0.4.js d3-color.v0.4.min.js && git commit -m \"d3-color ${VERSION}\" && git push && cd - && zip -j build/d3-color.zip -- LICENSE README.md build/d3-color.js build/d3-color.min.js"
   },
   "devDependencies": {
+    "eslint": "2",
     "json2module": "0.0",
-    "rollup": "0.25",
+    "rollup": "0.26",
     "tape": "4",
     "uglify-js": "2"
   }

@@ -1,6 +1,6 @@
 {
   "name": "d3-color",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Color spaces! RGB, HSL, HSV, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",
@@ -13,7 +13,7 @@
     "lch",
     "cubehelix"
   ],
-  "homepage": "https://github.com/d3/d3-color",
+  "homepage": "https://d3js.org/d3-color/",
   "license": "BSD-3-Clause",
   "author": {
     "name": "Mike Bostock",
@@ -26,15 +26,15 @@
     "url": "https://github.com/d3/d3-color.git"
   },
   "scripts": {
-    "pretest": "rm -rf build && mkdir build && json2module package.json > build/package.js && rollup -f umd -n d3_color -o build/d3-color.js -- index.js",
+    "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-color.js -- index.js",
     "test": "tape 'test/**/*-test.js' && eslint index.js src test",
-    "prepublish": "npm run test && uglifyjs build/d3-color.js -c -m -o build/d3-color.min.js",
-    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-color.js ../d3.github.com/d3-color.v0.4.js && cp build/d3-color.min.js ../d3.github.com/d3-color.v0.4.min.js && cd ../d3.github.com && git add d3-color.v0.4.js d3-color.v0.4.min.js && git commit -m \"d3-color ${VERSION}\" && git push && cd - && zip -j build/d3-color.zip -- LICENSE README.md build/d3-color.js build/d3-color.min.js"
+    "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-color.js -c -m -o build/d3-color.min.js",
+    "postpublish": "VERSION=`node -e 'console.log(require(\"./package.json\").version)'`; git push && git push --tags && cp build/d3-color.js ../d3.github.com/d3-color.v0.5.js && cp build/d3-color.min.js ../d3.github.com/d3-color.v0.5.min.js && cd ../d3.github.com && git add d3-color.v0.5.js d3-color.v0.5.min.js && git commit -m \"d3-color ${VERSION}\" && git push && cd - && zip -j build/d3-color.zip -- LICENSE README.md build/d3-color.js build/d3-color.min.js"
   },
   "devDependencies": {
     "eslint": "2",
-    "json2module": "0.0",
-    "rollup": "0.26",
+    "package-preamble": "0.0",
+    "rollup": "0.27",
     "tape": "4",
     "uglify-js": "2"
   }

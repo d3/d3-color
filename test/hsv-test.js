@@ -14,16 +14,16 @@ tape("hsv(…) returns an instance of hsv and color", function(test) {
 
 tape("hsv(…) exposes h, s, and v channel values and opacity", function(test) {
   test.hsvEqual(color.hsv("#abc"), 210, 0.16666666, 0.8, 1);
-  test.hsvEqual(color.hsv("hsva(60, 100%, 20%, 0.4)"), 60, 1, 0.2, 0.4);
+  test.hsvEqual(color.hsv(60, 1, 0.2, 0.4), 60, 1, 0.2, 0.4);
   test.end();
 });
 
 tape("hsv.toString() converts to RGB and formats as rgb(…) or rgba(…)", function(test) {
   test.equal(color.hsv("#abcdef") + "", "rgb(171, 205, 239)");
   test.equal(color.hsv("moccasin") + "", "rgb(255, 228, 181)");
-  test.equal(color.hsv("hsv(60, 100%, 20%)") + "", "rgb(51, 51, 0)");
-  test.equal(color.hsv("hsva(60, 100%, 20%, 0.4)") + "", "rgba(51, 51, 0, 0.4)");
   test.equal(color.hsv("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  test.equal(color.hsv(60, 1, 0.2) + "", "rgb(51, 51, 0)");
+  test.equal(color.hsv(60, 1, 0.2, 0.4) + "", "rgba(51, 51, 0, 0.4)");
   test.equal(color.hsv(color.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
   test.equal(color.hsv(color.hsv(60, 1, 0.2)) + "", "rgb(51, 51, 0)");
   test.equal(color.hsv(color.hsv(60, 1, 0.2, 0.4)) + "", "rgba(51, 51, 0, 0.4)");
@@ -123,35 +123,8 @@ tape("hsv(format) parses the specified format and converts to HSV", function(tes
   test.hsvEqual(color.hsv("#abc"), 210, 0.16666666, 0.8, 1);
   test.hsvEqual(color.hsv("rgb(12, 34, 56)"), 210, 0.785714, 0.219608, 1);
   test.hsvEqual(color.hsv("rgb(12%, 34%, 56%)"), 210, 0.785714, 0.56, 1);
-  test.hsvEqual(color.hsv("hsv(60,100%,20%)"), 60, 1, 0.2, 1);
-  test.hsvEqual(color.hsv("hsva(60,100%,20%,0.4)"), 60, 1, 0.2, 0.4);
   test.hsvEqual(color.hsv("aliceblue"), 208, 0.058824, 1, 1);
   test.hsvEqual(color.hsv("transparent"), NaN, NaN, NaN, 0);
-  test.end();
-});
-
-tape("hsv(format) ignores the hue if the saturation is <= 0", function(test) {
-  test.hsvEqual(color.hsv("hsv(120,0%,20%)"), NaN, 0, 0.2, 1);
-  test.hsvEqual(color.hsv("hsv(120,-10%,20%)"), NaN, -0.1, 0.2, 1);
-  test.end();
-});
-
-tape("hsv(format) ignores the hue and saturation if the lightness is <= 0 or >= 1", function(test) {
-  test.hsvEqual(color.hsv("hsv(120,20%,-10%)"), NaN, NaN, -0.1, 1);
-  test.hsvEqual(color.hsv("hsv(120,20%,0%)"), NaN, NaN, 0.0, 1);
-  test.hsvEqual(color.hsv("hsv(120,20%,100%)"), NaN, NaN, 1.0, 1);
-  test.hsvEqual(color.hsv("hsv(120,20%,120%)"), NaN, NaN, 1.2, 1);
-  test.end();
-});
-
-tape("hsv(format) ignores all channels if the alpha is <= 0", function(test) {
-  test.hsvEqual(color.hsv("hsva(120,20%,10%,0)"), NaN, NaN, NaN, 0);
-  test.hsvEqual(color.hsv("hsva(120,20%,10%,-0.1)"), NaN, NaN, NaN, -0.1);
-  test.end();
-});
-
-tape("hsv(format) does not lose precision when parsing HSV formats", function(test) {
-  test.hsvEqual(color.hsv("hsv(325,50%,40%)"), 325, 0.5, 0.4, 1);
   test.end();
 });
 
@@ -161,7 +134,7 @@ tape("hsv(format) returns undefined channel values for unknown formats", functio
 });
 
 tape("hsv(hsv) copies an HSV color", function(test) {
-  var c1 = color.hsv("hsva(120,30%,50%,0.4)"),
+  var c1 = color.hsv(120,0.3,0.5,0.4),
       c2 = color.hsv(c1);
   test.hsvEqual(c1, 120, 0.3, 0.5, 0.4);
   c1.h = c1.s = c1.v = c1.opacity = 0;

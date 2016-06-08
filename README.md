@@ -111,6 +111,14 @@ Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The cha
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 
+<a name="hsv" href="#hsv">#</a> d3.<b>hsv</b>(<i>h</i>, <i>s</i>, <i>v</i>[, <i>opacity</i>])<br>
+<a href="#hsv">#</a> d3.<b>hsv</b>(<i>specifier</i>)<br>
+<a href="#hsv">#</a> d3.<b>hsv</b>(<i>color</i>)<br>
+
+Constructs a new [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `v` properties on the returned instance.
+
+If *h*, *s* and *v* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSV color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSV.
+
 <a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>])<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>color</i>)<br>

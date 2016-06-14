@@ -4,6 +4,7 @@
   "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",
+    "d3-module",
     "color",
     "rgb",
     "hsl",

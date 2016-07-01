@@ -7,12 +7,7 @@
     "d3-module",
     "color",
     "rgb",
-    "hsl",
-    "lab",
-    "hcl",
-    "lch",
-    "hcg",
-    "cubehelix"
+    "hcg"
   ],
   "homepage": "https://d3js.org/d3-hcg/",
   "license": "BSD-3-Clause",

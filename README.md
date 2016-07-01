@@ -20,10 +20,10 @@ var yellow = d3.hcg("yellow"); // {h: 60, s: 1, v: 1, opacity: 1}
 
 ## API Reference
 
-<a name="hcg" href="#hcg">#</a> d3.<b>hcg</b>(<i>h</i>, <i>s</i>, <i>v</i>[, <i>opacity</i>])<br>
+<a name="hcg" href="#hcg">#</a> d3.<b>hcg</b>(<i>h</i>, <i>c</i>, <i>g</i>[, <i>opacity</i>])<br>
 <a href="#hcg">#</a> d3.<b>hcg</b>(<i>specifier</i>)<br>
 <a href="#hcg">#</a> d3.<b>hcg</b>(<i>color</i>)<br>
 
 Constructs a new hcg color. The channel values are exposed as `h`, `c` and `g` properties on the returned instance.
 
-If *h*, *s* and *v* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCG color space. See [d3.color](https://github.com/d3/d3-color#color) for examples. If a [*color*](https://github.com/d3/d3-color#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](https://github.com/d3/d3-color#color_rgb) and then converted to HGC.
+If *h*, *c* and *g* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCG color space. See [d3.color](https://github.com/d3/d3-color#color) for examples. If a [*color*](https://github.com/d3/d3-color#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](https://github.com/d3/d3-color#color_rgb) and then converted to HGC.

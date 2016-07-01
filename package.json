@@ -1,5 +1,5 @@
 {
-  "name": "d3-color",
+  "name": "d3-hcg",
   "version": "1.0.0",
   "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
@@ -11,9 +11,10 @@
     "lab",
     "hcl",
     "lch",
+    "hcg",
     "cubehelix"
   ],
-  "homepage": "https://d3js.org/d3-color/",
+  "homepage": "https://d3js.org/d3-hcg/",
   "license": "BSD-3-Clause",
   "author": {
     "name": "Mike Bostock",

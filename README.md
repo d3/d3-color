@@ -71,7 +71,7 @@ The list of supported [named colors](http://www.w3.org/TR/SVG/types.html#ColorKe
 
 Note: this function may also be used with `instanceof` to test if an object is a color instance. The same is true of color subclasses, allowing you to test whether a color is in a particular color space.
 
-<a name="color_opacity" href="#color_opacity">#</a> *color*.<b>opacity</b> [<>]( "Source")
+<a name="color_opacity" href="#color_opacity">#</a> *color*.<b>opacity</b>
 
 This color’s opacity, typically in the range [0, 1].
 
@@ -95,41 +95,41 @@ Returns true if and only if the color is displayable on standard hardware. For e
 
 Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
-<a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>]) [<>]( "Source")<br>
-<a href="#rgb">#</a> d3.<b>rgb</b>(<i>specifier</i>) [<>]( "Source")<br>
-<a href="#rgb">#</a> d3.<b>rgb</b>(<i>color</i>) [<>]( "Source")<br>
+<a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L209 "Source")<br>
+<a href="#rgb">#</a> d3.<b>rgb</b>(<i>specifier</i>)<br>
+<a href="#rgb">#</a> d3.<b>rgb</b>(<i>color</i>)<br>
 
 Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The channel values are exposed as `r`, `g` and `b` properties on the returned instance. Use the [RGB color picker](http://bl.ocks.org/mbostock/78d64ca7ef013b4dcf8f) to explore this color space.
 
 If *r*, *g* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
-<a name="hsl" href="#hsl">#</a> d3.<b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>]( "Source")<br>
-<a href="#hsl">#</a> d3.<b>hsl</b>(<i>specifier</i>) [<>]( "Source")<br>
-<a href="#hsl">#</a> d3.<b>hsl</b>(<i>color</i>) [<>]( "Source")<br>
+<a name="hsl" href="#hsl">#</a> d3.<b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L281 "Source")<br>
+<a href="#hsl">#</a> d3.<b>hsl</b>(<i>specifier</i>)<br>
+<a href="#hsl">#</a> d3.<b>hsl</b>(<i>color</i>)<br>
 
 Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 
-<a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js#L34 "Source")<br>
-<a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>) [<>]( "Source")<br>
-<a href="#lab">#</a> d3.<b>lab</b>(<i>color</i>) [<>]( "Source")<br>
+<a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js#L30 "Source")<br>
+<a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>
+<a href="#lab">#</a> d3.<b>lab</b>(<i>color</i>)<br>
 
 Constructs a new [Lab](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) color. The channel values are exposed as `l`, `a` and `b` properties on the returned instance. Use the [Lab color picker](http://bl.ocks.org/mbostock/9f37cc207c0cb166921b) to explore this color space.
 
 If *l*, *a* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
 
-<a name="hcl" href="#hcl">#</a> d3.<b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>[, <i>opacity</i>]) [<>]( "Source")<br>
-<a href="#hcl">#</a> d3.<b>hcl</b>(<i>specifier</i>) [<>]( "Source")<br>
-<a href="#hcl">#</a> d3.<b>hcl</b>(<i>color</i>) [<>]( "Source")<br>
+<a name="hcl" href="#hcl">#</a> d3.<b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js#L87 "Source")<br>
+<a href="#hcl">#</a> d3.<b>hcl</b>(<i>specifier</i>)<br>
+<a href="#hcl">#</a> d3.<b>hcl</b>(<i>color</i>)<br>
 
 Constructs a new [HCL](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) color. The channel values are exposed as `h`, `c` and `l` properties on the returned instance. Use the [HCL color picker](http://bl.ocks.org/mbostock/3e115519a1b495e0bd95) to explore this color space.
 
 If *h*, *c* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
 <a name="cubehelix" href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/cubehelix.js#L32 "Source")<br>
-<a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>specifier</i>) [<>]( "Source")<br>
-<a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>color</i>) [<>]( "Source")<br>
+<a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>specifier</i>)<br>
+<a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>color</i>)<br>
 
 Constructs a new [Cubehelix](https://www.mrao.cam.ac.uk/~dag/CUBEHELIX/) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [Cubehelix color picker](http://bl.ocks.org/mbostock/ba8d75e45794c27168b5) to explore this color space.
 

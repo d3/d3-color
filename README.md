@@ -53,7 +53,7 @@ var steelblue = d3.rgb("steelblue");
 
 ## API Reference
 
-<a name="color" href="#color">#</a> d3.<b>color</b>(<i>specifier</i>)
+<a name="color" href="#color">#</a> d3.<b>color</b>(<i>specifier</i>) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
 Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, null is returned. Some examples:
 
@@ -75,27 +75,27 @@ Note: this function may also be used with `instanceof` to test if an object is a
 
 This color’s opacity, typically in the range [0, 1].
 
-<a name="color_rgb" href="#color_rgb">#</a> *color*.<b>rgb</b>()
+<a name="color_rgb" href="#color_rgb">#</a> *color*.<b>rgb</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L209 "Source")
 
 Returns the [RGB equivalent](#rgb) of this color. For RGB colors, that’s `this`.
 
-<a name="color_brighter" href="#color_brighter">#</a> *color*.<b>brighter</b>([<i>k</i>])
+<a name="color_brighter" href="#color_brighter">#</a> *color*.<b>brighter</b>([<i>k</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L221 "Source")
 
 Returns a brighter copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.
 
-<a name="color_darker" href="#color_darker">#</a> *color*.<b>darker</b>([<i>k</i>])
+<a name="color_darker" href="#color_darker">#</a> *color*.<b>darker</b>([<i>k</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L225 "Source")
 
 Returns a darker copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.
 
-<a name="color_displayable" href="#color_displayable">#</a> *color*.<b>displayable</b>()
+<a name="color_displayable" href="#color_displayable">#</a> *color*.<b>displayable</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L169 "Source")
 
 Returns true if and only if the color is displayable on standard hardware. For example, this returns false for an RGB color if any channel value is less than zero or greater than 255, or if the opacity is not in the range [0, 1].
 
-<a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>()
+<a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L172 "Source")
 
 Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
-<a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>])<br>
+<a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L209 "Source")<br>
 <a href="#rgb">#</a> d3.<b>rgb</b>(<i>specifier</i>)<br>
 <a href="#rgb">#</a> d3.<b>rgb</b>(<i>color</i>)<br>
 
@@ -103,7 +103,7 @@ Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The
 
 If *r*, *g* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
-<a name="hsl" href="#hsl">#</a> d3.<b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>])<br>
+<a name="hsl" href="#hsl">#</a> d3.<b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js#L281 "Source")<br>
 <a href="#hsl">#</a> d3.<b>hsl</b>(<i>specifier</i>)<br>
 <a href="#hsl">#</a> d3.<b>hsl</b>(<i>color</i>)<br>
 
@@ -111,7 +111,7 @@ Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The cha
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
 
-<a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>])<br>
+<a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js#L30 "Source")<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>color</i>)<br>
 
@@ -119,7 +119,7 @@ Constructs a new [Lab](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) col
 
 If *l*, *a* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
 
-<a name="hcl" href="#hcl">#</a> d3.<b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>[, <i>opacity</i>])<br>
+<a name="hcl" href="#hcl">#</a> d3.<b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js#L87 "Source")<br>
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>specifier</i>)<br>
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>color</i>)<br>
 
@@ -127,7 +127,7 @@ Constructs a new [HCL](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) col
 
 If *h*, *c* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
-<a name="cubehelix" href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>])<br>
+<a name="cubehelix" href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/cubehelix.js#L32 "Source")<br>
 <a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>specifier</i>)<br>
 <a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>color</i>)<br>
 

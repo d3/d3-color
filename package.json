@@ -28,7 +28,7 @@
   },
   "scripts": {
     "pretest": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-color.js -- index.js",
-    "test": "tape 'test/**/*-test.js' && eslint index.js src test",
+    "test": "tape 'test/**/*-test.js' | tap-spec && eslint index.js src test",
     "prepublish": "npm run test && uglifyjs --preamble \"$(preamble)\" build/d3-color.js -c -m -o build/d3-color.min.js",
     "postpublish": "git push && git push --tags && cd ../d3.github.com && cp ../d3-color/build/d3-color.js d3-color.v1.js && cp ../d3-color/build/d3-color.min.js d3-color.v1.min.js && git add d3-color.v1.js d3-color.v1.min.js && git commit -m \"d3-color ${npm_package_version}\" && git push && cd - && zip -j build/d3-color.zip -- LICENSE README.md build/d3-color.js build/d3-color.min.js"
   },
@@ -37,6 +37,7 @@
     "package-preamble": "0.0",
     "rollup": "0.41",
     "tape": "4",
+    "tap-spec": "^4.1.1",
     "uglify-js": "^2.8.11"
   }
 }

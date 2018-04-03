@@ -3,9 +3,9 @@ import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
 
 var Kn = 18,
-    Xn = 0.950470, // D65 standard referent
-    Yn = 1,
-    Zn = 1.088830,
+    Xn = 0.9642, // D50 standard referent
+    Yn = 1.0000,
+    Zn = 0.82521,
     t0 = 4 / 29,
     t1 = 6 / 29,
     t2 = 3 * t1 * t1,
@@ -18,12 +18,15 @@ function labConvert(o) {
     return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
   }
   if (!(o instanceof Rgb)) o = rgbConvert(o);
-  var b = rgb2xyz(o.r),
-      a = rgb2xyz(o.g),
-      l = rgb2xyz(o.b),
-      x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
-      y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
-      z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
+  var r = rgb2lrgb(o.r), 
+      g = rgb2lrgb(o.g),
+      b = rgb2lrgb(o.b),
+
+      // linear RGB -> XYZ (D50)
+      // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
+      x = xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn),
+      y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn),
+      z = xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
   return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
 }
 
@@ -49,15 +52,18 @@ define(Lab, lab, extend(Color, {
     var y = (this.l + 16) / 116,
         x = isNaN(this.a) ? y : y + this.a / 500,
         z = isNaN(this.b) ? y : y - this.b / 200;
-    y = Yn * lab2xyz(y);
+
     x = Xn * lab2xyz(x);
+    y = Yn * lab2xyz(y);
     z = Zn * lab2xyz(z);
-    return new Rgb(
-      xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
-      xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
-      xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z),
-      this.opacity
-    );
+    
+    // XYZ (D50) -> linear RGB
+    // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
+    var r =  3.1338561 * x - 1.6168667 * y - 0.4906146 * z,
+        g = -0.9787684 * x + 1.9161415 * y + 0.0334540 * z,
+        b =  0.0719453 * x - 0.2289914 * y + 1.4052427 * z;
+
+    return new Rgb(lrgb2rgb(r), lrgb2rgb(g), lrgb2rgb(b), this.opacity);
   }
 }));
 
@@ -69,11 +75,11 @@ function lab2xyz(t) {
   return t > t1 ? t * t * t : t2 * (t - t0);
 }
 
-function xyz2rgb(x) {
+function lrgb2rgb(x) {
   return 255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055);
 }
 
-function rgb2xyz(x) {
+function rgb2lrgb(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
 

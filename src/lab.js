@@ -72,7 +72,7 @@ function xyz2lab(t) {
 }
 
 function lab2xyz(t) {
-  return t > t1 ? Math.pow(t, 3) : t2 * (t - t0);
+  return t > t1 ? t * t * t : t2 * (t - t0);
 }
 
 function lrgb2rgb(x) {

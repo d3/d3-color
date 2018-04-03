@@ -13,7 +13,7 @@ tape("hcl(…) returns an instance of hcl and color", function(test) {
 });
 
 tape("hcl(…) exposes h, c, and l channel values", function(test) {
-  test.hclEqual(color.hcl("#abc"), 257.7177616818892, 10.774886733325554, 75.10497524893663, 1);
+  test.hclEqual(color.hcl("#abc"), 252.38452899046413, 11.222753486232566, 74.96879980931759, 1);
   test.end();
 });
 
@@ -21,9 +21,9 @@ tape("hcl(…) returns defined hue and chroma, even for black and white", functi
   test.hclEqual(color.hcl("black"), 0, 0, 0, 1);
   test.hclEqual(color.hcl("#000"), 0, 0, 0, 1);
   test.hclEqual(color.hcl(color.lab("#000")), 0, 0, 0, 1);
-  test.hclEqual(color.hcl("white"), 158.19859051364818, 0.00001795054880958058, 100.00000386666655, 1);
-  test.hclEqual(color.hcl("#fff"), 158.19859051364818, 0.00001795054880958058, 100.00000386666655, 1);
-  test.hclEqual(color.hcl(color.lab("#fff")), 158.19859051364818, 0.00001795054880958058, 100.00000386666655, 1);
+  test.hclEqual(color.hcl("white"), 0, 0.003457073518231546, 100, 1);
+  test.hclEqual(color.hcl("#fff"), 0, 0.003457073518231546, 100, 1);
+  test.hclEqual(color.hcl(color.lab("#fff")), 0, 0.003457073518231546, 100, 1);
   test.end();
 });
 
@@ -112,14 +112,14 @@ tape("hcl(h, c, l, opacity) converts undefined opacity to 1", function(test) {
 });
 
 tape("hcl(format) parses the specified format and converts to HCL", function(test) {
-  test.hclEqual(color.hcl("#abcdef"), 259.84214815790716, 20.768234621934273, 81.04386565274363, 1);
-  test.hclEqual(color.hcl("#abc"), 257.7177616818892, 10.774886733325554, 75.10497524893663, 1);
-  test.hclEqual(color.hcl("rgb(12, 34, 56)"), 270.41717207657933, 16.833655998102003, 12.65624852526134, 1);
-  test.hclEqual(color.hcl("rgb(12%, 34%, 56%)"), 274.03009307843763, 36.289366963489435, 36.040298589825746, 1);
-  test.hclEqual(color.hcl("rgba(12%, 34%, 56%, 0.4)"), 274.03009307843763, 36.289366963489435, 36.040298589825746, 0.4);
-  test.hclEqual(color.hcl("hsl(60,100%,20%)"), 102.85124420310271, 49.44871600399321, 41.73251953866431, 1);
-  test.hclEqual(color.hcl("hsla(60,100%,20%,0.4)"), 102.85124420310271, 49.44871600399321, 41.73251953866431, 0.4);
-  test.hclEqual(color.hcl("aliceblue"), 252.44447593419056, 4.4710949781436735, 97.17864982306108, 1);
+  test.hclEqual(color.hcl("#abcdef"), 254.01521171170998, 21.62179282519733, 80.77135418262527, 1);
+  test.hclEqual(color.hcl("#abc"), 252.38452899046413, 11.222753486232566, 74.96879980931759, 1);
+  test.hclEqual(color.hcl("rgb(12, 34, 56)"), 262.83193442364876, 17.30336854563012, 12.404844123471648, 1);
+  test.hclEqual(color.hcl("rgb(12%, 34%, 56%)"), 266.119994747536, 37.03601810151972, 35.48300043476593, 1);
+  test.hclEqual(color.hcl("rgba(12%, 34%, 56%, 0.4)"), 266.119994747536, 37.03601810151972, 35.48300043476593, 0.4);
+  test.hclEqual(color.hcl("hsl(60,100%,20%)"), 99.57263208475133, 48.32704508820097, 41.97125732118659, 1);
+  test.hclEqual(color.hcl("hsla(60,100%,20%,0.4)"), 99.57263208475133, 48.32704508820097, 41.97125732118659, 0.4);
+  test.hclEqual(color.hcl("aliceblue"), 247.77343920212564, 4.680460380032747, 97.12294991108756, 1);
   test.end();
 });
 
@@ -149,7 +149,7 @@ tape("hcl(lab) returns defined hue, even if a and b are non-zero", function(test
 });
 
 tape("hcl(rgb) converts from RGB", function(test) {
-  test.hclEqual(color.hcl(color.rgb(255, 0, 0, 0.4)), 39.99901061253294, 104.55176567686985, 53.24079414130722, 0.4);
+  test.hclEqual(color.hcl(color.rgb(255, 0, 0, 0.4)), 40.851681934143315, 106.84100660249126, 54.29173376861782, 0.4);
   test.end();
 });
 
@@ -158,23 +158,23 @@ tape("hcl(color) converts from another colorspace via color.rgb()", function(tes
   TestColor.prototype = Object.create(color.color.prototype);
   TestColor.prototype.rgb = function() { return color.rgb(12, 34, 56, 0.4); };
   TestColor.prototype.toString = function() { throw new Error("should use rgb, not toString"); };
-  test.hclEqual(color.hcl(new TestColor), 270.41717207657933, 16.833655998102003, 12.65624852526134, 0.4);
+  test.hclEqual(color.hcl(new TestColor), 262.83193442364876, 17.30336854563012, 12.404844123471648, 0.4);
   test.end();
 });
 
 tape("hcl.brighter(k) returns a brighter color if k > 0", function(test) {
   var c = color.hcl("rgba(165, 42, 42, 0.4)");
-  test.hclEqual(c.brighter(0.5), 31.577795955065785, 58.32679960239559, 46.52650524281069, 0.4);
-  test.hclEqual(c.brighter(1), 31.577795955065785, 58.32679960239559, 55.52650524281069, 0.4);
-  test.hclEqual(c.brighter(2), 31.577795955065785, 58.32679960239559, 73.52650524281069, 0.4);
+  test.hclEqual(c.brighter(0.5), 32.282417816884454, 59.60396926239275, 47.149667346714935, 0.4);
+  test.hclEqual(c.brighter(1), 32.282417816884454, 59.60396926239275, 56.149667346714935, 0.4);
+  test.hclEqual(c.brighter(2), 32.282417816884454, 59.60396926239275, 74.14966734671493, 0.4);
   test.end();
 });
 
 tape("hcl.brighter(k) returns a copy", function(test) {
   var c1 = color.hcl("rgba(70, 130, 180, 0.4)"),
       c2 = c1.brighter(1);
-  test.hclEqual(c1, 262.78126775909277, 32.44906314974561, 52.46551718768575, 0.4);
-  test.hclEqual(c2, 262.78126775909277, 32.44906314974561, 70.46551718768575, 0.4);
+  test.hclEqual(c1, 255.71331691921011, 33.88051838788065, 51.98624890550498, 0.4);
+  test.hclEqual(c2, 255.71331691921011, 33.88051838788065, 69.98624890550498, 0.4);
   test.end();
 });
 
@@ -196,17 +196,17 @@ tape("hcl.brighter(k) is equivalent to hcl.darker(-k)", function(test) {
 
 tape("hcl.darker(k) returns a darker color if k > 0", function(test) {
   var c = color.hcl("rgba(165, 42, 42, 0.4)");
-  test.hclEqual(c.darker(0.5), 31.577795955065785, 58.32679960239559, 28.526505242810693, 0.4);
-  test.hclEqual(c.darker(1), 31.577795955065785, 58.32679960239559, 19.526505242810693, 0.4);
-  test.hclEqual(c.darker(2), 31.577795955065785, 58.32679960239559, 1.5265052428106927, 0.4);
+  test.hclEqual(c.darker(0.5), 32.282417816884454, 59.60396926239275, 29.149667346714935, 0.4);
+  test.hclEqual(c.darker(1), 32.282417816884454, 59.60396926239275, 20.149667346714935, 0.4);
+  test.hclEqual(c.darker(2), 32.282417816884454, 59.60396926239275, 2.149667346714935, 0.4);
   test.end();
 });
 
 tape("hcl.darker(k) returns a copy", function(test) {
   var c1 = color.hcl("rgba(70, 130, 180, 0.4)"),
       c2 = c1.darker(1);
-  test.hclEqual(c1, 262.78126775909277, 32.44906314974561, 52.46551718768575, 0.4);
-  test.hclEqual(c2, 262.78126775909277, 32.44906314974561, 34.46551718768575, 0.4);
+  test.hclEqual(c1, 255.71331691921011, 33.88051838788065, 51.98624890550498, 0.4);
+  test.hclEqual(c2, 255.71331691921011, 33.88051838788065, 33.98624890550498, 0.4);
   test.end();
 });
 
@@ -228,6 +228,6 @@ tape("hcl.darker(k) is equivalent to hcl.brighter(-k)", function(test) {
 
 tape("hcl.rgb() converts to RGB", function(test) {
   var c = color.hcl(120, 30, 50, 0.4);
-  test.rgbEqual(c.rgb(), 109, 125, 74, 0.4);
+  test.rgbEqual(c.rgb(), 105, 126, 73, 0.4);
   test.end();
 });

@@ -19,16 +19,15 @@ function labConvert(o) {
     return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
   }
   if (!(o instanceof Rgb)) o = rgbConvert(o);
+  // RGB -> linear RGB -> XYZ (D50) -> Lab
+  // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
   var r = rgb2lrgb(o.r),
       g = rgb2lrgb(o.g),
       b = rgb2lrgb(o.b),
-
-      // linear RGB -> XYZ (D50)
-      // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
-      x = xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn),
+      gray = r === g && g === b,
       y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn),
-      z = xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
-  if (o.r === o.g && o.g === o.b) x = y, z = y;
+      x = gray ? y : xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn),
+      z = gray ? y : xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
   return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
 }
 
@@ -51,20 +50,17 @@ define(Lab, lab, extend(Color, {
     return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
   rgb: function() {
+    // Lab -> XYZ (D50) -> linear RGB -> RGB
+    // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     var y = (this.l + 16) / 116,
         x = isNaN(this.a) ? y : y + this.a / 500,
         z = isNaN(this.b) ? y : y - this.b / 200;
-
     x = Xn * lab2xyz(x);
     y = Yn * lab2xyz(y);
     z = Zn * lab2xyz(z);
-
-    // XYZ (D50) -> linear RGB
-    // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     var r =  3.1338561 * x - 1.6168667 * y - 0.4906146 * z,
         g = -0.9787684 * x + 1.9161415 * y + 0.0334540 * z,
         b =  0.0719453 * x - 0.2289914 * y + 1.4052427 * z;
-
     return new Rgb(lrgb2rgb(r), lrgb2rgb(g), lrgb2rgb(b), this.opacity);
   }
 }));

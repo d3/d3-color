@@ -14,11 +14,12 @@ var Kn = 18,
 function labConvert(o) {
   if (o instanceof Lab) return new Lab(o.l, o.a, o.b, o.opacity);
   if (o instanceof Hcl) {
+    if (isNaN(o.h)) return new Lab(o.l, 0, 0, o.opacity);
     var h = o.h * deg2rad;
     return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
   }
   if (!(o instanceof Rgb)) o = rgbConvert(o);
-  var r = rgb2lrgb(o.r), 
+  var r = rgb2lrgb(o.r),
       g = rgb2lrgb(o.g),
       b = rgb2lrgb(o.b),
 
@@ -27,6 +28,7 @@ function labConvert(o) {
       x = xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn),
       y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn),
       z = xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
+  if (o.r === o.g && o.g === o.b) x = y, z = y;
   return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
 }
 
@@ -56,7 +58,7 @@ define(Lab, lab, extend(Color, {
     x = Xn * lab2xyz(x);
     y = Yn * lab2xyz(y);
     z = Zn * lab2xyz(z);
-    
+
     // XYZ (D50) -> linear RGB
     // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     var r =  3.1338561 * x - 1.6168667 * y - 0.4906146 * z,
@@ -86,6 +88,7 @@ function rgb2lrgb(x) {
 function hclConvert(o) {
   if (o instanceof Hcl) return new Hcl(o.h, o.c, o.l, o.opacity);
   if (!(o instanceof Lab)) o = labConvert(o);
+  if (o.a === 0 && o.b === 0) return new Hcl(NaN, 0, o.l, o.opacity);
   var h = Math.atan2(o.b, o.a) * rad2deg;
   return new Hcl(h < 0 ? h + 360 : h, Math.sqrt(o.a * o.a + o.b * o.b), o.l, o.opacity);
 }

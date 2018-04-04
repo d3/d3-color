@@ -24,10 +24,11 @@ function labConvert(o) {
   var r = rgb2lrgb(o.r),
       g = rgb2lrgb(o.g),
       b = rgb2lrgb(o.b),
-      gray = r === g && g === b,
-      y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn),
-      x = gray ? y : xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn),
-      z = gray ? y : xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
+      y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn), x, z;
+  if (r === g && g === b) x = z = y; else {
+    x = xyz2lab((0.4360747 * r + 0.3850649 * g + 0.1430804 * b) / Xn);
+    z = xyz2lab((0.0139322 * r + 0.0971045 * g + 0.7141733 * b) / Zn);
+  }
   return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
 }
 

@@ -22,10 +22,10 @@ function labConvert(o) {
   var b = rgb2xyz(o.r),
       a = rgb2xyz(o.g),
       l = rgb2xyz(o.b),
-      x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
+      gray = b === a && a === l,
       y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
-      z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
-  if (o.r === o.g && o.g === o.b) x = y, z = y;
+      x = gray ? y : xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
+      z = gray ? y : xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
   return new Lab(116 * y - 16, 500 * (x - y), 200 * (y - z), o.opacity);
 }
 

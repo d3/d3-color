@@ -13,7 +13,7 @@ tape("lab(…) returns an instance of lab and color", function(test) {
 });
 
 tape("lab(…) exposes l, a and b channel values and opacity", function(test) {
-  test.labEqual(color.lab("rgba(170, 187, 204, 0.4)"), 74.96879980931759, -3.3963111407948054, -10.696507207853333, 0.4);
+  test.labEqual(color.lab("rgba(170, 187, 204, 0.4)"), 74.96879980931759, -3.398998724348956, -10.696507207853333, 0.4);
   test.end();
 });
 
@@ -91,14 +91,14 @@ tape("lab(l, a, b, opacity) converts undefined opacity to 1", function(test) {
 });
 
 tape("lab(format) parses the specified format and converts to Lab", function(test) {
-  test.labEqual(color.lab("#abcdef"), 80.77135418262527, -5.954255502216621, -20.785782794739237, 1);
-  test.labEqual(color.lab("#abc"), 74.96879980931759, -3.3963111407948054, -10.696507207853333, 1);
-  test.labEqual(color.lab("rgb(12, 34, 56)"), 12.404844123471648, -2.159118622594325, -17.168132391132946, 1);
-  test.labEqual(color.lab("rgb(12%, 34%, 56%)"), 35.48300043476593, -2.5061206989765994, -36.9511298319585, 1);
-  test.labEqual(color.lab("rgba(12%, 34%, 56%, 0.4)"), 35.48300043476593, -2.5061206989765994, -36.9511298319585, 0.4);
-  test.labEqual(color.lab("hsl(60,100%,20%)"), 41.97125732118659, -8.036679181988028, 47.65411917854332, 1);
-  test.labEqual(color.lab("hsla(60,100%,20%,0.4)"), 41.97125732118659, -8.036679181988028, 47.65411917854332, 0.4);
-  test.labEqual(color.lab("aliceblue"), 97.12294991108756, -1.7704775380631976, -4.332680308569969, 1);
+  test.labEqual(color.lab("#abcdef"), 80.77135418262527, -5.957098328496224, -20.785782794739237, 1);
+  test.labEqual(color.lab("#abc"), 74.96879980931759, -3.398998724348956, -10.696507207853333, 1);
+  test.labEqual(color.lab("rgb(12, 34, 56)"), 12.404844123471648, -2.159950219712034, -17.168132391132946, 1);
+  test.labEqual(color.lab("rgb(12%, 34%, 56%)"), 35.48300043476593, -2.507637675606522, -36.95112983195855, 1);
+  test.labEqual(color.lab("rgba(12%, 34%, 56%, 0.4)"), 35.48300043476593, -2.507637675606522, -36.95112983195855, 0.4);
+  test.labEqual(color.lab("hsl(60,100%,20%)"), 41.97125732118659, -8.03835128380484, 47.65411917854332, 1);
+  test.labEqual(color.lab("hsla(60,100%,20%,0.4)"), 41.97125732118659, -8.03835128380484, 47.65411917854332, 0.4);
+  test.labEqual(color.lab("aliceblue"), 97.12294991108756, -1.773836604137824, -4.332680308569969, 1);
   test.end();
 });
 
@@ -123,7 +123,7 @@ tape("lab(hcl(lab)) doesn’t lose a and b channels if luminance is zero", funct
 });
 
 tape("lab(rgb) converts from RGB", function(test) {
-  test.labEqual(color.lab(color.rgb(255, 0, 0, 0.4)), 54.29173376861782, 80.81510892658389, 69.88504032350531, 0.4);
+  test.labEqual(color.lab(color.rgb(255, 0, 0, 0.4)), 54.29173376861782, 80.8124553179771, 69.88504032350531, 0.4);
   test.end();
 });
 
@@ -132,23 +132,23 @@ tape("lab(color) converts from another colorspace via color.rgb()", function(tes
   TestColor.prototype = Object.create(color.color.prototype);
   TestColor.prototype.rgb = function() { return color.rgb(12, 34, 56, 0.4); };
   TestColor.prototype.toString = function() { throw new Error("should use rgb, not toString"); };
-  test.labEqual(color.lab(new TestColor), 12.404844123471648, -2.159118622594325, -17.168132391132946, 0.4);
+  test.labEqual(color.lab(new TestColor), 12.404844123471648, -2.159950219712034, -17.168132391132946, 0.4);
   test.end();
 });
 
 tape("lab.brighter(k) returns a brighter color if k > 0", function(test) {
   var c = color.lab("rgba(165, 42, 42, 0.4)");
-  test.labEqual(c.brighter(0.5), 47.149667346714935, 50.39073152024248, 31.834059255569358, 0.4);
-  test.labEqual(c.brighter(1), 56.149667346714935, 50.39073152024248, 31.834059255569358, 0.4);
-  test.labEqual(c.brighter(2), 74.14966734671493, 50.39073152024248, 31.834059255569358, 0.4);
+  test.labEqual(c.brighter(0.5), 47.149667346714935, 50.388769337115, 31.834059255569358, 0.4);
+  test.labEqual(c.brighter(1), 56.149667346714935, 50.388769337115, 31.834059255569358, 0.4);
+  test.labEqual(c.brighter(2), 74.14966734671493, 50.388769337115, 31.834059255569358, 0.4);
   test.end();
 });
 
 tape("lab.brighter(k) returns a copy", function(test) {
   var c1 = color.lab("rgba(70, 130, 180, 0.4)"),
       c2 = c1.brighter(1);
-  test.labEqual(c1, 51.98624890550498, -8.360823708064903, -32.832699449697685, 0.4);
-  test.labEqual(c2, 69.98624890550498, -8.360823708064903, -32.83269944969768, 0.4);
+  test.labEqual(c1, 51.98624890550498, -8.362792037014344, -32.832699449697685, 0.4);
+  test.labEqual(c2, 69.98624890550498, -8.362792037014344, -32.832699449697685, 0.4);
   test.end();
 });
 
@@ -170,17 +170,17 @@ tape("lab.brighter(k) is equivalent to lab.darker(-k)", function(test) {
 
 tape("lab.darker(k) returns a darker color if k > 0", function(test) {
   var c = color.lab("rgba(165, 42, 42, 0.4)");
-  test.labEqual(c.darker(0.5), 29.149667346714935, 50.39073152024248, 31.834059255569358, 0.4);
-  test.labEqual(c.darker(1), 20.149667346714935, 50.39073152024248, 31.834059255569358, 0.4);
-  test.labEqual(c.darker(2), 2.149667346714935, 50.39073152024248, 31.834059255569358, 0.4);
+  test.labEqual(c.darker(0.5), 29.149667346714935, 50.388769337115, 31.834059255569358, 0.4);
+  test.labEqual(c.darker(1), 20.149667346714935, 50.388769337115, 31.834059255569358, 0.4);
+  test.labEqual(c.darker(2), 2.149667346714935, 50.388769337115, 31.834059255569358, 0.4);
   test.end();
 });
 
 tape("lab.darker(k) returns a copy", function(test) {
   var c1 = color.lab("rgba(70, 130, 180, 0.4)"),
       c2 = c1.darker(1);
-  test.labEqual(c1, 51.98624890550498, -8.360823708064903, -32.832699449697685, 0.4);
-  test.labEqual(c2, 33.98624890550498, -8.360823708064903, -32.832699449697685, 0.4);
+  test.labEqual(c1, 51.98624890550498, -8.362792037014344, -32.832699449697685, 0.4);
+  test.labEqual(c2, 33.98624890550498, -8.362792037014344, -32.832699449697685, 0.4);
   test.end();
 });
 

@@ -2,9 +2,10 @@ import define, {extend} from "./define";
 import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
 
-var Kn = 18,
-    Xn = 0.9642, // D50 standard referent
-    Yn = 1.0000,
+// https://beta.observablehq.com/@mbostock/lab-and-rgb
+var K = 18,
+    Xn = 0.96422,
+    Yn = 1,
     Zn = 0.82521,
     t0 = 4 / 29,
     t1 = 6 / 29,
@@ -19,8 +20,6 @@ function labConvert(o) {
     return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
   }
   if (!(o instanceof Rgb)) o = rgbConvert(o);
-  // RGB -> linear RGB -> XYZ (D50) -> Lab
-  // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
   var r = rgb2lrgb(o.r),
       g = rgb2lrgb(o.g),
       b = rgb2lrgb(o.b),
@@ -45,14 +44,12 @@ export function Lab(l, a, b, opacity) {
 
 define(Lab, lab, extend(Color, {
   brighter: function(k) {
-    return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
+    return new Lab(this.l + K * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
   darker: function(k) {
-    return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b, this.opacity);
+    return new Lab(this.l - K * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
   rgb: function() {
-    // Lab -> XYZ (D50) -> linear RGB -> RGB
-    // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
     var y = (this.l + 16) / 116,
         x = isNaN(this.a) ? y : y + this.a / 500,
         z = isNaN(this.b) ? y : y - this.b / 200;
@@ -103,10 +100,10 @@ export function Hcl(h, c, l, opacity) {
 
 define(Hcl, hcl, extend(Color, {
   brighter: function(k) {
-    return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k), this.opacity);
+    return new Hcl(this.h, this.c, this.l + K * (k == null ? 1 : k), this.opacity);
   },
   darker: function(k) {
-    return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k), this.opacity);
+    return new Hcl(this.h, this.c, this.l - K * (k == null ? 1 : k), this.opacity);
   },
   rgb: function() {
     return labConvert(this).rgb();

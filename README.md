@@ -36,6 +36,13 @@ In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) c
 
 Cubehelix features monotonic lightness, while Lab and HCL are perceptually uniform. Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
 
+For additional color spaces, see:
+
+* [d3-cam16](https://github.com/d3/d3-cam16)
+* [d3-cam02](https://github.com/connorgr/d3-cam02)
+* [d3-hsv](https://github.com/d3/d3-hsv)
+* [d3-hcg](https://github.com/d3/d3-hcg)
+
 ## Installing
 
 If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-color.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:

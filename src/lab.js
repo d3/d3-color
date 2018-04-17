@@ -56,10 +56,12 @@ define(Lab, lab, extend(Color, {
     x = Xn * lab2xyz(x);
     y = Yn * lab2xyz(y);
     z = Zn * lab2xyz(z);
-    var r =  3.1338561 * x - 1.6168667 * y - 0.4906146 * z,
-        g = -0.9787684 * x + 1.9161415 * y + 0.0334540 * z,
-        b =  0.0719453 * x - 0.2289914 * y + 1.4052427 * z;
-    return new Rgb(lrgb2rgb(r), lrgb2rgb(g), lrgb2rgb(b), this.opacity);
+    return new Rgb(
+      lrgb2rgb( 3.1338561 * x - 1.6168667 * y - 0.4906146 * z),
+      lrgb2rgb(-0.9787684 * x + 1.9161415 * y + 0.0334540 * z),
+      lrgb2rgb( 0.0719453 * x - 0.2289914 * y + 1.4052427 * z),
+      this.opacity
+    );
   }
 }));
 

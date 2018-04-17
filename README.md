@@ -138,7 +138,7 @@ Constructs a new [HCL](https://en.wikipedia.org/wiki/HCL_color_space) color. The
 
 If *h*, *c* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
 
-<a name="lch" href="#lch">#</a> d3.<b>lch</b>( <i>l</i>, <i>c</i>,<i>h</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
+<a name="lch" href="#lch">#</a> d3.<b>lch</b>(<i>l</i>, <i>c</i>, <i>h</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#lch">#</a> d3.<b>lch</b>(<i>specifier</i>)<br>
 <a href="#lch">#</a> d3.<b>lch</b>(<i>color</i>)<br>
 

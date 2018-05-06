@@ -160,3 +160,8 @@ tape("color(format) returns undefined RGB channel values for unknown formats", f
   test.equal(color.color("#abcd"), null);
   test.end();
 });
+
+tape("color(format).hex() returns a hexadecimal string", function(test) {
+  test.equal(color.color("rgba(12%,34%,56%,0.4)").hex(), "#1f578f");
+  test.end();
+});

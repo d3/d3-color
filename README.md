@@ -98,9 +98,13 @@ Returns a darker copy of this color. If *k* is specified, it controls how much d
 
 Returns true if and only if the color is displayable on standard hardware. For example, this returns false for an RGB color if any channel value is less than zero or greater than 255, or if the opacity is not in the range [0, 1].
 
+<a name="color_hex" href="#color_hex">#</a> *color*.<b>hex</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a hexadecimal string representing this color in RGB space, such as `#f7eaba`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
+
 <a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
-Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
+Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)` or `rgba(247, 234, 186, 0.2)`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
 <a name="rgb" href="#rgb">#</a> d3.<b>rgb</b>(<i>r</i>, <i>g</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")<br>
 <a href="#rgb">#</a> d3.<b>rgb</b>(<i>specifier</i>)<br>

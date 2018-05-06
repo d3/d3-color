@@ -172,6 +172,9 @@ define(Color, color, {
   displayable: function() {
     return this.rgb().displayable();
   },
+  hex: function() {
+    return this.rgb().hex();
+  },
   toString: function() {
     return this.rgb() + "";
   }
@@ -238,6 +241,9 @@ define(Rgb, rgb, extend(Color, {
         && (0 <= this.b && this.b <= 255)
         && (0 <= this.opacity && this.opacity <= 1);
   },
+  hex: function() {
+    return "#" + hex(this.r) + hex(this.g) + hex(this.b);
+  },
   toString: function() {
     var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
     return (a === 1 ? "rgb(" : "rgba(")
@@ -247,6 +253,11 @@ define(Rgb, rgb, extend(Color, {
         + (a === 1 ? ")" : ", " + a + ")");
   }
 }));
+
+function hex(value) {
+  value = Math.max(0, Math.min(255, Math.round(value) || 0));
+  return (value < 16 ? "0" : "") + value.toString(16);
+}
 
 function hsla(h, s, l, a) {
   if (a <= 0) h = s = l = NaN;

@@ -7,7 +7,6 @@ tape("rgb(…) returns an instance of rgb and color", function(test) {
   var c = color.rgb(70, 130, 180);
   test.ok(c instanceof color.rgb);
   test.ok(c instanceof color.color);
-  test.equal(c.constructor.name, "Rgb");
   test.end();
 });
 

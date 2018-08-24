@@ -8,7 +8,6 @@ tape("hsl(…) returns an instance of hsl and color", function(test) {
   var c = color.hsl(120, 0.4, 0.5);
   test.ok(c instanceof color.hsl);
   test.ok(c instanceof color.color);
-  test.equal(c.constructor.name, "Hsl");
   test.end();
 });
 

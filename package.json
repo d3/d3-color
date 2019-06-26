@@ -1,6 +1,6 @@
 {
   "name": "d3-color",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Color spaces! RGB, HSL, Cubehelix, Lab and HCL (Lch).",
   "keywords": [
     "d3",

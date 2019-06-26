@@ -1,8 +1,9 @@
 import define, {extend} from "./define";
 import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
+import {lrgb2rgb, rgb2lrgb} from "./lrgb";
 
-// https://beta.observablehq.com/@mbostock/lab-and-rgb
+// https://observablehq.com/@mbostock/lab-and-rgb
 var K = 18,
     Xn = 0.96422,
     Yn = 1,
@@ -75,14 +76,6 @@ function xyz2lab(t) {
 
 function lab2xyz(t) {
   return t > t1 ? t * t * t : t2 * (t - t0);
-}
-
-function lrgb2rgb(x) {
-  return 255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055);
-}
-
-function rgb2lrgb(x) {
-  return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }
 
 function hclConvert(o) {

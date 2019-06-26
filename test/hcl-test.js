@@ -16,13 +16,19 @@ tape("hcl(…) exposes h, c, and l channel values", function(test) {
   test.end();
 });
 
-tape("hcl(…) returns defined hue and chroma, even for black and white", function(test) {
-  test.hclEqual(color.hcl("black"), NaN, 0, 0, 1);
-  test.hclEqual(color.hcl("#000"), NaN, 0, 0, 1);
-  test.hclEqual(color.hcl(color.lab("#000")), NaN, 0, 0, 1);
-  test.hclEqual(color.hcl("white"), NaN, 0, 100, 1);
-  test.hclEqual(color.hcl("#fff"), NaN, 0, 100, 1);
-  test.hclEqual(color.hcl(color.lab("#fff")), NaN, 0, 100, 1);
+tape("hcl(…) returns defined hue for black and white", function(test) {
+  test.hclEqual(color.hcl("black"), NaN, NaN, 0, 1);
+  test.hclEqual(color.hcl("#000"), NaN, NaN, 0, 1);
+  test.hclEqual(color.hcl(color.lab("#000")), NaN, NaN, 0, 1);
+  test.hclEqual(color.hcl("white"), NaN, NaN, 100, 1);
+  test.hclEqual(color.hcl("#fff"), NaN, NaN, 100, 1);
+  test.hclEqual(color.hcl(color.lab("#fff")), NaN, NaN, 100, 1);
+  test.end();
+});
+
+tape("hcl(…) returns defined hue and chroma for gray", function(test) {
+  test.hclEqual(color.hcl("gray"), NaN, 0, 53.585013, 1);
+  test.hclEqual(color.hcl(color.lab("gray")), NaN, 0, 53.585013, 1);
   test.end();
 });
 
@@ -138,9 +144,9 @@ tape("hcl(hcl) copies an HCL color", function(test) {
 });
 
 tape("hcl(lab) returns h = NaN if a and b are zero", function(test) {
-  test.hclEqual(color.hcl(color.lab(0, 0, 0)), NaN, 0, 0, 1);
+  test.hclEqual(color.hcl(color.lab(0, 0, 0)), NaN, NaN, 0, 1);
   test.hclEqual(color.hcl(color.lab(50, 0, 0)), NaN, 0, 50, 1);
-  test.hclEqual(color.hcl(color.lab(100, 0, 0)), NaN, 0, 100, 1);
+  test.hclEqual(color.hcl(color.lab(100, 0, 0)), NaN, NaN, 100, 1);
   test.hclEqual(color.hcl(color.lab(0, 10, 0)), 0, 10, 0, 1);
   test.hclEqual(color.hcl(color.lab(50, 10, 0)), 0, 10, 50, 1);
   test.hclEqual(color.hcl(color.lab(100, 10, 0)), 0, 10, 100, 1);

@@ -52,7 +52,7 @@ define(Lab, lab, extend(Color, {
     return new Lab(this.l + K * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
   darker: function(k) {
-    return new Lab(this.l - K * (k == null ? 1 : k), this.a, this.b, this.opacity);
+    return this.brighter(k == null ? -1 : -k);
   },
   rgb: function() {
     var y = (this.l + 16) / 116,

@@ -1,7 +1,7 @@
 import define, {extend} from "./define";
 import {Color, rgbConvert, Rgb} from "./color";
 
-var brighter = 1 / 0.7; // TODO
+var brighter = 0.1;
 
 export function lrgb2rgb(x) {
   return 255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055);
@@ -34,7 +34,7 @@ define(Lrgb, lrgb, extend(Color, {
     return new Lrgb(this.r + k, this.g + k, this.b + k, this.opacity);
   },
   darker: function(k) {
-    return this.brighter(-k);
+    return this.brighter(k == null ? -1 : -k);
   },
   rgb: function() {
     return new Rgb(lrgb2rgb(this.r), lrgb2rgb(this.g), lrgb2rgb(this.b), this.opacity);

@@ -16,17 +16,17 @@ tape("hcl(…) exposes h, c, and l channel values", function(test) {
   test.end();
 });
 
-tape("hcl(…) returns defined hue and undefined chroma for black", function(test) {
+tape("hcl(…) returns defined hue and undefined chroma for black and white", function(test) {
   test.hclEqual(color.hcl("black"), NaN, NaN, 0, 1);
   test.hclEqual(color.hcl("#000"), NaN, NaN, 0, 1);
   test.hclEqual(color.hcl(color.lab("#000")), NaN, NaN, 0, 1);
+  test.hclEqual(color.hcl("white"), NaN, NaN, 100, 1);
+  test.hclEqual(color.hcl("#fff"), NaN, NaN, 100, 1);
+  test.hclEqual(color.hcl(color.lab("#fff")), NaN, NaN, 100, 1);
   test.end();
 });
 
-tape("hcl(…) returns defined hue and chroma for gray and white", function(test) {
-  test.hclEqual(color.hcl("white"), NaN, 0, 100, 1);
-  test.hclEqual(color.hcl("#fff"), NaN, 0, 100, 1);
-  test.hclEqual(color.hcl(color.lab("#fff")), NaN, 0, 100, 1);
+tape("hcl(…) returns undefined hue and zero chroma for gray", function(test) {
   test.hclEqual(color.hcl("gray"), NaN, 0, 53.585013, 1);
   test.hclEqual(color.hcl(color.lab("gray")), NaN, 0, 53.585013, 1);
   test.end();
@@ -67,6 +67,12 @@ tape("hcl.toString() treats undefined channel values as 0", function(test) {
   test.equal(color.hcl(120, 50, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hcl(*, *, 0)
   test.equal(color.hcl(0, 50, NaN) + "", "rgb(0, 0, 0)");
   test.equal(color.hcl(120, 0, NaN) + "", "rgb(0, 0, 0)");
+  test.end();
+});
+
+tape("hcl.toString() clamps chroma", function(test) {
+  test.equal(color.hcl(302, 130, 0, 0.4) + "", "rgba(0, 0, 0, 0.4)");
+  test.equal(color.hcl(302, 130, 100, 0.4) + "", "rgba(255, 255, 255, 0.4)");
   test.end();
 });
 
@@ -146,7 +152,7 @@ tape("hcl(hcl) copies an HCL color", function(test) {
 tape("hcl(lab) returns h = NaN if a and b are zero", function(test) {
   test.hclEqual(color.hcl(color.lab(0, 0, 0)), NaN, NaN, 0, 1);
   test.hclEqual(color.hcl(color.lab(50, 0, 0)), NaN, 0, 50, 1);
-  test.hclEqual(color.hcl(color.lab(100, 0, 0)), NaN, 0, 100, 1);
+  test.hclEqual(color.hcl(color.lab(100, 0, 0)), NaN, NaN, 100, 1);
   test.hclEqual(color.hcl(color.lab(0, 10, 0)), 0, 10, 0, 1);
   test.hclEqual(color.hcl(color.lab(50, 10, 0)), 0, 10, 50, 1);
   test.hclEqual(color.hcl(color.lab(100, 10, 0)), 0, 10, 100, 1);

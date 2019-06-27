@@ -2,7 +2,7 @@ import define, {extend} from "./define";
 import {Color, rgbConvert, Rgb} from "./color";
 import {deg2rad, rad2deg} from "./math";
 
-// https://beta.observablehq.com/@mbostock/lab-and-rgb
+// https://observablehq.com/@mbostock/lab-and-rgb
 var K = 18,
     Xn = 0.96422,
     Yn = 1,
@@ -10,15 +10,12 @@ var K = 18,
     t0 = 4 / 29,
     t1 = 6 / 29,
     t2 = 3 * t1 * t1,
-    t3 = t1 * t1 * t1;
+    t3 = t1 * t1 * t1,
+    dc = 0.1;
 
 function labConvert(o) {
   if (o instanceof Lab) return new Lab(o.l, o.a, o.b, o.opacity);
-  if (o instanceof Hcl) {
-    if (isNaN(o.h)) return new Lab(o.l, 0, 0, o.opacity);
-    var h = o.h * deg2rad;
-    return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
-  }
+  if (o instanceof Hcl) return hcl2lab(o);
   if (!(o instanceof Rgb)) o = rgbConvert(o);
   var r = rgb2lrgb(o.r),
       g = rgb2lrgb(o.g),
@@ -88,7 +85,7 @@ function rgb2lrgb(x) {
 function hclConvert(o) {
   if (o instanceof Hcl) return new Hcl(o.h, o.c, o.l, o.opacity);
   if (!(o instanceof Lab)) o = labConvert(o);
-  if (o.a === 0 && o.b === 0) return new Hcl(NaN, 0 < o.l ? 0 : NaN, o.l, o.opacity);
+  if (o.a === 0 && o.b === 0) return new Hcl(NaN, 0 < o.l && o.l < 100 ? 0 : NaN, o.l, o.opacity);
   var h = Math.atan2(o.b, o.a) * rad2deg;
   return new Hcl(h < 0 ? h + 360 : h, Math.sqrt(o.a * o.a + o.b * o.b), o.l, o.opacity);
 }
@@ -108,6 +105,16 @@ export function Hcl(h, c, l, opacity) {
   this.opacity = +opacity;
 }
 
+function hcl2lab(o) {
+  if (isNaN(o.h)) return new Lab(o.l, 0, 0, o.opacity);
+  var h = o.h * deg2rad;
+  return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
+}
+
+function hcl2rgb(o) {
+  return hcl2lab(o).rgb();
+}
+
 define(Hcl, hcl, extend(Color, {
   brighter: function(k) {
     return new Hcl(this.h, this.c, this.l + K * (k == null ? 1 : k), this.opacity);
@@ -116,6 +123,20 @@ define(Hcl, hcl, extend(Color, {
     return new Hcl(this.h, this.c, this.l - K * (k == null ? 1 : k), this.opacity);
   },
   rgb: function() {
-    return labConvert(this).rgb();
+    return hcl2rgb(this);
+  },
+  toString: function() {
+    if ((rgb = hcl2rgb(this)).displayable()) return rgb + "";
+    var c0, c1, rgb, hcl = new Hcl(this.h, 0, this.l, 1);
+    if ((rgb = hcl2rgb(hcl)).displayable()) {
+      c0 = 0, c1 = this.c;
+      while (c1 - c0 > dc) {
+        hcl.c = (c0 + c1) * 0.5;
+        if ((rgb = hcl2rgb(hcl)).displayable()) c0 = hcl.c;
+        else c1 = hcl.c;
+      }
+    }
+    rgb.opacity = this.opacity;
+    return rgb + "";
   }
 }));

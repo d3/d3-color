@@ -10,8 +10,7 @@ var K = 18,
     t0 = 4 / 29,
     t1 = 6 / 29,
     t2 = 3 * t1 * t1,
-    t3 = t1 * t1 * t1,
-    dc = 0.1;
+    t3 = t1 * t1 * t1;
 
 function labConvert(o) {
   if (o instanceof Lab) return new Lab(o.l, o.a, o.b, o.opacity);
@@ -111,10 +110,6 @@ function hcl2lab(o) {
   return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
 }
 
-function hcl2rgb(o) {
-  return hcl2lab(o).rgb();
-}
-
 define(Hcl, hcl, extend(Color, {
   brighter: function(k) {
     return new Hcl(this.h, this.c, this.l + K * (k == null ? 1 : k), this.opacity);
@@ -123,20 +118,6 @@ define(Hcl, hcl, extend(Color, {
     return new Hcl(this.h, this.c, this.l - K * (k == null ? 1 : k), this.opacity);
   },
   rgb: function() {
-    return hcl2rgb(this);
-  },
-  toString: function() {
-    if ((rgb = hcl2rgb(this)).displayable()) return rgb + "";
-    var c0, c1, rgb, hcl = new Hcl(this.h, 0, this.l, 1);
-    if ((rgb = hcl2rgb(hcl)).displayable()) {
-      c0 = 0, c1 = this.c;
-      while (c1 - c0 > dc) {
-        hcl.c = (c0 + c1) * 0.5;
-        if ((rgb = hcl2rgb(hcl)).displayable()) c0 = hcl.c;
-        else c1 = hcl.c;
-      }
-    }
-    rgb.opacity = this.opacity;
-    return rgb + "";
+    return hcl2lab(this).rgb();
   }
 }));

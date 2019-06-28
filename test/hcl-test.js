@@ -76,12 +76,6 @@ tape("hcl(yellow) is displayable", function(test) {
   test.end();
 });
 
-tape("hcl.toString() clamps chroma", function(test) {
-  test.equal(color.hcl(302, 130, 0, 0.4) + "", "rgba(1, 0, 3, 0.4)");
-  test.equal(color.hcl(302, 130, 100, 0.4) + "", "rgba(255, 255, 255, 0.4)");
-  test.end();
-});
-
 tape("hcl(h, c, l) does not wrap hue to [0,360)", function(test) {
   test.hclEqual(color.hcl(-10, 40, 50), -10, 40, 50, 1);
   test.hclEqual(color.hcl(0, 40, 50), 0, 40, 50, 1);

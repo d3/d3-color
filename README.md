@@ -96,7 +96,7 @@ Returns a darker copy of this color. If *k* is specified, it controls how much d
 
 <a name="color_displayable" href="#color_displayable">#</a> *color*.<b>displayable</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
-Returns true if and only if the color is displayable on standard hardware. For example, this returns false for an RGB color if any channel value is less than zero or greater than 255, or if the opacity is not in the range [0, 1].
+Returns true if and only if the color is displayable on standard hardware. For example, this returns false for an RGB color if any channel value is less than zero or greater than 255 when rounded, or if the opacity is not in the range [0, 1].
 
 <a name="color_hex" href="#color_hex">#</a> *color*.<b>hex</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 

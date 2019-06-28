@@ -70,8 +70,14 @@ tape("hcl.toString() treats undefined channel values as 0", function(test) {
   test.end();
 });
 
+tape("hcl(yellow) is displayable", function(test) {
+  test.equal(color.hcl("yellow").displayable(), true);
+  test.equal(color.hcl("yellow") + "", "rgb(255, 255, 0)");
+  test.end();
+});
+
 tape("hcl.toString() clamps chroma", function(test) {
-  test.equal(color.hcl(302, 130, 0, 0.4) + "", "rgba(0, 0, 0, 0.4)");
+  test.equal(color.hcl(302, 130, 0, 0.4) + "", "rgba(1, 0, 3, 0.4)");
   test.equal(color.hcl(302, 130, 100, 0.4) + "", "rgba(255, 255, 255, 0.4)");
   test.end();
 });

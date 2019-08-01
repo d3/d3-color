@@ -29,6 +29,22 @@ tape("hsl.toString() converts to RGB and formats as rgb(…) or rgba(…)", func
   test.end();
 });
 
+tape("hsl.toString(format) formats as the specified format", function(test) {
+  test.equal(color.hsl("#abcdef").toString("rgb"), "rgb(171, 205, 239)");
+  test.equal(color.hsl("#abcdef").toString("hsl"), "hsl(210, 68%, 80.3921568627451%)");
+  test.equal(color.hsl("#abcdef").toString("hex"), "#abcdef");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").toString("rgb"), "rgb(102, 102, 0)");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").toString("hsl"), "hsl(60, 100%, 20%)");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").toString("hex"), "#666600");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").toString("rgb"), "rgba(31, 87, 143, 0.4)");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").toString("hsl"), "hsla(210, 64.70588235294117%, 34%, 0.4)");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").toString("hex"), "#1f578f");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").toString("rgb"), "rgba(102, 102, 0, 0.4)");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").toString("hsl"), "hsla(60, 100%, 20%, 0.4)");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").toString("hex"), "#666600");
+  test.end();
+});
+
 tape("hsl.toString() reflects h, s and l channel values and opacity", function(test) {
   var c = color.hsl("#abc");
   c.h += 10, c.s += 0.01, c.l -= 0.01, c.opacity = 0.4;

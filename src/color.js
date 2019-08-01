@@ -175,8 +175,28 @@ define(Color, color, {
   hex: function() {
     return this.rgb().hex();
   },
-  toString: function() {
-    return this.rgb() + "";
+  toString: function(format) {
+    if (format === "hex") return this.hex();
+    if (format === undefined) format = "rgb";
+    else if (format !== undefined) format += "";
+    var a = this.opacity, c; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
+    if (format === "hsl") {
+      c = this instanceof Hsl ? this : hslConvert(this);
+      return (a === 1 ? "hsl(" : "hsla(")
+          + c.h + ", "
+          + Math.max(0, Math.min(1, c.s)) * 100 + "%, "
+          + Math.max(0, Math.min(1, c.l)) * 100 + "%"
+          + (a === 1 ? ")" : ", " + a + ")");
+    }
+    if (format === "rgb") {
+      c = this instanceof Rgb ? this : rgbConvert(this);
+      return (a === 1 ? "rgb(" : "rgba(")
+          + Math.max(0, Math.min(255, Math.round(c.r) || 0)) + ", "
+          + Math.max(0, Math.min(255, Math.round(c.g) || 0)) + ", "
+          + Math.max(0, Math.min(255, Math.round(c.b) || 0))
+          + (a === 1 ? ")" : ", " + a + ")");
+    }
+    throw new Error("unknown format: " + format);
   }
 });
 
@@ -235,22 +255,14 @@ define(Rgb, rgb, extend(Color, {
   rgb: function() {
     return this;
   },
+  hex: function() {
+    return "#" + hex(this.r) + hex(this.g) + hex(this.b);
+  },
   displayable: function() {
     return (-0.5 <= this.r && this.r < 255.5)
         && (-0.5 <= this.g && this.g < 255.5)
         && (-0.5 <= this.b && this.b < 255.5)
         && (0 <= this.opacity && this.opacity <= 1);
-  },
-  hex: function() {
-    return "#" + hex(this.r) + hex(this.g) + hex(this.b);
-  },
-  toString: function() {
-    var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
-    return (a === 1 ? "rgb(" : "rgba(")
-        + Math.max(0, Math.min(255, Math.round(this.r) || 0)) + ", "
-        + Math.max(0, Math.min(255, Math.round(this.g) || 0)) + ", "
-        + Math.max(0, Math.min(255, Math.round(this.b) || 0))
-        + (a === 1 ? ")" : ", " + a + ")");
   }
 }));
 

@@ -29,6 +29,30 @@ tape("hsl.toString() converts to RGB and formats as rgb(…) or rgba(…)", func
   test.end();
 });
 
+tape("hsl.formatRgb() formats as rgb(…) or rgba(…)", function(test) {
+  test.equal(color.hsl("#abcdef").formatRgb(), "rgb(171, 205, 239)");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").formatRgb(), "rgb(102, 102, 0)");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").formatRgb(), "rgba(31, 87, 143, 0.4)");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").formatRgb(), "rgba(102, 102, 0, 0.4)");
+  test.end();
+});
+
+tape("hsl.formatHsl() formats as hsl(…) or hsla(…)", function(test) {
+  test.equal(color.hsl("#abcdef").formatHsl(), "hsl(210, 68%, 80.3921568627451%)");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").formatHsl(), "hsl(60, 100%, 20%)");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").formatHsl(), "hsla(210, 64.70588235294117%, 34%, 0.4)");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").formatHsl(), "hsla(60, 100%, 20%, 0.4)");
+  test.end();
+});
+
+tape("hsl.formatHex() formats as #rrggbb", function(test) {
+  test.equal(color.hsl("#abcdef").formatHex(), "#abcdef");
+  test.equal(color.hsl("hsl(60, 100%, 20%)").formatHex(), "#666600");
+  test.equal(color.hsl("rgba(12%, 34%, 56%, 0.4)").formatHex(), "#1f578f");
+  test.equal(color.hsl("hsla(60, 100%, 20%, 0.4)").formatHex(), "#666600");
+  test.end();
+});
+
 tape("hsl.toString() reflects h, s and l channel values and opacity", function(test) {
   var c = color.hsl("#abc");
   c.h += 10, c.s += 0.01, c.l -= 0.01, c.opacity = 0.4;

@@ -172,13 +172,24 @@ define(Color, color, {
   displayable: function() {
     return this.rgb().displayable();
   },
-  hex: function() {
-    return this.rgb().hex();
-  },
-  toString: function() {
-    return this.rgb() + "";
-  }
+  hex: color_formatHex,
+  formatHex: color_formatHex,
+  formatHsl: color_formatHsl,
+  formatRgb: color_formatRgb,
+  toString: color_formatRgb
 });
+
+function color_formatHex() {
+  return this.rgb().formatHex();
+}
+
+function color_formatHsl() {
+  return hslConvert(this).formatHsl();
+}
+
+function color_formatRgb() {
+  return this.rgb().formatRgb();
+}
 
 export default function color(format) {
   var m;
@@ -241,18 +252,24 @@ define(Rgb, rgb, extend(Color, {
         && (-0.5 <= this.b && this.b < 255.5)
         && (0 <= this.opacity && this.opacity <= 1);
   },
-  hex: function() {
-    return "#" + hex(this.r) + hex(this.g) + hex(this.b);
-  },
-  toString: function() {
-    var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
-    return (a === 1 ? "rgb(" : "rgba(")
-        + Math.max(0, Math.min(255, Math.round(this.r) || 0)) + ", "
-        + Math.max(0, Math.min(255, Math.round(this.g) || 0)) + ", "
-        + Math.max(0, Math.min(255, Math.round(this.b) || 0))
-        + (a === 1 ? ")" : ", " + a + ")");
-  }
+  hex: rgb_formatHex,
+  formatHex: rgb_formatHex,
+  formatRgb: rgb_formatRgb,
+  toString: rgb_formatRgb
 }));
+
+function rgb_formatHex() {
+  return "#" + hex(this.r) + hex(this.g) + hex(this.b);
+}
+
+function rgb_formatRgb() {
+  var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
+  return (a === 1 ? "rgb(" : "rgba(")
+      + Math.max(0, Math.min(255, Math.round(this.r) || 0)) + ", "
+      + Math.max(0, Math.min(255, Math.round(this.g) || 0)) + ", "
+      + Math.max(0, Math.min(255, Math.round(this.b) || 0))
+      + (a === 1 ? ")" : ", " + a + ")");
+}
 
 function hex(value) {
   value = Math.max(0, Math.min(255, Math.round(value) || 0));
@@ -329,6 +346,14 @@ define(Hsl, hsl, extend(Color, {
     return (0 <= this.s && this.s <= 1 || isNaN(this.s))
         && (0 <= this.l && this.l <= 1)
         && (0 <= this.opacity && this.opacity <= 1);
+  },
+  formatHsl: function() {
+    var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
+    return (a === 1 ? "hsl(" : "hsla(")
+        + (this.h || 0) + ", "
+        + (this.s || 0) * 100 + "%, "
+        + (this.l || 0) * 100 + "%"
+        + (a === 1 ? ")" : ", " + a + ")");
   }
 }));
 

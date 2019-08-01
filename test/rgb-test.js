@@ -29,6 +29,36 @@ tape("rgb.toString() formats as rgb(…) or rgba(…)", function(test) {
   test.end();
 });
 
+tape("rgb.formatRgb() formats as rgb(…) or rgba(…)", function(test) {
+  test.equal(color.rgb("#abcdef").formatRgb(), "rgb(171, 205, 239)");
+  test.equal(color.rgb("hsl(60, 100%, 20%)").formatRgb(), "rgb(102, 102, 0)");
+  test.equal(color.rgb("rgba(12%, 34%, 56%, 0.4)").formatRgb(), "rgba(31, 87, 143, 0.4)");
+  test.equal(color.rgb("hsla(60, 100%, 20%, 0.4)").formatRgb(), "rgba(102, 102, 0, 0.4)");
+  test.end();
+});
+
+tape("rgb.formatHsl() formats as hsl(…) or hsla(…)", function(test) {
+  test.equal(color.rgb("#abcdef").formatHsl(), "hsl(210, 68%, 80.3921568627451%)");
+  test.equal(color.rgb("hsl(60, 100%, 20%)").formatHsl(), "hsl(60, 100%, 20%)");
+  test.equal(color.rgb("rgba(12%, 34%, 56%, 0.4)").formatHsl(), "hsla(210, 64.70588235294117%, 34%, 0.4)");
+  test.equal(color.rgb("hsla(60, 100%, 20%, 0.4)").formatHsl(), "hsla(60, 100%, 20%, 0.4)");
+  test.end();
+});
+
+tape("rgb.formatHex() formats as #rrggbb", function(test) {
+  test.equal(color.rgb("#abcdef").formatHex(), "#abcdef");
+  test.equal(color.rgb("hsl(60, 100%, 20%)").formatHex(), "#666600");
+  test.equal(color.rgb("rgba(12%, 34%, 56%, 0.4)").formatHex(), "#1f578f");
+  test.equal(color.rgb("hsla(60, 100%, 20%, 0.4)").formatHex(), "#666600");
+  test.end();
+});
+
+tape("rgb.hex() is an alias for rgb.formatHex()", function(test) {
+  test.equal(color.color.prototype.hex, color.color.prototype.formatHex);
+  test.equal(color.rgb.prototype.hex, color.rgb.prototype.formatHex);
+  test.end();
+});
+
 tape("rgb.toString() reflects r, g and b channel values and opacity", function(test) {
   var c = color.rgb("#abc");
   ++c.r, ++c.g, ++c.b, c.opacity = 0.5;

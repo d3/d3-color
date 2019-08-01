@@ -110,10 +110,6 @@ Returns a string representing this color according to the [CSS Color Module Leve
 
 Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)` or `rgba(247, 234, 186, 0.2)`. If this color is not displayable, a suitable displayable color is returned instead by clamping RGB channel values to the interval [0, 255].
 
-<a name="color_hex" href="#color_hex">#</a> *color*.<b>hex</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
-
-An alias for [*color*.formatHex](#color_formatHex).
-
 <a name="color_toString" href="#color_toString">#</a> *color*.<b>toString</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
 An alias for [*color*.formatRgb](#color_formatRgb).

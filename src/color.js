@@ -172,7 +172,7 @@ define(Color, color, {
   displayable: function() {
     return this.rgb().displayable();
   },
-  hex: color_formatHex,
+  hex: color_formatHex, // Deprecated! Use color.formatHex.
   formatHex: color_formatHex,
   formatHsl: color_formatHsl,
   formatRgb: color_formatRgb,
@@ -252,7 +252,7 @@ define(Rgb, rgb, extend(Color, {
         && (-0.5 <= this.b && this.b < 255.5)
         && (0 <= this.opacity && this.opacity <= 1);
   },
-  hex: rgb_formatHex,
+  hex: rgb_formatHex, // Deprecated! Use color.formatHex.
   formatHex: rgb_formatHex,
   formatRgb: rgb_formatRgb,
   toString: rgb_formatRgb

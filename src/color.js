@@ -177,8 +177,7 @@ define(Color, color, {
   },
   toString: function(format) {
     if (format === "hex") return this.hex();
-    if (format === undefined) format = "rgb";
-    else if (format !== undefined) format += "";
+    if (format === undefined) format = "rgb"; else format += "";
     var a = this.opacity, c; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
     if (format === "hsl") {
       c = this instanceof Hsl ? this : hslConvert(this);

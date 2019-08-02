@@ -316,3 +316,13 @@ tape("hsl.rgb() converts to RGB", function(test) {
   test.rgbEqual(c.rgb(), 89, 166, 89, 0.4);
   test.end();
 });
+
+tape("hsl.copy(…) returns a new hsl with the specified channel values", function(test) {
+  var c = color.hsl(120, 0.3, 0.5, 0.4);
+  test.equal(c.copy() instanceof color.hsl, true);
+  test.equal(c.copy().formatHsl(), "hsla(120, 30%, 50%, 0.4)");
+  test.equal(c.copy({opacity: 1}).formatHsl(), "hsl(120, 30%, 50%)");
+  test.equal(c.copy({h: 20}).formatHsl(), "hsla(20, 30%, 50%, 0.4)");
+  test.equal(c.copy({h: 20, s: 0.4}).formatHsl(), "hsla(20, 40%, 50%, 0.4)");
+  test.end();
+});

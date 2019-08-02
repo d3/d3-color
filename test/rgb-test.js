@@ -279,3 +279,13 @@ tape("rgb.rgb() returns this", function(test) {
   test.equal(c.rgb(), c);
   test.end();
 });
+
+tape("rgb.copy(…) returns a new rgb with the specified channel values", function(test) {
+  var c = color.rgb(70, 130, 180);
+  test.equal(c.copy() instanceof color.rgb, true);
+  test.equal(c.copy() + "", "rgb(70, 130, 180)");
+  test.equal(c.copy({opacity: 0.2}) + "", "rgba(70, 130, 180, 0.2)");
+  test.equal(c.copy({r: 20}) + "", "rgb(20, 130, 180)");
+  test.equal(c.copy({r: 20, g: 40}) + "", "rgb(20, 40, 180)");
+  test.end();
+});

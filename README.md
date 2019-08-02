@@ -86,6 +86,14 @@ This color’s opacity, typically in the range [0, 1].
 
 Returns the [RGB equivalent](#rgb) of this color. For RGB colors, that’s `this`.
 
+<a name="color_copy" href="#color_copy">#</a> <i>color</i>.<b>copy</b>([<i>values</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a copy of this color. If *values* is specified, any enumerable own properties of *values* are assigned to the new returned color. For example, to derive a copy of a *color* with opacity 0.5, say
+
+```js
+color.copy({opacity: 0.5})
+```
+
 <a name="color_brighter" href="#color_brighter">#</a> *color*.<b>brighter</b>([<i>k</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
 Returns a brighter copy of this color. If *k* is specified, it controls how much brighter the returned color should be. If *k* is not specified, it defaults to 1. The behavior of this method is dependent on the implementing color space.

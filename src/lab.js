@@ -1,6 +1,6 @@
-import define, {extend} from "./define";
-import {Color, rgbConvert, Rgb} from "./color";
-import {deg2rad, rad2deg} from "./math";
+import define, {extend} from "./define.js";
+import {Color, rgbConvert, Rgb} from "./color.js";
+import {deg2rad, rad2deg} from "./math.js";
 
 // https://observablehq.com/@mbostock/lab-and-rgb
 var K = 18,

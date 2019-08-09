@@ -1,6 +1,6 @@
-import define, {extend} from "./define";
-import {Color, rgbConvert, Rgb, darker, brighter} from "./color";
-import {deg2rad, rad2deg} from "./math";
+import define, {extend} from "./define.js";
+import {Color, rgbConvert, Rgb, darker, brighter} from "./color.js";
+import {deg2rad, rad2deg} from "./math.js";
 
 var A = -0.14861,
     B = +1.78277,

@@ -29,12 +29,13 @@ c.opacity = 0.8;
 c + ""; // rgba(198, 45, 205, 0.8)
 ```
 
-In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports two color spaces that are designed for humans:
+In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports color spaces that are designed for humans:
 
+* [CIELAB](#lab)
+* [CIELCh<sub>ab</sub>](#lch)
 * Dave Green’s [Cubehelix](#cubehelix)
-* [Lab (CIELAB)](#lab) and [HCL (CIELCH)](#hcl)
 
-Cubehelix features monotonic lightness, while Lab and HCL are perceptually uniform. Note that HCL is the cylindrical form of Lab, similar to how HSL is the cylindrical form of RGB.
+Cubehelix features monotonic lightness, while CIELAB and its polar form CIELCh<sub>ab</sub> are perceptually uniform.
 
 For additional color spaces, see:
 
@@ -45,7 +46,7 @@ For additional color spaces, see:
 
 ## Installing
 
-If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-color.v1.min.js) or as part of [D3 4.0](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-color.v1.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
 <script src="https://d3js.org/d3-color.v1.min.js"></script>
@@ -56,7 +57,7 @@ var steelblue = d3.rgb("steelblue");
 </script>
 ```
 
-[Try d3-color in your browser.](https://tonicdev.com/npm/d3-color)
+[Try d3-color in your browser.](https://observablehq.com/collection/@d3/d3-color)
 
 ## API Reference
 
@@ -142,27 +143,27 @@ If *h*, *s* and *l* are specified, these represent the channel values of the ret
 <a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>color</i>)<br>
 
-Constructs a new [Lab](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) color. The channel values are exposed as `l`, `a` and `b` properties on the returned instance. Use the [Lab color picker](http://bl.ocks.org/mbostock/9f37cc207c0cb166921b) to explore this color space. The value of *l* is typically in the range [0, 100], while *a* and *b* are typically in [-160, +160].
+Constructs a new [CIELAB](https://en.wikipedia.org/wiki/Lab_color_space#CIELAB) color. The channel values are exposed as `l`, `a` and `b` properties on the returned instance. Use the [CIELAB color picker](http://bl.ocks.org/mbostock/9f37cc207c0cb166921b) to explore this color space. The value of *l* is typically in the range [0, 100], while *a* and *b* are typically in [-160, +160].
 
-If *l*, *a* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the Lab color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to Lab. (Colors already in the Lab color space skip the conversion to RGB, and colors in the HCL color space are converted directly to Lab.)
+If *l*, *a* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the CIELAB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to CIELAB. (Colors already in the CIELAB color space skip the conversion to RGB, and colors in the HCL color space are converted directly to CIELAB.)
 
 <a name="gray" href="#gray">#</a> d3.<b>gray</b>(<i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 
-Constructs a new [Lab](#lab) color with the specified *l* value and *a* = *b* = 0.
+Constructs a new [CIELAB](#lab) color with the specified *l* value and *a* = *b* = 0.
 
 <a name="hcl" href="#hcl">#</a> d3.<b>hcl</b>(<i>h</i>, <i>c</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>specifier</i>)<br>
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>color</i>)<br>
 
-Constructs a new [HCL](https://en.wikipedia.org/wiki/HCL_color_space) color. The channel values are exposed as `h`, `c` and `l` properties on the returned instance. Use the [HCL color picker](http://bl.ocks.org/mbostock/3e115519a1b495e0bd95) to explore this color space. The value of *l* is typically in the range [0, 100], *c* is typically in [0, 230], and *h* is typically in [0, 360).
-
-If *h*, *c* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HCL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HCL. (Colors already in the HCL color space skip the conversion to RGB, and colors in the Lab color space are converted directly to HCL.)
+Equivalent to [d3.lch](#lch), but with reversed argument order.
 
 <a name="lch" href="#lch">#</a> d3.<b>lch</b>(<i>l</i>, <i>c</i>, <i>h</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#lch">#</a> d3.<b>lch</b>(<i>specifier</i>)<br>
 <a href="#lch">#</a> d3.<b>lch</b>(<i>color</i>)<br>
 
-Equivalent to [d3.hcl](#hcl), but with reversed argument order.
+Constructs a new [CIELCh<sub>ab</sub>](https://en.wikipedia.org/wiki/CIELAB_color_space#Cylindrical_representation:_CIELCh_or_CIEHLC) color. The channel values are exposed as `l`, `c` and `h` properties on the returned instance. Use the [CIELCh<sub>ab</sub>](http://bl.ocks.org/mbostock/3e115519a1b495e0bd95) to explore this color space. The value of *l* is typically in the range [0, 100], *c* is typically in [0, 230], and *h* is typically in [0, 360).
+
+If *l*, *c*, and *h* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to CIELCh<sub>ab</sub> color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to CIELCh<sub>ab</sub>. (Colors already in CIELCh<sub>ab</sub> color space skip the conversion to RGB, and colors in CIELAB color space are converted directly to CIELCh<sub>ab</sub>.)
 
 <a name="cubehelix" href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/cubehelix.js "Source")<br>
 <a href="#cubehelix">#</a> d3.<b>cubehelix</b>(<i>specifier</i>)<br>

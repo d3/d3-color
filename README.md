@@ -31,8 +31,8 @@ c + ""; // rgba(198, 45, 205, 0.8)
 
 In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) color space, d3-color supports color spaces that are designed for humans:
 
-* [CIELAB](#lab)
-* [CIELCh<sub>ab</sub>](#lch)
+* [CIELAB](#lab) (*a.k.a.* “Lab”)
+* [CIELCh<sub>ab</sub>](#lch) (*a.k.a.* “LCh” or “HCL”)
 * Dave Green’s [Cubehelix](#cubehelix)
 
 Cubehelix features monotonic lightness, while CIELAB and its polar form CIELCh<sub>ab</sub> are perceptually uniform.

@@ -219,7 +219,6 @@ function rgbn(n) {
 }
 
 function rgbn8(n) {
-  console.log(n);
   return new Rgb(n >> 24 & 0xff, n >> 16 & 0xff, n >> 8 & 0xff, (n & 0xff) / 0xff);
 }
 

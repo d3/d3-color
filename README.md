@@ -63,7 +63,7 @@ var steelblue = d3.rgb("steelblue");
 
 <a name="color" href="#color">#</a> d3.<b>color</b>(<i>specifier</i>) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
-Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color. If the specifier was not valid, null is returned. Some examples:
+Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color, along with [CSS Color Module Level 4 hex](https://www.w3.org/TR/css-color-4/#hex-notation) *specifier* strings. If the specifier was not valid, null is returned. Some examples:
 
 * `rgb(255, 255, 255)`
 * `rgb(10%, 20%, 30%)`
@@ -73,6 +73,8 @@ Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/
 * `hsla(120, 50%, 20%, 0.4)`
 * `#ffeeaa`
 * `#fea`
+* `#ffeeaa22`
+* `#fea2`
 * `steelblue`
 
 The list of supported [named colors](http://www.w3.org/TR/SVG/types.html#ColorKeywords) is specified by CSS.

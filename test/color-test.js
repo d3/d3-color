@@ -26,12 +26,12 @@ tape("color(format) parses 3-digit hexadecimal (e.g., \"#abc\")", function(test)
   test.end();
 });
 
-tape("color(format) parses 8-digit hexadecimal (e.g., \"#abcdef\")", function(test) {
+tape("color(format) parses 8-digit hexadecimal (e.g., \"#abcdef33\")", function(test) {
   test.rgbEqual(color.color("#abcdef33"), 171, 205, 239, 0.2);
   test.end();
 });
 
-tape("color(format) parses 4-digit hexadecimal (e.g., \"#abc\")", function(test) {
+tape("color(format) parses 4-digit hexadecimal (e.g., \"#abc3\")", function(test) {
   test.rgbEqual(color.color("#abc3"), 170, 187, 204, 0.2);
   test.end();
 });

@@ -26,6 +26,16 @@ tape("color(format) parses 3-digit hexadecimal (e.g., \"#abc\")", function(test)
   test.end();
 });
 
+tape("color(format) parses 8-digit hexadecimal (e.g., \"#abcdef\")", function(test) {
+  test.rgbEqual(color.color("#abcdef33"), 171, 205, 239, 0.2);
+  test.end();
+});
+
+tape("color(format) parses 4-digit hexadecimal (e.g., \"#abc\")", function(test) {
+  test.rgbEqual(color.color("#abc3"), 170, 187, 204, 0.2);
+  test.end();
+});
+
 tape("color(format) parses RGB integer format (e.g., \"rgb(12,34,56)\")", function(test) {
   test.rgbEqual(color.color("rgb(12,34,56)"), 12, 34, 56, 1);
   test.end();
@@ -157,7 +167,6 @@ tape("color(format) returns undefined RGB channel values for unknown formats", f
   test.equal(color.color("hasOwnProperty"), null);
   test.equal(color.color("__proto__"), null);
   test.equal(color.color("#ab"), null);
-  test.equal(color.color("#abcd"), null);
   test.end();
 });
 

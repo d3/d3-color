@@ -26,6 +26,11 @@ tape("color(format) parses 3-digit hexadecimal (e.g., \"#abc\")", function(test)
   test.end();
 });
 
+tape("color(format) does not parse 7-digit hexadecimal (e.g., \"#abcdef3\")", function(test) {
+  test.strictEqual(color.color("#abcdef3"), null);
+  test.end();
+});
+
 tape("color(format) parses 8-digit hexadecimal (e.g., \"#abcdef33\")", function(test) {
   test.rgbEqual(color.color("#abcdef33"), 171, 205, 239, 0.2);
   test.end();

@@ -217,7 +217,7 @@ function rgbn(n) {
 }
 
 function rgba(r, g, b, a) {
-  if (a <= 0) r = g = b = NaN;
+  if (a < 0) r = g = b = NaN;
   return new Rgb(r, g, b, a);
 }
 

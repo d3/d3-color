@@ -14,7 +14,9 @@ var reI = "\\s*([+-]?\\d+)\\s*",
     reRgbaInteger = new RegExp("^rgba\\(" + [reI, reI, reI, reN] + "\\)$"),
     reRgbaPercent = new RegExp("^rgba\\(" + [reP, reP, reP, reN] + "\\)$"),
     reHslPercent = new RegExp("^hsl\\(" + [reN, reP, reP] + "\\)$"),
-    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$");
+    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$"),
+    reHwb = new RegExp("^hwb\\(" + reN + reP + reP + "\\)$"),
+    reHwba = new RegExp("^hwb\\(" + reN + reP + reP + "/" + reN + "\\)$");
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -177,6 +179,7 @@ define(Color, color, {
   hex: color_formatHex, // Deprecated! Use color.formatHex.
   formatHex: color_formatHex,
   formatHsl: color_formatHsl,
+  formatHwb: color_formatHwb,
   formatRgb: color_formatRgb,
   toString: color_formatRgb
 });
@@ -187,6 +190,10 @@ function color_formatHex() {
 
 function color_formatHsl() {
   return hslConvert(this).formatHsl();
+}
+
+function color_formatHwb() {
+  return hwbConvert(this).formatHwb();
 }
 
 function color_formatRgb() {
@@ -207,6 +214,8 @@ export default function color(format) {
       : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
       : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
       : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
+      : (m = reHwb.exec(format)) ? hwba(m[1], m[2] / 100, m[3] / 100, 1) // hwb(120 0% 0%)
+      : (m = reHwba.exec(format)) ? hwba(m[1], m[2] / 100, m[3] / 100, m[4]) // hwba(120 0% 0%/1)
       : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
       : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;
@@ -280,6 +289,8 @@ function hex(value) {
   value = Math.max(0, Math.min(255, Math.round(value) || 0));
   return (value < 16 ? "0" : "") + value.toString(16);
 }
+
+// HSL
 
 function hsla(h, s, l, a) {
   if (a <= 0) h = s = l = NaN;
@@ -368,4 +379,100 @@ function hsl2rgb(h, m1, m2) {
       : h < 180 ? m2
       : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60
       : m1) * 255;
+}
+
+// HWB
+
+function hwba(h, w, b, a) {
+  // Treating w, b outside [0,1] as invalid is mandated by CSS4,
+  // but here we only enforce it when parsing specifiers
+  if (w < 0 || w > 1 || b < 0 || b > 1) return null;
+  if (a <= 0) h = w = b = NaN;
+  else if (w + b >= 1) h = NaN;
+  return new Hwb(h, w, b, a);
+}
+
+export function hwbConvert(o) {
+  if (o instanceof Hwb) return new Hwb(o.h, o.w, o.b, o.opacity);
+  if (!(o instanceof Color)) o = color(o);
+  if (!o) return new Hwb;
+  if (o instanceof Hwb) return o;
+  o = o.rgb();
+  var r = o.r / 255,
+      g = o.g / 255,
+      b = o.b / 255,
+      min = Math.min(r, g, b),
+      max = Math.max(r, g, b),
+      h = NaN,
+      s = max - min;
+  if (s) {
+    if (r === max) h = (g - b) / s + (g < b) * 6;
+    else if (g === max) h = (b - r) / s + 2;
+    else h = (r - g) / s + 4;
+    h *= 60;
+  }
+  return new Hwb(h, min, 1 - max, o.opacity);
+}
+
+export function hwb(h, w, b, opacity) {
+  return arguments.length === 1 ? hwbConvert(h) : new Hwb(h, w, b, opacity == null ? 1 : opacity);
+}
+
+function Hwb(h, w, b, opacity) {
+  this.h = +h;
+  this.w = +w;
+  this.b = +b;
+  this.opacity = +opacity;
+}
+
+define(Hwb, hwb, extend(Color, {
+  brighter: function(k) {
+    var wb = shift(this.w, this.b, k == null ? 1 : k);
+    return new Hwb(this.h, wb[0], wb[1], this.opacity);
+  },
+  darker: function(k) {
+    var wb = shift(this.w, this.b, k == null ? -1 : -k);
+    return new Hwb(this.h, wb[0], wb[1], this.opacity);
+  },
+  rgb: function() {
+    var h = this.h % 360 + (this.h < 0) * 360,
+        w = isNaN(this.w) ? 0 : this.w,
+        g = w + (isNaN(this.b) ? 0 : this.b),
+        s = Math.min(g, 1);
+    w /= Math.max(g, 1);
+    return new Rgb(
+      hsl2rgb(h >= 240 ? h - 240 : h + 120, 0, 1) * (1 - s) + w * 255,
+      hsl2rgb(h, 0, 1) * (1 - s) + w * 255,
+      hsl2rgb(h < 120 ? h + 240 : h - 120, 0, 1) * (1 - s) + w * 255,
+      this.opacity
+    );
+  },
+  displayable: function() {
+    return (0 <= this.w && this.w <= 1 || isNaN(this.w))
+        && (0 <= this.b && this.b <= 1 || isNaN(this.b))
+        && (0 <= this.opacity && this.opacity <= 1);
+  },
+  formatHwb: function() {
+    var a = this.opacity,
+        w = this.w,
+        b = this.b;
+    a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
+    w = isNaN(w) ? 0 : Math.max(0, Math.min(1, w));
+    b = isNaN(b) ? 0 : Math.max(0, Math.min(1, b));
+    return "hwb("
+        + (this.h || 0) + " "
+        + w * 100 + "% "
+        + b * 100 + "%"
+        + (a === 1 ? ")" : "/" + a + ")");
+  }
+}));
+
+function shift(w, b, k) {
+  var x = w - b,
+      y = w + b - 1,
+      x2 = x + k * 0.3,
+      y2 = Math.abs(x) === 1 ? 0 : (1 - Math.abs(x2)) * y / (1 - Math.abs(x)),
+      w2 = (y2 + 1 + x2) / 2,
+      b2 = (y2 + 1 - x2) / 2;
+  return [w2, b2];
 }

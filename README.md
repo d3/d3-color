@@ -43,6 +43,7 @@ For additional color spaces, see:
 * [d3-cam02](https://github.com/connorgr/d3-cam02)
 * [d3-hsv](https://github.com/d3/d3-hsv)
 * [d3-hcg](https://github.com/d3/d3-hcg)
+* [d3-hsluv](https://github.com/petulla/d3-hsluv)
 
 ## Installing
 

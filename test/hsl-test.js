@@ -60,7 +60,7 @@ tape("hsl.toString() reflects h, s and l channel values and opacity", function(t
   test.end();
 });
 
-tape("hsl.toString() treats undefined channel values as 0", function(test) {
+tape("hsl.toString() treats undefined hue as gray, undefined saturation/lightness as 0", function(test) {
   test.equal(color.hsl("invalid") + "", "rgb(0, 0, 0)");
   test.equal(color.hsl("#000") + "", "rgb(0, 0, 0)");
   test.equal(color.hsl("#ccc") + "", "rgb(204, 204, 204)");

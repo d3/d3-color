@@ -74,7 +74,7 @@ tape("hwb.toString() reflects h, w and b channel values and opacity", function(t
   test.end();
 });
 
-tape("hwb.toString() treats undefined channel values as 0", function(test) {
+tape("hwb.toString() treats undefined hue as gray, undefined whiteness/blackness as 0", function(test) {
   test.equal(color.hwb("invalid") + "", "rgb(0, 0, 0)");
   test.equal(color.hwb("#000") + "", "rgb(0, 0, 0)");
   test.equal(color.hwb("#ccc") + "", "rgb(204, 204, 204)");

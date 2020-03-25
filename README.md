@@ -64,16 +64,20 @@ var steelblue = d3.rgb("steelblue");
 
 <a name="color" href="#color">#</a> d3.<b>color</b>(<i>specifier</i>) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
-Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color, along with [CSS Color Module Level 4 hex](https://www.w3.org/TR/css-color-4/#hex-notation) and [HWB](https://www.w3.org/TR/css-color-4/#the-hwb-notation) *specifier* strings. If the specifier was not valid, null is returned. Some examples:
+Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) or [Level 4](https://www.w3.org/TR/css-color-4) *specifier* string, returning an [RGB](#rgb), [HSL](#hsl) or [HWB](#hwb) color. If the specifier was not valid, null is returned. Some examples:
 
 * `rgb(255, 255, 255)`
 * `rgb(10%, 20%, 30%)`
+* `rgb(127.5 127.5 127.5)`
 * `rgba(255, 255, 255, 0.4)`
 * `rgba(10%, 20%, 30%, 0.4)`
+* `rgba(127.5 127.5 127.5/40%)`
 * `hsl(120, 50%, 20%)`
 * `hsla(120, 50%, 20%, 0.4)`
+* `hsl(120grad 50% 20%/0.4)`
 * `hwb(120 50% 20%)`
 * `hwb(120 50% 20%/0.4)`
+* `hwb(1rad 30% 20%/40%)`
 * `#ffeeaa`
 * `#fea`
 * `#ffeeaa22`

@@ -159,6 +159,8 @@ tape("hwb(format) parses the specified format and converts to HWB", function(tes
   test.hwbEqual(color.hwb("hsla(60,100%,20%,0.4)"), 60, 0, 0.6, 0.4);
   test.hwbEqual(color.hwb("hwb(48  12% 24% )"), 48, 0.12, 0.24, 1);
   test.hwbEqual(color.hwb("hwb(48 12% 24%/0.77)"), 48, 0.12, 0.24, 0.77);
+  test.hwbEqual(color.hwb("hwb(200grad 46% 22%)"), 180, 0.46, 0.22, 1);
+  test.hwbEqual(color.hwb("hwb(147 33% 33%/80%)"), 147, 0.33, 0.33, 0.8);
   test.hwbEqual(color.hwb("rebeccapurple"), 270, 0.2, 0.4, 1);
   test.hwbEqual(color.hwb("transparent"), NaN, NaN, NaN, 0);
   test.end();

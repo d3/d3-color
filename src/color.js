@@ -1,22 +1,31 @@
 import define, {extend} from "./define.js";
+import {rad2deg} from "./math.js";
 
 export function Color() {}
 
 export var darker = 0.7;
 export var brighter = 1 / darker;
 
-var reI = "\\s*([+-]?\\d+)\\s*",
-    reN = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)\\s*",
-    reP = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)%\\s*",
+var reF = "([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)",
+    reN = "\\s*" + reF + "\\s*",
+    reP = "\\s*" + reF + "%\\s*",
+    reH = "\\s*" + reF + "((?:deg|grad|rad|turn)?)\\s*",
+    reA = "\\s*" + reF + "(%?)\\s*",
     reHex = /^#([0-9a-f]{3,8})$/,
-    reRgbInteger = new RegExp("^rgb\\(" + [reI, reI, reI] + "\\)$"),
-    reRgbPercent = new RegExp("^rgb\\(" + [reP, reP, reP] + "\\)$"),
-    reRgbaInteger = new RegExp("^rgba\\(" + [reI, reI, reI, reN] + "\\)$"),
-    reRgbaPercent = new RegExp("^rgba\\(" + [reP, reP, reP, reN] + "\\)$"),
-    reHslPercent = new RegExp("^hsl\\(" + [reN, reP, reP] + "\\)$"),
-    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$"),
-    reHwb = new RegExp("^hwb\\(" + reN + reP + reP + "\\)$"),
-    reHwba = new RegExp("^hwb\\(" + reN + reP + reP + "/" + reN + "\\)$");
+    reRgb = new RegExp("^rgba?\\(" + reN + reN + reN + "\\)$"),
+    reRgba = new RegExp("^rgba?\\(" + reN + reN + reN + "/" + reA + "\\)$"),
+    reRgbP = new RegExp("^rgba?\\(" + reP + reP + reP + "\\)$"),
+    reRgbaP = new RegExp("^rgba?\\(" + reP + reP + reP + "/" + reA + "\\)$"),
+    reRgbC = new RegExp("^rgba?\\(" + [reN, reN, reN] + "\\)$"),
+    reRgbaC = new RegExp("^rgba?\\(" + [reN, reN, reN, reA] + "\\)$"),
+    reRgbPC = new RegExp("^rgba?\\(" + [reP, reP, reP] + "\\)$"),
+    reRgbaPC = new RegExp("^rgba?\\(" + [reP, reP, reP, reA] + "\\)$"),
+    reHsl = new RegExp("^hsla?\\(" + reH + reP + reP + "\\)$"),
+    reHsla = new RegExp("^hsla?\\(" + reH + reP + reP + "/" + reA + "\\)$"),
+    reHslC = new RegExp("^hsla?\\(" + [reH, reP, reP] + "\\)$"),
+    reHslaC = new RegExp("^hsla?\\(" + [reH, reP, reP, reA] + "\\)$"),
+    reHwb = new RegExp("^hwb\\(" + reH + reP + reP + "\\)$"),
+    reHwba = new RegExp("^hwb\\(" + reH + reP + reP + "/" + reA + "\\)$");
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -200,6 +209,21 @@ function color_formatRgb() {
   return this.rgb().formatRgb();
 }
 
+function angle2degrees(value, unit) {
+  return unit === "" ? +value
+      : unit === "deg" ? +value
+      : unit === "grad" ? value * 0.9
+      : unit === "rad" ? value * rad2deg
+      : unit === "turn" ? value * 360
+      : +value;
+}
+
+function opacity2number(value, unit) {
+  return unit === "" ? +value
+      : unit === "%" ? value * 0.01
+      : +value;
+}
+
 export default function color(format) {
   var m, l;
   format = (format + "").trim().toLowerCase();
@@ -208,14 +232,14 @@ export default function color(format) {
       : l === 8 ? new Rgb(m >> 24 & 0xff, m >> 16 & 0xff, m >> 8 & 0xff, (m & 0xff) / 0xff) // #ff000000
       : l === 4 ? new Rgb((m >> 12 & 0xf) | (m >> 8 & 0xf0), (m >> 8 & 0xf) | (m >> 4 & 0xf0), (m >> 4 & 0xf) | (m & 0xf0), (((m & 0xf) << 4) | (m & 0xf)) / 0xff) // #f000
       : null) // invalid hex
-      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3], 1) // rgb(255, 0, 0)
-      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
-      : (m = reRgbaInteger.exec(format)) ? rgba(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
-      : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
-      : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
-      : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
-      : (m = reHwb.exec(format)) ? hwba(m[1], m[2] / 100, m[3] / 100, 1) // hwb(120 0% 0%)
-      : (m = reHwba.exec(format)) ? hwba(m[1], m[2] / 100, m[3] / 100, m[4]) // hwba(120 0% 0%/1)
+      : (m = reRgb.exec(format) || reRgbC.exec(format)) ? new Rgb(m[1], m[2], m[3], 1) // rgb(255, 0, 0)
+      : (m = reRgbP.exec(format) || reRgbPC.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
+      : (m = reRgba.exec(format) || reRgbaC.exec(format)) ? rgba(m[1], m[2], m[3], opacity2number(m[4], m[5])) // rgba(255, 0, 0, 1)
+      : (m = reRgbaP.exec(format) || reRgbaPC.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, opacity2number(m[4], m[5])) // rgba(100%, 0%, 0%, 1)
+      : (m = reHsl.exec(format) || reHslC.exec(format)) ? hsla(angle2degrees(m[1], m[2]), m[3] / 100, m[4] / 100, 1) // hsl(120, 50%, 50%)
+      : (m = reHsla.exec(format) || reHslaC.exec(format)) ? hsla(angle2degrees(m[1], m[2]), m[3] / 100, m[4] / 100, opacity2number(m[5], m[6])) // hsla(120, 50%, 50%, 1)
+      : (m = reHwb.exec(format)) ? hwba(angle2degrees(m[1], m[2]), m[3] / 100, m[4] / 100, 1) // hwb(120 0% 0%)
+      : (m = reHwba.exec(format)) ? hwba(angle2degrees(m[1], m[2]), m[3] / 100, m[4] / 100, opacity2number(m[5], m[6])) // hwba(120 0% 0%/1)
       : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
       : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;

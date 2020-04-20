@@ -146,6 +146,13 @@ tape("color(format) does not allow made-up names", function(test) {
   test.end();
 });
 
+tape("color(format) allows achromatic colors", function(test) {
+  test.rgbEqual(color.color("rgba(0,0,0,0)"), NaN, NaN, NaN, 0);
+  test.rgbEqual(color.color("#0000"), NaN, NaN, NaN, 0);
+  test.rgbEqual(color.color("#00000000"), NaN, NaN, NaN, 0);
+  test.end();
+});
+
 tape("color(format) does not allow whitespace before open paren or percent sign", function(test) {
   test.equal(color.color("rgb (120,30,50)"), null);
   test.equal(color.color("rgb (12%,30%,50%)"), null);

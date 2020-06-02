@@ -3,7 +3,7 @@ import {Color, rgbConvert, Rgb} from "./color.js";
 import {deg2rad, rad2deg} from "./math.js";
 
 // https://observablehq.com/@mbostock/lab-and-rgb
-var K = 18,
+const K = 18,
     Xn = 0.96422,
     Yn = 1,
     Zn = 0.82521,

@@ -1,6 +1,6 @@
 import define, {extend} from "./define.js";
 import {Color, rgbConvert, Rgb, darker, brighter} from "./color.js";
-import {deg2rad, rad2deg} from "./math.js";
+import {degrees, radians} from "./math.js";
 
 var A = -0.14861,
     B = +1.78277,
@@ -21,7 +21,7 @@ function cubehelixConvert(o) {
       bl = b - l,
       k = (E * (g - l) - C * bl) / D,
       s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)), // NaN if l=0 or l=1
-      h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
+      h = s ? Math.atan2(k, bl) * degrees - 120 : NaN;
   return new Cubehelix(h < 0 ? h + 360 : h, s, l, o.opacity);
 }
 
@@ -46,7 +46,7 @@ define(Cubehelix, cubehelix, extend(Color, {
     return new Cubehelix(this.h, this.s, this.l * k, this.opacity);
   },
   rgb: function() {
-    var h = isNaN(this.h) ? 0 : (this.h + 120) * deg2rad,
+    var h = isNaN(this.h) ? 0 : (this.h + 120) * radians,
         l = +this.l,
         a = isNaN(this.s) ? 0 : this.s * l * (1 - l),
         cosh = Math.cos(h),

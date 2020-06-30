@@ -37,6 +37,8 @@ In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) c
 
 Cubehelix features monotonic lightness, while CIELAB and its polar form CIELCh<sub>ab</sub> are perceptually uniform.
 
+## Extensions
+
 For additional color spaces, see:
 
 * [d3-cam16](https://github.com/d3/d3-cam16)
@@ -44,6 +46,10 @@ For additional color spaces, see:
 * [d3-hsv](https://github.com/d3/d3-hsv)
 * [d3-hcg](https://github.com/d3/d3-hcg)
 * [d3-hsluv](https://github.com/petulla/d3-hsluv)
+
+To measure color differences, see:
+
+* [d3-color-difference](https://github.com/Evercoder/d3-color-difference)
 
 ## Installing
 

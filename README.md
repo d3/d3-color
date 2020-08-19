@@ -37,6 +37,8 @@ In addition to the ubiquitous and machine-friendly [RGB](#rgb) and [HSL](#hsl) c
 
 Cubehelix features monotonic lightness, while CIELAB and its polar form CIELCh<sub>ab</sub> are perceptually uniform.
 
+## Extensions
+
 For additional color spaces, see:
 
 * [d3-cam16](https://github.com/d3/d3-cam16)
@@ -45,12 +47,16 @@ For additional color spaces, see:
 * [d3-hcg](https://github.com/d3/d3-hcg)
 * [d3-hsluv](https://github.com/petulla/d3-hsluv)
 
+To measure color differences, see:
+
+* [d3-color-difference](https://github.com/Evercoder/d3-color-difference)
+
 ## Installing
 
-If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-color.v1.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
+If you use NPM, `npm install d3-color`. Otherwise, download the [latest release](https://github.com/d3/d3-color/releases/latest). You can also load directly from [d3js.org](https://d3js.org), either as a [standalone library](https://d3js.org/d3-color.v2.min.js) or as part of [D3](https://github.com/d3/d3). AMD, CommonJS, and vanilla environments are supported. In vanilla, a `d3` global is exported:
 
 ```html
-<script src="https://d3js.org/d3-color.v1.min.js"></script>
+<script src="https://d3js.org/d3-color.v2.min.js"></script>
 <script>
 
 var steelblue = d3.rgb("steelblue");

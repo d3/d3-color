@@ -1,9 +1,9 @@
 import define, {extend} from "./define.js";
 import {Color, rgbConvert, Rgb} from "./color.js";
-import {deg2rad, rad2deg} from "./math.js";
+import {degrees, radians} from "./math.js";
 
 // https://observablehq.com/@mbostock/lab-and-rgb
-var K = 18,
+const K = 18,
     Xn = 0.96422,
     Yn = 1,
     Zn = 0.82521,
@@ -85,7 +85,7 @@ function hclConvert(o) {
   if (o instanceof Hcl) return new Hcl(o.h, o.c, o.l, o.opacity);
   if (!(o instanceof Lab)) o = labConvert(o);
   if (o.a === 0 && o.b === 0) return new Hcl(NaN, 0 < o.l && o.l < 100 ? 0 : NaN, o.l, o.opacity);
-  var h = Math.atan2(o.b, o.a) * rad2deg;
+  var h = Math.atan2(o.b, o.a) * degrees;
   return new Hcl(h < 0 ? h + 360 : h, Math.sqrt(o.a * o.a + o.b * o.b), o.l, o.opacity);
 }
 
@@ -106,7 +106,7 @@ export function Hcl(h, c, l, opacity) {
 
 function hcl2lab(o) {
   if (isNaN(o.h)) return new Lab(o.l, 0, 0, o.opacity);
-  var h = o.h * deg2rad;
+  var h = o.h * radians;
   return new Lab(o.l, Math.cos(h) * o.c, Math.sin(h) * o.c, o.opacity);
 }
 

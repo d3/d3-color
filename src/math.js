@@ -1,2 +1,2 @@
-export var deg2rad = Math.PI / 180;
-export var rad2deg = 180 / Math.PI;
+export const radians = Math.PI / 180;
+export const degrees = 180 / Math.PI;

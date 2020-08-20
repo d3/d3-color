@@ -70,14 +70,20 @@ var steelblue = d3.rgb("steelblue");
 
 <a name="color" href="#color">#</a> d3.<b>color</b>(<i>specifier</i>) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
-Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) *specifier* string, returning an [RGB](#rgb) or [HSL](#hsl) color, along with [CSS Color Module Level 4 hex](https://www.w3.org/TR/css-color-4/#hex-notation) *specifier* strings. If the specifier was not valid, null is returned. Some examples:
+Parses the specified [CSS Color Module Level 3](http://www.w3.org/TR/css3-color/#colorunits) or [Level 4](https://www.w3.org/TR/css-color-4) *specifier* string, returning an [RGB](#rgb), [HSL](#hsl) or [HWB](#hwb) color. If the specifier was not valid, null is returned. Some examples:
 
 * `rgb(255, 255, 255)`
 * `rgb(10%, 20%, 30%)`
+* `rgb(127.5 127.5 127.5)`
 * `rgba(255, 255, 255, 0.4)`
 * `rgba(10%, 20%, 30%, 0.4)`
+* `rgba(127.5 127.5 127.5/40%)`
 * `hsl(120, 50%, 20%)`
 * `hsla(120, 50%, 20%, 0.4)`
+* `hsl(120grad 50% 20%/0.4)`
+* `hwb(120 50% 20%)`
+* `hwb(120 50% 20%/0.4)`
+* `hwb(1rad 30% 20%/40%)`
 * `#ffeeaa`
 * `#fea`
 * `#ffeeaa22`
@@ -124,6 +130,10 @@ Returns a hexadecimal string representing this color in RGB space, such as `#f7e
 
 Returns a string representing this color according to the [CSS Color Module Level 3 specification](https://www.w3.org/TR/css-color-3/#hsl-color), such as `hsl(257, 50%, 80%)` or `hsla(257, 50%, 80%, 0.2)`. If this color is not displayable, a suitable displayable color is returned instead by clamping S and L channel values to the interval [0, 100].
 
+<a name="color_formatHwb" href="#color_formatHwb">#</a> *color*.<b>formatHwb</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a string representing this color according to the [CSS Color Module Level 4 specification](https://www.w3.org/TR/css-color-4/#the-hwb-notation), such as `hwb(257 50% 30%)` or `hwb(257 50% 30%/0.2)`. If this color is not displayable, a suitable displayable color is returned instead by clamping W and B channel values to the interval [0, 100].
+
 <a name="color_formatRgb" href="#color_formatRgb">#</a> *color*.<b>formatRgb</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
 Returns a string representing this color according to the [CSS Object Model specification](https://drafts.csswg.org/cssom/#serialize-a-css-component-value), such as `rgb(247, 234, 186)` or `rgba(247, 234, 186, 0.2)`. If this color is not displayable, a suitable displayable color is returned instead by clamping RGB channel values to the interval [0, 255].
@@ -147,6 +157,14 @@ If *r*, *g* and *b* are specified, these represent the channel values of the ret
 Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
+
+<a name="hwb" href="#hwb">#</a> d3.<b>hwb</b>(<i>h</i>, <i>w</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")<br>
+<a href="#hwb">#</a> d3.<b>hwb</b>(<i>specifier</i>)<br>
+<a href="#hwb">#</a> d3.<b>hwb</b>(<i>color</i>)<br>
+
+Constructs a new [HWB](https://en.wikipedia.org/wiki/HWB_color_model) color. The channel values are exposed as `h`, `w` and `b` properties on the returned instance. Use the [HWB color picker](https://observablehq.com/@parcly-taxel/the-hwb-colour-model) to explore this color space.
+
+If *h*, *w* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HWB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HWB. (Colors already in the HWB color space skip the conversion to RGB.)
 
 <a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>

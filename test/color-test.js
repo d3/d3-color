@@ -127,8 +127,8 @@ tape("color(format) allows exponential format for hue, opacity and percentages",
   test.end();
 });
 
-tape("color(format) does not allow decimals for integer values", function(test) {
-  test.equal(color.color("rgb(120.5,30,50)"), null);
+tape("color(format) allows decimals for RGB channel values", function(test) {
+  test.rgbEqual(color.color("rgb(120.5,30,50)"), 120.5, 30, 50, 1);
   test.end();
 });
 
@@ -171,6 +171,22 @@ tape("color(format) is case-insensitive", function(test) {
   test.rgbEqual(color.color(" #aaBBCC\t\n"), 170, 187, 204, 1);
   test.rgbEqual(color.color(" rGB(120,30,50)\t\n"), 120, 30, 50, 1);
   test.hslEqual(color.color(" HSl(120,30%,50%)\t\n"), 120, 0.3, 0.5, 1);
+  test.end();
+});
+
+tape("color(format) supports commaless syntax", function(test) {
+  test.rgbEqual(color.color("rgb(120 30 50)"), 120, 30, 50, 1);
+  test.rgbEqual(color.color("rgb(120 30 50/0.6)"), 120, 30, 50, 0.6);
+  test.hslEqual(color.color("hsl(120 30% 50%)"), 120, 0.3, 0.5, 1);
+  test.hslEqual(color.color("hsl(120 30% 50%/0.6)"), 120, 0.3, 0.5, 0.6);
+  test.end();
+});
+
+tape("color(format) supports units for opacity and hue", function(test) {
+  test.rgbEqual(color.color("rgba(120 30 50/50%)"), 120, 30, 50, 0.5);
+  test.hslEqual(color.color("hsla(100grad 30% 50%)"), 90, 0.3, 0.5, 1);
+  test.hslEqual(color.color("hsl(1rad 30% 50%)"), 57.29577951308232, 0.3, 0.5, 1);
+  test.hslEqual(color.color("hsl(0.1turn 30% 50%/80%)"), 36, 0.3, 0.5, 0.8);
   test.end();
 });
 

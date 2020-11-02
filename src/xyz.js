@@ -27,8 +27,6 @@ const Xn = 0.96422,
     yb = -0.2289914,
     zb = 1.4052427;
 
-
-
 function rgb2lrgb(x) {
   return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
 }

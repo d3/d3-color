@@ -164,7 +164,7 @@ Constructs a new [CIELAB](#lab) color with the specified *l* value and *a* = *b*
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>specifier</i>)<br>
 <a href="#hcl">#</a> d3.<b>hcl</b>(<i>color</i>)<br>
 
-Equivalent to [d3.lch](#lch), but with reversed argument order.
+Equivalent to [d3.hcl](#hcl), but with reversed argument order.
 
 <a name="lch" href="#lch">#</a> d3.<b>lch</b>(<i>l</i>, <i>c</i>, <i>h</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#lch">#</a> d3.<b>lch</b>(<i>specifier</i>)<br>

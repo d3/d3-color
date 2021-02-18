@@ -5,16 +5,11 @@ export function Color() {}
 export var darker = 0.7;
 export var brighter = 1 / darker;
 
-var reI = "\\s*([+-]?\\d+)\\s*",
-    reN = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)\\s*",
-    reP = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)%\\s*",
-    reHex = /^#([0-9a-f]{3,8})$/,
-    reRgbInteger = new RegExp("^rgb\\(" + [reI, reI, reI] + "\\)$"),
-    reRgbPercent = new RegExp("^rgb\\(" + [reP, reP, reP] + "\\)$"),
-    reRgbaInteger = new RegExp("^rgba\\(" + [reI, reI, reI, reN] + "\\)$"),
-    reRgbaPercent = new RegExp("^rgba\\(" + [reP, reP, reP, reN] + "\\)$"),
-    reHslPercent = new RegExp("^hsl\\(" + [reN, reP, reP] + "\\)$"),
-    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$");
+var reHex = /^#([0-9a-f]{3,8})$/,
+    reRgb = /^rgb\(([^)]+)\)$/,
+    reRgba = /^rgba\(([^)]+)\)$/,
+    reHsl = /^hsl\(([^)]+)\)$/,
+    reHsla = /^hsla\(([^)]+)\)$/;
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -193,6 +188,22 @@ function color_formatRgb() {
   return this.rgb().formatRgb();
 }
 
+function color_part(s) {
+  return (s = s.trim()).endsWith("%") ? s.slice(0, -1) / 100 : +s;
+}
+
+function color_parts(s) {
+  return s.split(",").map(color_part);
+}
+
+function color_part255(s) {
+  return (s = s.trim()).endsWith("%") ? s.slice(0, -1) / 100 * 255 : +s;
+}
+
+function color_parts255(s) {
+  return s.split(",").map(color_part255);
+}
+
 export default function color(format) {
   var m, l;
   format = (format + "").trim().toLowerCase();
@@ -201,12 +212,10 @@ export default function color(format) {
       : l === 8 ? rgba(m >> 24 & 0xff, m >> 16 & 0xff, m >> 8 & 0xff, (m & 0xff) / 0xff) // #ff000000
       : l === 4 ? rgba((m >> 12 & 0xf) | (m >> 8 & 0xf0), (m >> 8 & 0xf) | (m >> 4 & 0xf0), (m >> 4 & 0xf) | (m & 0xf0), (((m & 0xf) << 4) | (m & 0xf)) / 0xff) // #f000
       : null) // invalid hex
-      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3], 1) // rgb(255, 0, 0)
-      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
-      : (m = reRgbaInteger.exec(format)) ? rgba(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
-      : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
-      : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
-      : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
+      : (m = reRgb.exec(format)) ? new Rgb(...color_parts255(m[1]), 1) // rgb(255, 0, 0)
+      : (m = reRgba.exec(format)) ? rgba(...color_parts255(m[1])) // rgba(255, 0, 0, 1)
+      : (m = reHsl.exec(format)) ? hsla(...color_parts(m[1]), 1) // hsl(120, 50%, 50%)
+      : (m = reHsla.exec(format)) ? hsla(...color_parts(m[1])) // hsla(120, 50%, 50%, 1)
       : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
       : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;

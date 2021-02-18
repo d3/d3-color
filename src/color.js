@@ -6,10 +6,8 @@ export var darker = 0.7;
 export var brighter = 1 / darker;
 
 var reHex = /^#([0-9a-f]{3,8})$/,
-    reRgb = /^rgb\(([^)]+)\)$/,
-    reRgba = /^rgba\(([^)]+)\)$/,
-    reHsl = /^hsl\(([^)]+)\)$/,
-    reHsla = /^hsla\(([^)]+)\)$/;
+    reRgb = /^rgb[a]?\(([^)]*)\)$/,
+    reHsl = /^hsl[a]?\(([^)]*)\)$/;
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -188,20 +186,20 @@ function color_formatRgb() {
   return this.rgb().formatRgb();
 }
 
-function color_part(s) {
-  return (s = s.trim()).endsWith("%") ? s.slice(0, -1) / 100 : +s;
+function color_parseRgb(s) {
+  s = s.split(",").map(s => s.trim());
+  s = s.map((s, i) => s.endsWith("%") ? s.slice(0, -1) * (i < 3 ? 255 : 1) / 100 : +s);
+  if (s.some(isNaN)) return null;
+  if (s.length === 3) s.push(1);
+  return rgba(...s);
 }
 
-function color_parts(s) {
-  return s.split(",").map(color_part);
-}
-
-function color_part255(s) {
-  return (s = s.trim()).endsWith("%") ? s.slice(0, -1) / 100 * 255 : +s;
-}
-
-function color_parts255(s) {
-  return s.split(",").map(color_part255);
+function color_parseHsl(s) {
+  s = s.split(",").map(s => s.trim());
+  s = s.map(s => s.endsWith("%") ? s.slice(0, -1) / 100 : +s);
+  if (s.some(isNaN)) return null;
+  if (s.length === 3) s.push(1);
+  return hsla(...s);
 }
 
 export default function color(format) {
@@ -212,10 +210,8 @@ export default function color(format) {
       : l === 8 ? rgba(m >> 24 & 0xff, m >> 16 & 0xff, m >> 8 & 0xff, (m & 0xff) / 0xff) // #ff000000
       : l === 4 ? rgba((m >> 12 & 0xf) | (m >> 8 & 0xf0), (m >> 8 & 0xf) | (m >> 4 & 0xf0), (m >> 4 & 0xf) | (m & 0xf0), (((m & 0xf) << 4) | (m & 0xf)) / 0xff) // #f000
       : null) // invalid hex
-      : (m = reRgb.exec(format)) ? new Rgb(...color_parts255(m[1]), 1) // rgb(255, 0, 0)
-      : (m = reRgba.exec(format)) ? rgba(...color_parts255(m[1])) // rgba(255, 0, 0, 1)
-      : (m = reHsl.exec(format)) ? hsla(...color_parts(m[1]), 1) // hsl(120, 50%, 50%)
-      : (m = reHsla.exec(format)) ? hsla(...color_parts(m[1])) // hsla(120, 50%, 50%, 1)
+      : (m = reRgb.exec(format)) ? color_parseRgb(m[1]) // rgb(255, 0, 0)
+      : (m = reHsl.exec(format)) ? color_parseHsl(m[1]) // hsl(120, 50%, 50%)
       : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
       : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;

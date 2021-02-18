@@ -186,20 +186,55 @@ function color_formatRgb() {
   return this.rgb().formatRgb();
 }
 
-function color_parseRgb(s) {
-  s = s.split(",").map(s => s.trim());
-  s = s.map((s, i) => s.endsWith("%") ? s.slice(0, -1) * (i < 3 ? 255 : 1) / 100 : +s);
-  if (s.some(isNaN)) return null;
-  if (s.length === 3) s.push(1);
-  return rgba(...s);
+function color_isPercent(s) {
+  return s.endsWith("%");
 }
 
-function color_parseHsl(s) {
-  s = s.split(",").map(s => s.trim());
-  s = s.map(s => s.endsWith("%") ? s.slice(0, -1) / 100 : +s);
-  if (s.some(isNaN)) return null;
-  if (s.length === 3) s.push(1);
-  return hsla(...s);
+function color_parsePercent(s, k = 1) {
+  return /\d%$/.test(s) ? s.slice(0, -1) * k / 100 : NaN;
+}
+
+function color_parseNumber(s) {
+  return s.endsWith(".") ? NaN : +s;
+}
+
+function color_parseAlpha(s) {
+  return s === undefined ? 1 : (color_isPercent(s) ? color_parsePercent : color_parseNumber)(s);
+}
+
+function color_parseRgb(S) {
+  S = S.split(",").map(s => s.trim());
+  if (S.length < 3 || S.length > 4) return null;
+  let [r, g, b, a] = S;
+  if (color_isPercent(r) || color_isPercent(g) || color_isPercent(g)) {
+    r = color_parsePercent(r, 255);
+    g = color_parsePercent(g, 255);
+    b = color_parsePercent(b, 255);
+  } else {
+    r = color_parseNumber(r);
+    g = color_parseNumber(g);
+    b = color_parseNumber(b);
+  }
+  a = color_parseAlpha(a);
+  if (isNaN(r) || isNaN(g) || isNaN(b) || isNaN(a)) return null;
+  return rgba(r, g, b, a);
+}
+
+function color_parseHsl(S) {
+  S = S.split(",").map(s => s.trim());
+  if (S.length < 3 || S.length > 4) return null;
+  let [h, s, l, a] = S;
+  h = color_parseNumber(h);
+  if (color_isPercent(s) || color_isPercent(l)) {
+    s = color_parsePercent(s);
+    l = color_parsePercent(l);
+  } else {
+    s = color_parseNumber(s);
+    l = color_parseNumber(l);
+  }
+  a = color_parseAlpha(a);
+  if (isNaN(h) || isNaN(s) || isNaN(l) || isNaN(a)) return null;
+  return hsla(h, s, l, a);
 }
 
 export default function color(format) {

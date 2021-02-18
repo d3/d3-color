@@ -127,8 +127,8 @@ tape("color(format) allows exponential format for hue, opacity and percentages",
   test.end();
 });
 
-tape("color(format) does not allow decimals for integer values", function(test) {
-  test.equal(color.color("rgb(120.5,30,50)"), null);
+tape("color(format) allows decimals for integer values", function(test) {
+  test.rgbEqual(color.color("rgb(120.5,30,50)"), 120.5, 30, 50, 1);
   test.end();
 });
 

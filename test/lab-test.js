@@ -13,34 +13,34 @@ it("lab(…) exposes l, a and b channel values and opacity", () => {
 });
 
 it("lab.toString() converts to RGB and formats as rgb(…) or rgba(…)", () => {
-  assert.equal(d3.lab("#abcdef") + "", "rgb(171, 205, 239)");
-  assert.equal(d3.lab("moccasin") + "", "rgb(255, 228, 181)");
-  assert.equal(d3.lab("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
-  assert.equal(d3.lab("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
-  assert.equal(d3.lab("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
-  assert.equal(d3.lab(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
-  assert.equal(d3.lab(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
-  assert.equal(d3.lab(d3.hsl(60, 1, 0.2, 0.4)) + "", "rgba(102, 102, 0, 0.4)");
+  assert.strictEqual(d3.lab("#abcdef") + "", "rgb(171, 205, 239)");
+  assert.strictEqual(d3.lab("moccasin") + "", "rgb(255, 228, 181)");
+  assert.strictEqual(d3.lab("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.lab("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
+  assert.strictEqual(d3.lab("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.lab(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.lab(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.lab(d3.hsl(60, 1, 0.2, 0.4)) + "", "rgba(102, 102, 0, 0.4)");
 });
 
 it("lab.toString() reflects l, a and b channel values and opacity", () => {
   const c = d3.lab("#abc");
   c.l += 10, c.a -= 10, c.b += 10, c.opacity = 0.4;
-  assert.equal(c + "", "rgba(184, 220, 213, 0.4)");
+  assert.strictEqual(c + "", "rgba(184, 220, 213, 0.4)");
 });
 
 it("lab.toString() treats undefined channel values as 0", () => {
-  assert.equal(d3.lab("invalid") + "", "rgb(0, 0, 0)");
-  assert.equal(d3.lab(NaN, 0, 0) + "", "rgb(0, 0, 0)");
-  assert.equal(d3.lab(50, NaN, 0) + "", "rgb(119, 119, 119)");
-  assert.equal(d3.lab(50, 0, NaN) + "", "rgb(119, 119, 119)");
-  assert.equal(d3.lab(50, NaN, NaN) + "", "rgb(119, 119, 119)");
+  assert.strictEqual(d3.lab("invalid") + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.lab(NaN, 0, 0) + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.lab(50, NaN, 0) + "", "rgb(119, 119, 119)");
+  assert.strictEqual(d3.lab(50, 0, NaN) + "", "rgb(119, 119, 119)");
+  assert.strictEqual(d3.lab(50, NaN, NaN) + "", "rgb(119, 119, 119)");
 });
 
 it("lab.toString() treats undefined opacity as 1", () => {
   const c = d3.lab("#abc");
   c.opacity = NaN;
-  assert.equal(c + "", "rgb(170, 187, 204)");
+  assert.strictEqual(c + "", "rgb(170, 187, 204)");
 });
 
 it("lab(l, a, b) does not clamp l channel value", () => {

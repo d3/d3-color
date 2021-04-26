@@ -27,42 +27,42 @@ it("hcl(…) returns undefined hue and zero chroma for gray", () => {
 });
 
 it("hcl.toString() converts to RGB and formats as hexadecimal", () => {
-  assert.equal(d3.hcl("#abcdef") + "", "rgb(171, 205, 239)");
-  assert.equal(d3.hcl("moccasin") + "", "rgb(255, 228, 181)");
-  assert.equal(d3.hcl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
-  assert.equal(d3.hcl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
-  assert.equal(d3.hcl(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
-  assert.equal(d3.hcl(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.hcl("#abcdef") + "", "rgb(171, 205, 239)");
+  assert.strictEqual(d3.hcl("moccasin") + "", "rgb(255, 228, 181)");
+  assert.strictEqual(d3.hcl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.hcl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.hcl(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.hcl(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
 });
 
 it("hcl.toString() reflects h, c and l channel values", () => {
   const c = d3.hcl("#abc");
   c.h += 10, c.c += 1, c.l -= 1;
-  assert.equal(c + "", "rgb(170, 183, 204)");
+  assert.strictEqual(c + "", "rgb(170, 183, 204)");
 });
 
 it("hcl.toString() treats undefined opacity as 1", () => {
   const c = d3.hcl("#abc");
   c.opacity = NaN;
-  assert.equal(c + "", "rgb(170, 187, 204)");
+  assert.strictEqual(c + "", "rgb(170, 187, 204)");
 });
 
 it("hcl.toString() treats undefined channel values as 0", () => {
-  assert.equal(d3.hcl("invalid") + "", "rgb(0, 0, 0)");
-  assert.equal(d3.hcl("#000") + "", "rgb(0, 0, 0)");
-  assert.equal(d3.hcl("#ccc") + "", "rgb(204, 204, 204)");
-  assert.equal(d3.hcl("#fff") + "", "rgb(255, 255, 255)");
-  assert.equal(d3.hcl(NaN, 20, 40) + "", "rgb(94, 94, 94)"); // equivalent to hcl(*, *, 40)
-  assert.equal(d3.hcl(120, NaN, 40) + "", "rgb(94, 94, 94)");
-  assert.equal(d3.hcl(0, NaN, 40) + "", "rgb(94, 94, 94)");
-  assert.equal(d3.hcl(120, 50, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hcl(*, *, 0)
-  assert.equal(d3.hcl(0, 50, NaN) + "", "rgb(0, 0, 0)");
-  assert.equal(d3.hcl(120, 0, NaN) + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hcl("invalid") + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hcl("#000") + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hcl("#ccc") + "", "rgb(204, 204, 204)");
+  assert.strictEqual(d3.hcl("#fff") + "", "rgb(255, 255, 255)");
+  assert.strictEqual(d3.hcl(NaN, 20, 40) + "", "rgb(94, 94, 94)"); // equivalent to hcl(*, *, 40)
+  assert.strictEqual(d3.hcl(120, NaN, 40) + "", "rgb(94, 94, 94)");
+  assert.strictEqual(d3.hcl(0, NaN, 40) + "", "rgb(94, 94, 94)");
+  assert.strictEqual(d3.hcl(120, 50, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hcl(*, *, 0)
+  assert.strictEqual(d3.hcl(0, 50, NaN) + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hcl(120, 0, NaN) + "", "rgb(0, 0, 0)");
 });
 
 it("hcl(yellow) is displayable", () => {
-  assert.equal(d3.hcl("yellow").displayable(), true);
-  assert.equal(d3.hcl("yellow") + "", "rgb(255, 255, 0)");
+  assert.strictEqual(d3.hcl("yellow").displayable(), true);
+  assert.strictEqual(d3.hcl("yellow") + "", "rgb(255, 255, 0)");
 });
 
 it("hcl(h, c, l) does not wrap hue to [0,360)", () => {

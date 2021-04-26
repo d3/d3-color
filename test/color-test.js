@@ -108,19 +108,19 @@ it("color(format) allows exponential format for hue, opacity and percentages", (
 });
 
 it("color(format) does not allow decimals for integer values", () => {
-  assert.equal(d3.color("rgb(120.5,30,50)"), null);
+  assert.strictEqual(d3.color("rgb(120.5,30,50)"), null);
 });
 
 it("color(format) does not allow empty decimals", () => {
-  assert.equal(d3.color("rgb(120.,30,50)"), null);
-  assert.equal(d3.color("rgb(120.%,30%,50%)"), null);
-  assert.equal(d3.color("rgba(120,30,50,1.)"), null);
-  assert.equal(d3.color("rgba(12%,30%,50%,1.)"), null);
-  assert.equal(d3.color("hsla(60,100%,20%,1.)"), null);
+  assert.strictEqual(d3.color("rgb(120.,30,50)"), null);
+  assert.strictEqual(d3.color("rgb(120.%,30%,50%)"), null);
+  assert.strictEqual(d3.color("rgba(120,30,50,1.)"), null);
+  assert.strictEqual(d3.color("rgba(12%,30%,50%,1.)"), null);
+  assert.strictEqual(d3.color("hsla(60,100%,20%,1.)"), null);
 });
 
 it("color(format) does not allow made-up names", () => {
-  assert.equal(d3.color("bostock"), null);
+  assert.strictEqual(d3.color("bostock"), null);
 });
 
 it("color(format) allows achromatic colors", () => {
@@ -130,13 +130,13 @@ it("color(format) allows achromatic colors", () => {
 });
 
 it("color(format) does not allow whitespace before open paren or percent sign", () => {
-  assert.equal(d3.color("rgb (120,30,50)"), null);
-  assert.equal(d3.color("rgb (12%,30%,50%)"), null);
-  assert.equal(d3.color("hsl (120,30%,50%)"), null);
-  assert.equal(d3.color("hsl(120,30 %,50%)"), null);
-  assert.equal(d3.color("rgba (120,30,50,1)"), null);
-  assert.equal(d3.color("rgba (12%,30%,50%,1)"), null);
-  assert.equal(d3.color("hsla (120,30%,50%,1)"), null);
+  assert.strictEqual(d3.color("rgb (120,30,50)"), null);
+  assert.strictEqual(d3.color("rgb (12%,30%,50%)"), null);
+  assert.strictEqual(d3.color("hsl (120,30%,50%)"), null);
+  assert.strictEqual(d3.color("hsl(120,30 %,50%)"), null);
+  assert.strictEqual(d3.color("rgba (120,30,50,1)"), null);
+  assert.strictEqual(d3.color("rgba (12%,30%,50%,1)"), null);
+  assert.strictEqual(d3.color("hsla (120,30%,50%,1)"), null);
 });
 
 it("color(format) is case-insensitive", () => {
@@ -149,12 +149,12 @@ it("color(format) is case-insensitive", () => {
 });
 
 it("color(format) returns undefined RGB channel values for unknown formats", () => {
-  assert.equal(d3.color("invalid"), null);
-  assert.equal(d3.color("hasOwnProperty"), null);
-  assert.equal(d3.color("__proto__"), null);
-  assert.equal(d3.color("#ab"), null);
+  assert.strictEqual(d3.color("invalid"), null);
+  assert.strictEqual(d3.color("hasOwnProperty"), null);
+  assert.strictEqual(d3.color("__proto__"), null);
+  assert.strictEqual(d3.color("#ab"), null);
 });
 
 it("color(format).hex() returns a hexadecimal string", () => {
-  assert.equal(d3.color("rgba(12%,34%,56%,0.4)").hex(), "#1f578f");
+  assert.strictEqual(d3.color("rgba(12%,34%,56%,0.4)").hex(), "#1f578f");
 });

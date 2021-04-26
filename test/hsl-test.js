@@ -14,58 +14,58 @@ it("hsl(…) exposes h, s, and l channel values and opacity", () => {
 });
 
 it("hsl.toString() converts to RGB and formats as rgb(…) or rgba(…)", () => {
-  assert.equal(d3.hsl("#abcdef") + "", "rgb(171, 205, 239)");
-  assert.equal(d3.hsl("moccasin") + "", "rgb(255, 228, 181)");
-  assert.equal(d3.hsl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
-  assert.equal(d3.hsl("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
-  assert.equal(d3.hsl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
-  assert.equal(d3.hsl(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
-  assert.equal(d3.hsl(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
-  assert.equal(d3.hsl(d3.hsl(60, 1, 0.2, 0.4)) + "", "rgba(102, 102, 0, 0.4)");
+  assert.strictEqual(d3.hsl("#abcdef") + "", "rgb(171, 205, 239)");
+  assert.strictEqual(d3.hsl("moccasin") + "", "rgb(255, 228, 181)");
+  assert.strictEqual(d3.hsl("hsl(60, 100%, 20%)") + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.hsl("hsla(60, 100%, 20%, 0.4)") + "", "rgba(102, 102, 0, 0.4)");
+  assert.strictEqual(d3.hsl("rgb(12, 34, 56)") + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.hsl(d3.rgb(12, 34, 56)) + "", "rgb(12, 34, 56)");
+  assert.strictEqual(d3.hsl(d3.hsl(60, 1, 0.2)) + "", "rgb(102, 102, 0)");
+  assert.strictEqual(d3.hsl(d3.hsl(60, 1, 0.2, 0.4)) + "", "rgba(102, 102, 0, 0.4)");
 });
 
 it("hsl.formatRgb() formats as rgb(…) or rgba(…)", () => {
-  assert.equal(d3.hsl("#abcdef").formatRgb(), "rgb(171, 205, 239)");
-  assert.equal(d3.hsl("hsl(60, 100%, 20%)").formatRgb(), "rgb(102, 102, 0)");
-  assert.equal(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatRgb(), "rgba(31, 87, 143, 0.4)");
-  assert.equal(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatRgb(), "rgba(102, 102, 0, 0.4)");
+  assert.strictEqual(d3.hsl("#abcdef").formatRgb(), "rgb(171, 205, 239)");
+  assert.strictEqual(d3.hsl("hsl(60, 100%, 20%)").formatRgb(), "rgb(102, 102, 0)");
+  assert.strictEqual(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatRgb(), "rgba(31, 87, 143, 0.4)");
+  assert.strictEqual(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatRgb(), "rgba(102, 102, 0, 0.4)");
 });
 
 it("hsl.formatHsl() formats as hsl(…) or hsla(…)", () => {
-  assert.equal(d3.hsl("#abcdef").formatHsl(), "hsl(210, 68%, 80.3921568627451%)");
-  assert.equal(d3.hsl("hsl(60, 100%, 20%)").formatHsl(), "hsl(60, 100%, 20%)");
-  assert.equal(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatHsl(), "hsla(210, 64.70588235294117%, 34%, 0.4)");
-  assert.equal(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatHsl(), "hsla(60, 100%, 20%, 0.4)");
+  assert.strictEqual(d3.hsl("#abcdef").formatHsl(), "hsl(210, 68%, 80.3921568627451%)");
+  assert.strictEqual(d3.hsl("hsl(60, 100%, 20%)").formatHsl(), "hsl(60, 100%, 20%)");
+  assert.strictEqual(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatHsl(), "hsla(210, 64.70588235294117%, 34%, 0.4)");
+  assert.strictEqual(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatHsl(), "hsla(60, 100%, 20%, 0.4)");
 });
 
 it("hsl.formatHex() formats as #rrggbb", () => {
-  assert.equal(d3.hsl("#abcdef").formatHex(), "#abcdef");
-  assert.equal(d3.hsl("hsl(60, 100%, 20%)").formatHex(), "#666600");
-  assert.equal(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatHex(), "#1f578f");
-  assert.equal(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatHex(), "#666600");
+  assert.strictEqual(d3.hsl("#abcdef").formatHex(), "#abcdef");
+  assert.strictEqual(d3.hsl("hsl(60, 100%, 20%)").formatHex(), "#666600");
+  assert.strictEqual(d3.hsl("rgba(12%, 34%, 56%, 0.4)").formatHex(), "#1f578f");
+  assert.strictEqual(d3.hsl("hsla(60, 100%, 20%, 0.4)").formatHex(), "#666600");
 });
 
 it("hsl.toString() reflects h, s and l channel values and opacity", () => {
   const c = d3.hsl("#abc");
   c.h += 10, c.s += 0.01, c.l -= 0.01, c.opacity = 0.4;
-  assert.equal(c + "", "rgba(166, 178, 203, 0.4)");
+  assert.strictEqual(c + "", "rgba(166, 178, 203, 0.4)");
 });
 
 it("hsl.toString() treats undefined channel values as 0", () => {
-  assert.equal(d3.hsl("invalid") + "", "rgb(0, 0, 0)");
-  assert.equal(d3.hsl("#000") + "", "rgb(0, 0, 0)");
-  assert.equal(d3.hsl("#ccc") + "", "rgb(204, 204, 204)");
-  assert.equal(d3.hsl("#fff") + "", "rgb(255, 255, 255)");
-  assert.equal(d3.hsl(NaN, 0.5, 0.4) + "", "rgb(102, 102, 102)"); // equivalent to hsl(*, 0, 0.4)
-  assert.equal(d3.hsl(120, NaN, 0.4) + "", "rgb(102, 102, 102)");
-  assert.equal(d3.hsl(NaN, NaN, 0.4) + "", "rgb(102, 102, 102)");
-  assert.equal(d3.hsl(120, 0.5, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hsl(120, 0.5, 0)
+  assert.strictEqual(d3.hsl("invalid") + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hsl("#000") + "", "rgb(0, 0, 0)");
+  assert.strictEqual(d3.hsl("#ccc") + "", "rgb(204, 204, 204)");
+  assert.strictEqual(d3.hsl("#fff") + "", "rgb(255, 255, 255)");
+  assert.strictEqual(d3.hsl(NaN, 0.5, 0.4) + "", "rgb(102, 102, 102)"); // equivalent to hsl(*, 0, 0.4)
+  assert.strictEqual(d3.hsl(120, NaN, 0.4) + "", "rgb(102, 102, 102)");
+  assert.strictEqual(d3.hsl(NaN, NaN, 0.4) + "", "rgb(102, 102, 102)");
+  assert.strictEqual(d3.hsl(120, 0.5, NaN) + "", "rgb(0, 0, 0)"); // equivalent to hsl(120, 0.5, 0)
 });
 
 it("hsl.toString() treats undefined opacity as 1", () => {
   const c = d3.hsl("#abc");
   c.opacity = NaN;
-  assert.equal(c + "", "rgb(170, 187, 204)");
+  assert.strictEqual(c + "", "rgb(170, 187, 204)");
 });
 
 it("hsl(h, s, l) does not wrap hue to [0,360)", () => {
@@ -193,18 +193,18 @@ it("hsl(color) converts from another colorspace via d3.rgb()", () => {
 });
 
 it("hsl.displayable() returns true if the color is within the RGB gamut and the opacity is in [0,1]", () => {
-  assert.equal(d3.hsl("white").displayable(), true);
-  assert.equal(d3.hsl("red").displayable(), true);
-  assert.equal(d3.hsl("black").displayable(), true);
-  assert.equal(d3.hsl("invalid").displayable(), false);
-  assert.equal(d3.hsl(NaN, NaN, 1).displayable(), true);
-  assert.equal(d3.hsl(NaN, NaN, 1.5).displayable(), false);
-  assert.equal(d3.hsl(120, -0.5, 0).displayable(), false);
-  assert.equal(d3.hsl(120, 1.5, 0).displayable(), false);
-  assert.equal(d3.hsl(0, 1, 1, 0).displayable(), true);
-  assert.equal(d3.hsl(0, 1, 1, 1).displayable(), true);
-  assert.equal(d3.hsl(0, 1, 1, -0.2).displayable(), false);
-  assert.equal(d3.hsl(0, 1, 1, 1.2).displayable(), false);
+  assert.strictEqual(d3.hsl("white").displayable(), true);
+  assert.strictEqual(d3.hsl("red").displayable(), true);
+  assert.strictEqual(d3.hsl("black").displayable(), true);
+  assert.strictEqual(d3.hsl("invalid").displayable(), false);
+  assert.strictEqual(d3.hsl(NaN, NaN, 1).displayable(), true);
+  assert.strictEqual(d3.hsl(NaN, NaN, 1.5).displayable(), false);
+  assert.strictEqual(d3.hsl(120, -0.5, 0).displayable(), false);
+  assert.strictEqual(d3.hsl(120, 1.5, 0).displayable(), false);
+  assert.strictEqual(d3.hsl(0, 1, 1, 0).displayable(), true);
+  assert.strictEqual(d3.hsl(0, 1, 1, 1).displayable(), true);
+  assert.strictEqual(d3.hsl(0, 1, 1, -0.2).displayable(), false);
+  assert.strictEqual(d3.hsl(0, 1, 1, 1.2).displayable(), false);
 });
 
 it("hsl.brighter(k) returns a brighter color if k > 0", () => {
@@ -277,9 +277,9 @@ it("hsl.rgb() converts to RGB", () => {
 
 it("hsl.copy(…) returns a new hsl with the specified channel values", () => {
   const c = d3.hsl(120, 0.3, 0.5, 0.4);
-  assert.equal(c.copy() instanceof d3.hsl, true);
-  assert.equal(c.copy().formatHsl(), "hsla(120, 30%, 50%, 0.4)");
-  assert.equal(c.copy({opacity: 1}).formatHsl(), "hsl(120, 30%, 50%)");
-  assert.equal(c.copy({h: 20}).formatHsl(), "hsla(20, 30%, 50%, 0.4)");
-  assert.equal(c.copy({h: 20, s: 0.4}).formatHsl(), "hsla(20, 40%, 50%, 0.4)");
+  assert.strictEqual(c.copy() instanceof d3.hsl, true);
+  assert.strictEqual(c.copy().formatHsl(), "hsla(120, 30%, 50%, 0.4)");
+  assert.strictEqual(c.copy({opacity: 1}).formatHsl(), "hsl(120, 30%, 50%)");
+  assert.strictEqual(c.copy({h: 20}).formatHsl(), "hsla(20, 30%, 50%, 0.4)");
+  assert.strictEqual(c.copy({h: 20, s: 0.4}).formatHsl(), "hsla(20, 40%, 50%, 0.4)");
 });

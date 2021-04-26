@@ -1,9 +1,8 @@
-var tape = require("tape"),
-    color = require("../");
+import assert from "assert";
+import * as d3 from "../src/index.js";
 
-tape("cubehelix(…) returns an instance of cubehelix and color", function(test) {
-  var c = color.cubehelix("steelblue");
-  test.ok(c instanceof color.cubehelix);
-  test.ok(c instanceof color.color);
-  test.end();
+it("cubehelix(…) returns an instance of cubehelix and color", () => {
+  var c = d3.cubehelix("steelblue");
+  assert(c instanceof d3.cubehelix);
+  assert(c instanceof d3.color);
 });

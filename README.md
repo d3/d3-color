@@ -57,9 +57,11 @@ If you use npm, `npm install d3-color`. You can also download the [latest releas
 
 ```html
 <script type="module">
+
 import {rgb} from "https://cdn.skypack.dev/d3-color@3";
 
 const steelblue = d3.rgb("steelblue");
+
 </script>
 ```
 

@@ -59,6 +59,10 @@ it("color(format) parses HSLA format (e.g., \"hsla(60,100%,20%,0.4)\")", () => {
   assertHslEqual(color("hsla(60,100%,20%,0.4)"), 60, 1, 0.2, 0.4);
 });
 
+it("color(format) disallows invalid hexadecimal (e.g., \"#abcdef no\")", () => {
+  assert.strictEqual(color("#abcdef no"), null);
+});
+
 it("color(format) ignores leading and trailing whitespace", () => {
   assertRgbApproxEqual(color(" aliceblue\t\n"), 240, 248, 255, 1);
   assertRgbApproxEqual(color(" #abc\t\n"), 170, 187, 204, 1);

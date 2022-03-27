@@ -5,16 +5,14 @@ export function Color() {}
 export var darker = 0.7;
 export var brighter = 1 / darker;
 
-var reI = "\\s*([+-]?\\d+)\\s*",
-    reN = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)\\s*",
-    reP = "\\s*([+-]?\\d*\\.?\\d+(?:[eE][+-]?\\d+)?)%\\s*",
-    reHex = /^#([0-9a-f]{3,8})$/,
-    reRgbInteger = new RegExp("^rgb\\(" + [reI, reI, reI] + "\\)$"),
-    reRgbPercent = new RegExp("^rgb\\(" + [reP, reP, reP] + "\\)$"),
-    reRgbaInteger = new RegExp("^rgba\\(" + [reI, reI, reI, reN] + "\\)$"),
-    reRgbaPercent = new RegExp("^rgba\\(" + [reP, reP, reP, reN] + "\\)$"),
-    reHslPercent = new RegExp("^hsl\\(" + [reN, reP, reP] + "\\)$"),
-    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$");
+var reHex = /#([0-9a-fA-F]{3,8})/y,
+    reFuncl = /(\w+)\(/y,
+    reFuncr = /\)/y,
+    reSpace = /\s+/y,
+    reComma = /,/y,
+    reInteger = /([+-]?\d+)/y,
+    reNumber = /([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?)/y,
+    rePercent = /(?=([+-]?\d*\.?\d+(?:[eE][+-]?\d+)?))\1%/y; // https://blog.stevenlevithan.com/archives/mimic-atomic-groups
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -193,23 +191,103 @@ function color_formatRgb() {
   return this.rgb().formatRgb();
 }
 
-export default function color(format) {
-  var m, l;
-  format = (format + "").trim().toLowerCase();
-  return (m = reHex.exec(format)) ? (l = m[1].length, m = parseInt(m[1], 16), l === 6 ? rgbn(m) // #ff0000
-      : l === 3 ? new Rgb((m >> 8 & 0xf) | (m >> 4 & 0xf0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf), 1) // #f00
-      : l === 8 ? rgba(m >> 24 & 0xff, m >> 16 & 0xff, m >> 8 & 0xff, (m & 0xff) / 0xff) // #ff000000
-      : l === 4 ? rgba((m >> 12 & 0xf) | (m >> 8 & 0xf0), (m >> 8 & 0xf) | (m >> 4 & 0xf0), (m >> 4 & 0xf) | (m & 0xf0), (((m & 0xf) << 4) | (m & 0xf)) / 0xff) // #f000
-      : null) // invalid hex
-      : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3], 1) // rgb(255, 0, 0)
-      : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
-      : (m = reRgbaInteger.exec(format)) ? rgba(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
-      : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
-      : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
-      : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
-      : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
-      : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
-      : null;
+export default function color(input) {
+  input = `${input}`; // coerce to string
+  const state = {input, token: null, index: 0};
+  if (parseToken(state, reHex)) { // hexadecimal
+    if (!parseEnd(state)) return null;
+    const l = state.token.length;
+    const i = parseInt(state.token, 16);
+    return l === 6 ? rgbn(i) // #ff0000
+        : l === 3 ? new Rgb((i >> 8 & 0xf) | (i >> 4 & 0xf0), (i >> 4 & 0xf) | (i & 0xf0), ((i & 0xf) << 4) | (i & 0xf), 1) // #f00
+        : l === 8 ? rgba(i >> 24 & 0xff, i >> 16 & 0xff, i >> 8 & 0xff, (i & 0xff) / 0xff) // #ff000000
+        : l === 4 ? rgba((i >> 12 & 0xf) | (i >> 8 & 0xf0), (i >> 8 & 0xf) | (i >> 4 & 0xf0), (i >> 4 & 0xf) | (i & 0xf0), (((i & 0xf) << 4) | (i & 0xf)) / 0xff) // #f000
+        : null; // invalid hex
+  }
+  if (parseToken(state, reFuncl)) { // functional
+    switch (state.token.toLowerCase()) {
+      case "rgb": {
+        let r, g, b;
+        if (parseToken(state, rePercent)) { // rgb(100%, 0%, 0%)
+          return (r = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+              && (g = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+              && (b = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+            ? new Rgb(r * 255 / 100, g * 255 / 100, b * 255 / 100, 1)
+            : null;
+        } else if (parseToken(state, reInteger)) { // rgb(255, 0, 0)
+          return (r = state.token, parseToken(state, reComma)) && parseToken(state, reInteger)
+              && (g = state.token, parseToken(state, reComma)) && parseToken(state, reInteger)
+              && (b = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+            ? new Rgb(r, g, b, 1)
+            : null;
+        }
+        return null;
+      }
+      case "rgba": {
+        let r, g, b, a;
+        if (parseToken(state, rePercent)) { // rgb(100%, 0%, 0%)
+          return (r = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+              && (g = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+              && (b = state.token, parseToken(state, reComma)) && parseToken(state, reNumber)
+              && (a = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+            ? rgba(r * 255 / 100, g * 255 / 100, b * 255 / 100, a)
+            : null;
+        } else if (parseToken(state, reInteger)) { // rgb(255, 0, 0)
+          return (r = state.token, parseToken(state, reComma)) && parseToken(state, reInteger)
+              && (g = state.token, parseToken(state, reComma)) && parseToken(state, reInteger)
+              && (b = state.token, parseToken(state, reComma)) && parseToken(state, reNumber)
+              && (a = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+            ? rgba(r, g, b, a)
+            : null;
+        }
+        return null;
+      }
+      case "hsl": { // hsl(120, 50%, 50%)
+        let h, s, l;
+        return parseToken(state, reNumber)
+            && (h = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+            && (s = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+            && (l = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+          ? hsla(h, s / 100, l / 100, 1)
+          : null;
+      }
+      case "hsla": {
+        let h, s, l, a;
+        return parseToken(state, reNumber)
+            && (h = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+            && (s = state.token, parseToken(state, reComma)) && parseToken(state, rePercent)
+            && (l = state.token, parseToken(state, reComma)) && parseToken(state, reNumber)
+            && (a = state.token, parseToken(state, reFuncr)) && parseEnd(state)
+          ? hsla(h, s / 100, l / 100, a)
+          : null;
+      }
+    }
+    return null; // unknown function
+  }
+  input = input.trim().toLowerCase(); // trim and downcase
+  return named.hasOwnProperty(input) ? rgbn(named[input]) // eslint-disable-line no-prototype-builtins
+    : input === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
+    : null;
+}
+
+function skipSpace(state) {
+  reSpace.lastIndex = state.index;
+  if (reSpace.test(state.input)) state.index = reSpace.lastIndex;
+}
+
+function parseToken(state, re) {
+  skipSpace(state);
+  re.lastIndex = state.index;
+  const match = re.exec(state.input);
+  if (match === null) return false;
+  state.index = re.lastIndex;
+  state.token = match[1];
+  return true;
+}
+
+function parseEnd(state) {
+  skipSpace(state);
+  return state.index === state.input.length;
 }
 
 function rgbn(n) {

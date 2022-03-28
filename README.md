@@ -152,6 +152,10 @@ Constructs a new [RGB](https://en.wikipedia.org/wiki/RGB_color_model) color. The
 
 If *r*, *g* and *b* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the RGB color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb). Note that unlike [*color*.rgb](#color_rgb) this method *always* returns a new instance, even if *color* is already an RGB color.
 
+<a name="rgb_clamp" href="#rgb_clamp">#</a> *rgb*.<b>clamp</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a new RGB color where the `r`, `g`, and `b` channels are clamped to the range [0, 255] and rounded to the nearest integer value, and the `opacity` is clamped to the range [0, 1].
+
 <a name="hsl" href="#hsl">#</a> d3.<b>hsl</b>(<i>h</i>, <i>s</i>, <i>l</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")<br>
 <a href="#hsl">#</a> d3.<b>hsl</b>(<i>specifier</i>)<br>
 <a href="#hsl">#</a> d3.<b>hsl</b>(<i>color</i>)<br>
@@ -159,6 +163,10 @@ If *r*, *g* and *b* are specified, these represent the channel values of the ret
 Constructs a new [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) color. The channel values are exposed as `h`, `s` and `l` properties on the returned instance. Use the [HSL color picker](http://bl.ocks.org/mbostock/debaad4fcce9bcee14cf) to explore this color space.
 
 If *h*, *s* and *l* are specified, these represent the channel values of the returned color; an *opacity* may also be specified. If a CSS Color Module Level 3 *specifier* string is specified, it is parsed and then converted to the HSL color space. See [color](#color) for examples. If a [*color*](#color) instance is specified, it is converted to the RGB color space using [*color*.rgb](#color_rgb) and then converted to HSL. (Colors already in the HSL color space skip the conversion to RGB.)
+
+<a name="hsl_clamp" href="#hsl_clamp">#</a> *hsl*.<b>clamp</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a new HSL color where the `h` channel is clamped to the range [0, 360), and the `s`, `l`, and `opacity` channels are clamped to the range [0, 1].
 
 <a name="lab" href="#lab">#</a> d3.<b>lab</b>(<i>l</i>, <i>a</i>, <i>b</i>[, <i>opacity</i>]) [<>](https://github.com/d3/d3-color/blob/master/src/lab.js "Source")<br>
 <a href="#lab">#</a> d3.<b>lab</b>(<i>specifier</i>)<br>

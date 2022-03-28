@@ -46,6 +46,13 @@ it("rgb.formatHex() formats as #rrggbb", () => {
   assert.strictEqual(rgb("hsla(60, 100%, 20%, 0.4)").formatHex(), "#666600");
 });
 
+it("rgb.formatHex8() formats as #rrggbbaa", () => {
+  assert.strictEqual(rgb("#abcdef").formatHex8(), "#abcdefff");
+  assert.strictEqual(rgb("hsl(60, 100%, 20%)").formatHex8(), "#666600ff");
+  assert.strictEqual(rgb("rgba(12%, 34%, 56%, 0.4)").formatHex8(), "#1f578f66");
+  assert.strictEqual(rgb("hsla(60, 100%, 20%, 0.4)").formatHex8(), "#66660066");
+});
+
 it("rgb.hex() is an alias for rgb.formatHex()", () => {
   assert.strictEqual(color.prototype.hex, color.prototype.formatHex);
   assert.strictEqual(rgb.prototype.hex, rgb.prototype.formatHex);

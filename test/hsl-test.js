@@ -89,6 +89,18 @@ it("hsl(h, s, l) does not clamp s and l channel values to [0,1]", () => {
   assertHslEqual(hsl(120, 0.2, 1.1), 120, 0.2, 1.1, 1);
 });
 
+it("hsl(h, s, l).clamp() clamps channel values", () => {
+  assertHslEqual(hsl(120, -0.1, -0.2).clamp(), 120, 0, 0, 1);
+  assertHslEqual(hsl(120, 1.1, 1.2).clamp(), 120, 1, 1, 1);
+  assertHslEqual(hsl(120, 2.1, 2.2).clamp(), 120, 1, 1, 1);
+  assertHslEqual(hsl(420, -0.1, -0.2).clamp(), 60, 0, 0, 1);
+  assertHslEqual(hsl(-420, -0.1, -0.2).clamp(), 300, 0, 0, 1);
+  assert.strictEqual(hsl(-420, -0.1, -0.2, NaN).clamp().opacity, 1);
+  assert.strictEqual(hsl(-420, -0.1, -0.2, 0.5).clamp().opacity, 0.5);
+  assert.strictEqual(hsl(-420, -0.1, -0.2, -1).clamp().opacity, 0);
+  assert.strictEqual(hsl(-420, -0.1, -0.2, 2).clamp().opacity, 1);
+});
+
 it("hsl(h, s, l, opacity) does not clamp opacity to [0,1]", () => {
   assertHslEqual(hsl(120, 0.1, 0.5, -0.2), 120, 0.1, 0.5, -0.2);
   assertHslEqual(hsl(120, 0.9, 0.5, 1.2), 120, 0.9, 0.5, 1.2);

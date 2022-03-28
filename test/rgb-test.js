@@ -91,6 +91,16 @@ it("rgb(r, g, b) does not clamp channel values", () => {
   assertRgbApproxEqual(rgb(300, 400, 500), 300, 400, 500, 1);
 });
 
+it("rgb(r, g, b).clamp() rounds and clamps channel values", () => {
+  assertRgbApproxEqual(rgb(-10, -20, -30).clamp(), 0, 0, 0, 1);
+  assertRgbApproxEqual(rgb(10.5, 20.5, 30.5).clamp(), 11, 21, 31, 1);
+  assertRgbApproxEqual(rgb(300, 400, 500).clamp(), 255, 255, 255, 1);
+  assert.strictEqual(rgb(10.5, 20.5, 30.5, -1).clamp().opacity, 0);
+  assert.strictEqual(rgb(10.5, 20.5, 30.5, 0.5).clamp().opacity, 0.5);
+  assert.strictEqual(rgb(10.5, 20.5, 30.5, 2).clamp().opacity, 1);
+  assert.strictEqual(rgb(10.5, 20.5, 30.5, NaN).clamp().opacity, 1);
+});
+
 it("rgb(r, g, b, opacity) does not clamp opacity", () => {
   assertRgbApproxEqual(rgb(-10, -20, -30, -0.2), -10, -20, -30, -0.2);
   assertRgbApproxEqual(rgb(300, 400, 500, 1.2), 300, 400, 500, 1.2);

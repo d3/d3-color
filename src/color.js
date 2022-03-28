@@ -251,6 +251,9 @@ define(Rgb, rgb, extend(Color, {
   rgb: function() {
     return this;
   },
+  clamp: function() {
+    return new Rgb(clampi(this.r), clampi(this.g), clampi(this.b), clampa(this.opacity));
+  },
   displayable: function() {
     return (-0.5 <= this.r && this.r < 255.5)
         && (-0.5 <= this.g && this.g < 255.5)
@@ -268,16 +271,20 @@ function rgb_formatHex() {
 }
 
 function rgb_formatRgb() {
-  var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
-  return (a === 1 ? "rgb(" : "rgba(")
-      + Math.max(0, Math.min(255, Math.round(this.r) || 0)) + ", "
-      + Math.max(0, Math.min(255, Math.round(this.g) || 0)) + ", "
-      + Math.max(0, Math.min(255, Math.round(this.b) || 0))
-      + (a === 1 ? ")" : ", " + a + ")");
+  const a = clampa(this.opacity);
+  return `${a === 1 ? "rgb(" : "rgba("}${clampi(this.r)}, ${clampi(this.g)}, ${clampi(this.b)}${a === 1 ? ")" : `, ${a})`}`;
+}
+
+function clampa(opacity) {
+  return isNaN(opacity) ? 1 : Math.max(0, Math.min(1, opacity));
+}
+
+function clampi(value) {
+  return Math.max(0, Math.min(255, Math.round(value) || 0));
 }
 
 function hex(value) {
-  value = Math.max(0, Math.min(255, Math.round(value) || 0));
+  value = clampi(value);
   return (value < 16 ? "0" : "") + value.toString(16);
 }
 
@@ -347,24 +354,28 @@ define(Hsl, hsl, extend(Color, {
       this.opacity
     );
   },
+  clamp: function() {
+    return new Hsl(clamph(this.h), clampt(this.s), clampt(this.l), clampa(this.opacity));
+  },
   displayable: function() {
     return (0 <= this.s && this.s <= 1 || isNaN(this.s))
         && (0 <= this.l && this.l <= 1)
         && (0 <= this.opacity && this.opacity <= 1);
   },
   formatHsl: function() {
-    var a = this.opacity,
-        h = (this.h || 0) % 360,
-        s = Math.max(0, Math.min(1, this.s || 0)),
-        l = Math.max(0, Math.min(1, this.l || 0));
-    a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
-    return (a === 1 ? "hsl(" : "hsla(")
-        + (h < 0 ? h + 360 : h) + ", "
-        + s * 100 + "%, "
-        + l * 100 + "%"
-        + (a === 1 ? ")" : ", " + a + ")");
+    const a = clampa(this.opacity);
+    return `${a === 1 ? "hsl(" : "hsla("}${clamph(this.h)}, ${clampt(this.s) * 100}%, ${clampt(this.l) * 100}%${a === 1 ? ")" : `, ${a})`}`;
   }
 }));
+
+function clamph(value) {
+  value = (value || 0) % 360;
+  return value < 0 ? value + 360 : value;
+}
+
+function clampt(value) {
+  return Math.max(0, Math.min(1, value || 0));
+}
 
 /* From FvD 13.37, CSS Color Module Level 3 */
 function hsl2rgb(h, m1, m2) {

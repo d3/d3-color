@@ -37,15 +37,15 @@ export function Cubehelix(h, s, l, opacity) {
 }
 
 define(Cubehelix, cubehelix, extend(Color, {
-  brighter: function(k) {
+  brighter(k) {
     k = k == null ? brighter : Math.pow(brighter, k);
     return new Cubehelix(this.h, this.s, this.l * k, this.opacity);
   },
-  darker: function(k) {
+  darker(k) {
     k = k == null ? darker : Math.pow(darker, k);
     return new Cubehelix(this.h, this.s, this.l * k, this.opacity);
   },
-  rgb: function() {
+  rgb() {
     var h = isNaN(this.h) ? 0 : (this.h + 120) * radians,
         l = +this.l,
         a = isNaN(this.s) ? 0 : this.s * l * (1 - l),

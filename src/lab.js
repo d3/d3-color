@@ -43,13 +43,13 @@ export function Lab(l, a, b, opacity) {
 }
 
 define(Lab, lab, extend(Color, {
-  brighter: function(k) {
+  brighter(k) {
     return new Lab(this.l + K * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
-  darker: function(k) {
+  darker(k) {
     return new Lab(this.l - K * (k == null ? 1 : k), this.a, this.b, this.opacity);
   },
-  rgb: function() {
+  rgb() {
     var y = (this.l + 16) / 116,
         x = isNaN(this.a) ? y : y + this.a / 500,
         z = isNaN(this.b) ? y : y - this.b / 200;
@@ -111,13 +111,13 @@ function hcl2lab(o) {
 }
 
 define(Hcl, hcl, extend(Color, {
-  brighter: function(k) {
+  brighter(k) {
     return new Hcl(this.h, this.c, this.l + K * (k == null ? 1 : k), this.opacity);
   },
-  darker: function(k) {
+  darker(k) {
     return new Hcl(this.h, this.c, this.l - K * (k == null ? 1 : k), this.opacity);
   },
-  rgb: function() {
+  rgb() {
     return hcl2lab(this).rgb();
   }
 }));

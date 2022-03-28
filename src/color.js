@@ -168,10 +168,10 @@ var named = {
 };
 
 define(Color, color, {
-  copy: function(channels) {
+  copy(channels) {
     return Object.assign(new this.constructor, this, channels);
   },
-  displayable: function() {
+  displayable() {
     return this.rgb().displayable();
   },
   hex: color_formatHex, // Deprecated! Use color.formatHex.
@@ -245,21 +245,21 @@ export function Rgb(r, g, b, opacity) {
 }
 
 define(Rgb, rgb, extend(Color, {
-  brighter: function(k) {
+  brighter(k) {
     k = k == null ? brighter : Math.pow(brighter, k);
     return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
   },
-  darker: function(k) {
+  darker(k) {
     k = k == null ? darker : Math.pow(darker, k);
     return new Rgb(this.r * k, this.g * k, this.b * k, this.opacity);
   },
-  rgb: function() {
+  rgb() {
     return this;
   },
-  clamp: function() {
+  clamp() {
     return new Rgb(clampi(this.r), clampi(this.g), clampi(this.b), clampa(this.opacity));
   },
-  displayable: function() {
+  displayable() {
     return (-0.5 <= this.r && this.r < 255.5)
         && (-0.5 <= this.g && this.g < 255.5)
         && (-0.5 <= this.b && this.b < 255.5)
@@ -343,15 +343,15 @@ function Hsl(h, s, l, opacity) {
 }
 
 define(Hsl, hsl, extend(Color, {
-  brighter: function(k) {
+  brighter(k) {
     k = k == null ? brighter : Math.pow(brighter, k);
     return new Hsl(this.h, this.s, this.l * k, this.opacity);
   },
-  darker: function(k) {
+  darker(k) {
     k = k == null ? darker : Math.pow(darker, k);
     return new Hsl(this.h, this.s, this.l * k, this.opacity);
   },
-  rgb: function() {
+  rgb() {
     var h = this.h % 360 + (this.h < 0) * 360,
         s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
         l = this.l,
@@ -364,15 +364,15 @@ define(Hsl, hsl, extend(Color, {
       this.opacity
     );
   },
-  clamp: function() {
+  clamp() {
     return new Hsl(clamph(this.h), clampt(this.s), clampt(this.l), clampa(this.opacity));
   },
-  displayable: function() {
+  displayable() {
     return (0 <= this.s && this.s <= 1 || isNaN(this.s))
         && (0 <= this.l && this.l <= 1)
         && (0 <= this.opacity && this.opacity <= 1);
   },
-  formatHsl: function() {
+  formatHsl() {
     const a = clampa(this.opacity);
     return `${a === 1 ? "hsl(" : "hsla("}${clamph(this.h)}, ${clampt(this.s) * 100}%, ${clampt(this.l) * 100}%${a === 1 ? ")" : `, ${a})`}`;
   }

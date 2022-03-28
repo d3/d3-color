@@ -38,6 +38,13 @@ it("hsl.formatHsl() formats as hsl(…) or hsla(…)", () => {
   assert.strictEqual(hsl("hsla(60, 100%, 20%, 0.4)").formatHsl(), "hsla(60, 100%, 20%, 0.4)");
 });
 
+it("hsl.formatHsl() clamps to the expected range", () => {
+  assert.strictEqual(hsl(180, -100, -50).formatHsl(), "hsl(180, 0%, 0%)");
+  assert.strictEqual(hsl(180, 150, 200).formatHsl(), "hsl(180, 100%, 100%)");
+  assert.strictEqual(hsl(-90, 50, 50).formatHsl(), "hsl(270, 100%, 100%)");
+  assert.strictEqual(hsl(420, 50, 50).formatHsl(), "hsl(60, 100%, 100%)");
+});
+
 it("hsl.formatHex() formats as #rrggbb", () => {
   assert.strictEqual(hsl("#abcdef").formatHex(), "#abcdef");
   assert.strictEqual(hsl("hsl(60, 100%, 20%)").formatHex(), "#666600");

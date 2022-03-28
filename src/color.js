@@ -353,11 +353,15 @@ define(Hsl, hsl, extend(Color, {
         && (0 <= this.opacity && this.opacity <= 1);
   },
   formatHsl: function() {
-    var a = this.opacity; a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
+    var a = this.opacity,
+        h = (this.h || 0) % 360,
+        s = Math.max(0, Math.min(1, this.s || 0)),
+        l = Math.max(0, Math.min(1, this.l || 0));
+    a = isNaN(a) ? 1 : Math.max(0, Math.min(1, a));
     return (a === 1 ? "hsl(" : "hsla(")
-        + (this.h || 0) + ", "
-        + (this.s || 0) * 100 + "%, "
-        + (this.l || 0) * 100 + "%"
+        + (h < 0 ? h + 360 : h) + ", "
+        + s * 100 + "%, "
+        + l * 100 + "%"
         + (a === 1 ? ")" : ", " + a + ")");
   }
 }));

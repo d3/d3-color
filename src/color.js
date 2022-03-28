@@ -9,12 +9,12 @@ var reI = "\\s*([+-]?\\d+)\\s*",
     reN = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)\\s*",
     reP = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)%\\s*",
     reHex = /^#([0-9a-f]{3,8})$/,
-    reRgbInteger = new RegExp("^rgb\\(" + [reI, reI, reI] + "\\)$"),
-    reRgbPercent = new RegExp("^rgb\\(" + [reP, reP, reP] + "\\)$"),
-    reRgbaInteger = new RegExp("^rgba\\(" + [reI, reI, reI, reN] + "\\)$"),
-    reRgbaPercent = new RegExp("^rgba\\(" + [reP, reP, reP, reN] + "\\)$"),
-    reHslPercent = new RegExp("^hsl\\(" + [reN, reP, reP] + "\\)$"),
-    reHslaPercent = new RegExp("^hsla\\(" + [reN, reP, reP, reN] + "\\)$");
+    reRgbInteger = new RegExp(`^rgb\\(${reI},${reI},${reI}\\)$`),
+    reRgbPercent = new RegExp(`^rgb\\(${reP},${reP},${reP}\\)$`),
+    reRgbaInteger = new RegExp(`^rgba\\(${reI},${reI},${reI},${reN}\\)$`),
+    reRgbaPercent = new RegExp(`^rgba\\(${reP},${reP},${reP},${reN}\\)$`),
+    reHslPercent = new RegExp(`^hsl\\(${reN},${reP},${reP}\\)$`),
+    reHslaPercent = new RegExp(`^hsla\\(${reN},${reP},${reP},${reN}\\)$`);
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -273,11 +273,11 @@ define(Rgb, rgb, extend(Color, {
 }));
 
 function rgb_formatHex() {
-  return "#" + hex(this.r) + hex(this.g) + hex(this.b);
+  return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}`;
 }
 
 function rgb_formatHex8() {
-  return "#" + hex(this.r) + hex(this.g) + hex(this.b) + hex((isNaN(this.opacity) ? 1 : this.opacity) * 255);
+  return `#${hex(this.r)}${hex(this.g)}${hex(this.b)}${hex((isNaN(this.opacity) ? 1 : this.opacity) * 255)}`;
 }
 
 function rgb_formatRgb() {

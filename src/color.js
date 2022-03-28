@@ -176,6 +176,7 @@ define(Color, color, {
   },
   hex: color_formatHex, // Deprecated! Use color.formatHex.
   formatHex: color_formatHex,
+  formatHex8: color_formatHex8,
   formatHsl: color_formatHsl,
   formatRgb: color_formatRgb,
   toString: color_formatRgb
@@ -183,6 +184,10 @@ define(Color, color, {
 
 function color_formatHex() {
   return this.rgb().formatHex();
+}
+
+function color_formatHex8() {
+  return this.rgb().formatHex8();
 }
 
 function color_formatHsl() {
@@ -262,12 +267,17 @@ define(Rgb, rgb, extend(Color, {
   },
   hex: rgb_formatHex, // Deprecated! Use color.formatHex.
   formatHex: rgb_formatHex,
+  formatHex8: rgb_formatHex8,
   formatRgb: rgb_formatRgb,
   toString: rgb_formatRgb
 }));
 
 function rgb_formatHex() {
   return "#" + hex(this.r) + hex(this.g) + hex(this.b);
+}
+
+function rgb_formatHex8() {
+  return "#" + hex(this.r) + hex(this.g) + hex(this.b) + hex((isNaN(this.opacity) ? 1 : this.opacity) * 255);
 }
 
 function rgb_formatRgb() {

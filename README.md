@@ -132,6 +132,10 @@ Returns true if and only if the color is displayable on standard hardware. For e
 
 Returns a hexadecimal string representing this color in RGB space, such as `#f7eaba`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
 
+<a name="color_formatHex8" href="#color_formatHex8">#</a> *color*.<b>formatHex8</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
+
+Returns a hexadecimal string representing this color in RGBA space, such as `#f7eaba90`. If this color is not displayable, a suitable displayable color is returned instead. For example, RGB channel values greater than 255 are clamped to 255.
+
 <a name="color_formatHsl" href="#color_formatHsl">#</a> *color*.<b>formatHsl</b>() [<>](https://github.com/d3/d3-color/blob/master/src/color.js "Source")
 
 Returns a string representing this color according to the [CSS Color Module Level 3 specification](https://www.w3.org/TR/css-color-3/#hsl-color), such as `hsl(257, 50%, 80%)` or `hsla(257, 50%, 80%, 0.2)`. If this color is not displayable, a suitable displayable color is returned instead by clamping S and L channel values to the interval [0, 100].

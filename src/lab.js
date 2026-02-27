@@ -17,7 +17,7 @@ function labConvert(o) {
   if (o instanceof Hcl) return hcl2lab(o);
   if (!(o instanceof Rgb)) o = rgbConvert(o);
   var r = rgb2lrgb(o.r),
-      g = rgb2lrgb(o.g),
+      g = rgb2lrgb(o.g), 
       b = rgb2lrgb(o.b),
       y = xyz2lab((0.2225045 * r + 0.7168786 * g + 0.0606169 * b) / Yn), x, z;
   if (r === g && g === b) x = z = y; else {

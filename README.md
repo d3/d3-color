@@ -7,6 +7,6 @@ Even though your browser understands a lot about colors, it doesn’t offer much
 ## Resources
 
 - [Documentation](https://d3js.org/d3-color)
-- [Examples](https://observablehq.com/collection/@d3/d3-color)
+- [Examples](https://observablehq.com/@d3/-/collection/d3-color)
 - [Releases](https://github.com/d3/d3-color/releases)
 - [Getting help](https://d3js.org/community)

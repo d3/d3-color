@@ -1,5 +1,5 @@
-import assert from "assert";
-import {hcl, hsl, lab, rgb} from "../src/index.js";
+import assert from "node:assert";
+import {hcl, hsl, lab, rgb} from "d3-color";
 
 export function assertRgbEqual(actual, r, g, b, opacity) {
   assert(actual instanceof rgb

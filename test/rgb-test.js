@@ -1,5 +1,6 @@
-import assert from "assert";
-import {color, hsl, rgb} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {color, hsl, rgb} from "d3-color";
 import {assertRgbApproxEqual, assertRgbEqual} from "./asserts.js";
 
 it("rgb(…) returns an instance of rgb and color", () => {

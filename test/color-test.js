@@ -1,5 +1,6 @@
-import assert from "assert";
-import {color} from "../src/index.js";
+import assert from "node:assert";
+import {it} from "vitest";
+import {color} from "d3-color";
 import {assertHslEqual, assertRgbApproxEqual, assertRgbEqual} from "./asserts.js";
 
 it("color(format) parses CSS color names (e.g., \"rebeccapurple\")", () => {

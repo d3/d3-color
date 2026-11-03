@@ -1,4 +1,5 @@
-import {lch, rgb} from "../src/index.js";
+import {it} from "vitest";
+import {lch, rgb} from "d3-color";
 import {assertHclEqual} from "./asserts.js";
 
 it("lch(color) is equivalent to hcl(color)", () => {

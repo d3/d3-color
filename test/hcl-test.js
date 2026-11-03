@@ -1,6 +1,7 @@
-import assert from "assert";
+import assert from "node:assert";
+import {it} from "vitest";
 import {assertHclEqual, assertRgbApproxEqual} from "./asserts.js";
-import {color, hcl, hsl, lab, rgb} from "../src/index.js";
+import {color, hcl, hsl, lab, rgb} from "d3-color";
 
 it("hcl(…) returns an instance of hcl and color", () => {
   const c = hcl(120, 40, 50);

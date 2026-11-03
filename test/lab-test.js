@@ -1,5 +1,5 @@
+import assert from "node:assert";
 import {it} from "vitest";
-import assert from "assert";
 import {color, hcl, hsl, lab, rgb} from "../src/index.js";
 import {assertLabEqual, assertRgbApproxEqual} from "./asserts.js";
 

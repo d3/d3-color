@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert";
 import {hcl, hsl, lab, rgb} from "../src/index.js";
 
 export function assertRgbEqual(actual, r, g, b, opacity) {

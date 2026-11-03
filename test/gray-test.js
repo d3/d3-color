@@ -1,6 +1,6 @@
 import {it} from "vitest";
 import {assertLabEqual} from "./asserts.js";
-import {gray} from "../src/index.js";
+import {gray} from "d3-color";
 
 it("gray(l[, opacity]) is an alias for lab(l, 0, 0[, opacity])", () => {
   assertLabEqual(gray(120), 120, 0, 0, 1);

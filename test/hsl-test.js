@@ -14,6 +14,15 @@ it("hsl(…) exposes h, s, and l channel values and opacity", () => {
   assertHslEqual(hsl("hsla(60, 100%, 20%, 0.4)"), 60, 1, 0.2, 0.4);
 });
 
+it("hsl(…) parses hues with CSS angle units", () => {
+  assert.strictEqual(rgb("hsl(120deg, 100%, 50%)") + "", "rgb(0, 255, 0)");
+  assertHslEqual(hsl("hsl(120deg, 100%, 50%)"), 120, 1, 0.5, 1);
+  assertHslEqual(hsl("hsl(133.333333grad, 100%, 50%)"), 120, 1, 0.5, 1);
+  assertHslEqual(hsl("hsl(2.0943951024rad, 100%, 50%)"), 120, 1, 0.5, 1);
+  assertHslEqual(hsl("hsl(0.333333333turn, 100%, 50%)"), 120, 1, 0.5, 1);
+  assertHslEqual(hsl("hsla(120deg, 100%, 50%, 0.5)"), 120, 1, 0.5, 0.5);
+});
+
 it("hsl.toString() converts to RGB and formats as rgb(…) or rgba(…)", () => {
   assert.strictEqual(hsl("#abcdef") + "", "rgb(171, 205, 239)");
   assert.strictEqual(hsl("moccasin") + "", "rgb(255, 228, 181)");

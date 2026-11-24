@@ -13,8 +13,9 @@ var reI = "\\s*([+-]?\\d+)\\s*",
     reRgbPercent = new RegExp(`^rgb\\(${reP},${reP},${reP}\\)$`),
     reRgbaInteger = new RegExp(`^rgba\\(${reI},${reI},${reI},${reN}\\)$`),
     reRgbaPercent = new RegExp(`^rgba\\(${reP},${reP},${reP},${reN}\\)$`),
-    reHslPercent = new RegExp(`^hsl\\(${reN},${reP},${reP}\\)$`),
-    reHslaPercent = new RegExp(`^hsla\\(${reN},${reP},${reP},${reN}\\)$`);
+    reH = "\\s*([+-]?(?:\\d*\\.)?\\d+(?:[eE][+-]?\\d+)?)(deg|grad|rad|turn)?\\s*",
+    reHslPercent = new RegExp(`^hsl\\(${reH},${reP},${reP}\\)$`),
+    reHslaPercent = new RegExp(`^hsla\\(${reH},${reP},${reP},${reN}\\)$`);
 
 var named = {
   aliceblue: 0xf0f8ff,
@@ -210,8 +211,8 @@ export default function color(format) {
       : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, 1) // rgb(100%, 0%, 0%)
       : (m = reRgbaInteger.exec(format)) ? rgba(m[1], m[2], m[3], m[4]) // rgba(255, 0, 0, 1)
       : (m = reRgbaPercent.exec(format)) ? rgba(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100, m[4]) // rgb(100%, 0%, 0%, 1)
-      : (m = reHslPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, 1) // hsl(120, 50%, 50%)
-      : (m = reHslaPercent.exec(format)) ? hsla(m[1], m[2] / 100, m[3] / 100, m[4]) // hsla(120, 50%, 50%, 1)
+      : (m = reHslPercent.exec(format)) ? hsla(hue(m[1], m[2]), m[3] / 100, m[4] / 100, 1) // hsl(120, 50%, 50%)
+      : (m = reHslaPercent.exec(format)) ? hsla(hue(m[1], m[2]), m[3] / 100, m[4] / 100, m[5]) // hsla(120, 50%, 50%, 1)
       : named.hasOwnProperty(format) ? rgbn(named[format]) // eslint-disable-line no-prototype-builtins
       : format === "transparent" ? new Rgb(NaN, NaN, NaN, 0)
       : null;
@@ -219,6 +220,13 @@ export default function color(format) {
 
 function rgbn(n) {
   return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff, 1);
+}
+
+function hue(h, unit) {
+  return unit === "grad" ? h * 0.9
+      : unit === "rad" ? h * 180 / Math.PI
+      : unit === "turn" ? h * 360
+      : +h;
 }
 
 function rgba(r, g, b, a) {
